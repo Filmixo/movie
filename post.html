@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -9,11 +10,31 @@
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js"></script>
 
     <style>  
-    /* --- বেসিক সেটআপ --- */
+    /* --- বেসিক রিসেট --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }  
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
+
+    /* --- [AD CONTROLLERS - ৫টি এডের আলাদা আলাদা কন্ট্রোল] --- */
+    /* ১. ইমেজ কন্টেইনারের উপরের অ্যাড */
+    #ad-box-top { width: 100%; height: 65px; margin-top: 5px; margin-bottom: 5px; } 
+
+    /* ২. টাইটেলের নিচের অ্যাড */
+    #ad-box-title { width: 100%; height: 65px; margin-top: 10px; margin-bottom: 15px; }
+
+    /* ৩. ১ম প্যারাগ্রাফের নিচের অ্যাড */
+    #ad-box-p1 { width: 100%; height: 65px; margin-top: 10px; margin-bottom: 10px; }
+
+    /* ৪. ২য় প্যারাগ্রাফের নিচের অ্যাড */
+    #ad-box-p2 { width: 100%; height: 65px; margin-top: 10px; margin-bottom: 10px; }
+
+    /* ৫. ডাউনলোড সেকশনের উপরের অ্যাড (আর্টিকেলের শেষে) */
+    #ad-box-mid { width: 100%; height: 65px; margin-top: 15px; margin-bottom: 5px; }
+
+    /* কমন অ্যাড স্টাইল (হাত দেওয়ার দরকার নেই) */
+    .ad-box { display: flex; justify-content: center; align-items: center; overflow: hidden; background: transparent; }
+    .ad-box iframe { width: 100%; height: 100%; border: none; }
 
     /* --- হেডার --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
@@ -21,12 +42,8 @@
     .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
     .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
     header > div { display: flex; align-items: center; gap: 2px; }
-        
-    /* --- [স্মার্ট অ্যাড বক্স] --- */
-    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; overflow: hidden; }
-    .ad-box:not(:empty) { margin: 10px 0; }
 
-    /* --- ভিডিও প্লেয়ার সেকশন --- */
+    /* --- ভিডিও প্লেয়ার --- */
      .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
      .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
      .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
@@ -42,7 +59,7 @@
      .video-container.is-loading .video-controls { display: none !important; }
      .video-container.is-loading .play-btn-center { display: none !important; }
 
-    /* --- পোস্ট ডিটেইলস --- */  
+    /* --- পোস্ট ইনফো --- */  
     .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
     .author-info { display: flex; align-items: center; gap: 10px; }  
     .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
@@ -51,9 +68,9 @@
     .author-text span { font-size: 12px; color: #1da1f2; display: block; margin-top: -1px; }  
     .post-time { font-size: 14px; color: #536471; font-weight: bold; }  
 
-    /* --- আর্টিকেল ও কন্টেন্ট --- */
+    /* --- কন্টেন্ট --- */
     .content-body { padding: 15px 15px 0 15px; }  
-    .article-title { font-size: 18px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
+    .article-title { font-size: 18px; font-weight: 800; margin-bottom: 0px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-bottom: 10px; text-align: left; letter-spacing: -0.3px; }  
 
     /* --- ডাউনলোড সেকশন --- */  
@@ -63,7 +80,7 @@
     .download-btn-v2:active { transform: scale(0.98); }  
     .download-btn-v2 i { margin-right: 4px; }
 
-    /* --- স্ট্যাটস ও শেয়ার --- */  
+    /* --- স্ট্যাটস --- */  
     .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; font-size: 15px; color: #536471; font-weight: 500; }  
     .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }  
     .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
@@ -74,7 +91,7 @@
     .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: transform 0.2s; user-select: none; }  
     .share-icon:active { transform: scale(0.9); }
 
-    /* --- রিলেটেড পোস্ট কার্ড --- */
+    /* --- রিলেটেড পোস্টস --- */
     .related-header { padding: 13px; font-weight: 900; color: #000000; border-top: 2px solid #cfd9de; border-bottom: 2px solid #e1e8ed; text-transform: uppercase; }  
     .post-card { padding: 5px 15px 5px 15px; border-bottom: 1.5px solid #e1e8ed; display: flex; flex-direction: column; gap: 6px; }  
     .post-title, .post-excerpt { cursor: pointer; user-select: none; transition: color 0.1s ease; }
@@ -102,8 +119,6 @@
     .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }  
     .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }  
     .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }  
-    
-    /* --- ফুটার কার্ড ও লিংক --- */
     .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; color: #536471; font-size: 16px; font-weight: 500; }  
     .footer-left { display: flex; align-items: center; gap: 6px; }  
     .footer-right { display: flex; align-items: center; gap: 20px; }  
@@ -118,14 +133,14 @@
     .footer-share-btn:active i { color: #1da1f2; }
     .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; user-select: none; }  
     .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }  
+    
+    /* --- ফুটার ও অন্যান্য --- */
     .site-footer { padding: 20px 20px; text-align: center; border-top: none; }  
     .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
     .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; user-select: none; }  
     .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
     .footer-copyright { color: #536471; font-size: 13px; }  
     .footer-copyright a { color: #1da1f2; font-weight: bold; }
-    
-    /* --- নোটিফিকেশন --- */
     .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 8px 15px; border-radius: 20px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 500; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; width: auto; max-width: 90%; white-space: nowrap; }  
     .notification.show { opacity: 1; }  
     #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }  
@@ -268,7 +283,7 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- 🔥 FIX: Iframe Injection for Ads (Solves Conflict Issue) ---
+    // --- 🔥 FIX: Iframe Injection + Centering + Full Height ---
     function injectAd(tid, cid) {
         const t = document.getElementById(tid);
         const c = document.getElementById(cid);
@@ -276,46 +291,34 @@
 
         c.innerHTML = ""; 
 
-        // Create an iframe to isolate the ad script
         const iframe = document.createElement('iframe');
-        iframe.style.width = '100%';
-        iframe.style.height = '80px'; // Adjust height as needed
+        iframe.style.width = '100%'; 
+        iframe.style.height = '100%'; // কন্টেইনারের হাইট থেকে নেবে
         iframe.style.border = 'none';
         iframe.style.overflow = 'hidden';
         iframe.scrolling = "no";
 
         c.appendChild(iframe);
 
-        // Write the ad code inside the iframe
         const doc = iframe.contentWindow.document;
         doc.open();
-        doc.write('<html><head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;}</style></head><body>');
-        doc.write(t.innerHTML); // Inject the script from template
+        // বডি মার্জিন ০ এবং ফ্লেক্স দিয়ে সেন্টার করা হয়েছে যাতে অ্যাড কেটে না যায়
+        doc.write('<html><head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;width:100%;height:100%;}</style></head><body>');
+        doc.write(t.innerHTML); 
         doc.write('</body></html>');
         doc.close();
     }
       
     // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
-        // 1. টাইটেল + টাইটেলের নিচের অ্যাড (সবসময় থাকবে)
         let content = `<h1 class="article-title">${post.title}</h1><div id="ad-box-title" class="ad-box"></div>`;  
         
-        // 2. প্যারাগ্রাফ লজিক
         if(post.paragraphs) { 
             const pLen = post.paragraphs.length; 
-
             post.paragraphs.forEach((p, index) => { 
                 content += `<p class="article-para">${p}</p>`; 
-                
-                // শর্ত: যদি প্যারাগ্রাফ ২টি বা তার বেশি হয়, তবে ১ম প্যারাগ্রাফের নিচে অ্যাড বসবে
-                if (index === 0 && pLen >= 2) {
-                    content += `<div id="ad-box-p1" class="ad-box"></div>`;
-                }
-
-                // শর্ত: যদি প্যারাগ্রাফ ৩টি বা তার বেশি হয়, তবে ২য় প্যারাগ্রাফের নিচে অ্যাড বসবে
-                if (index === 1 && pLen >= 3) {
-                    content += `<div id="ad-box-p2" class="ad-box"></div>`;
-                }
+                if (index === 0 && pLen >= 2) { content += `<div id="ad-box-p1" class="ad-box"></div>`; }
+                if (index === 1 && pLen >= 3) { content += `<div id="ad-box-p2" class="ad-box"></div>`; }
             }); 
         }
         
@@ -375,10 +378,8 @@
                 </div>  
             </div>`;  
         
-        // --- 5 DISTINCT AD INJECTIONS (Iframe Method) ---
         injectAd('ad-src-top', 'ad-box-top');      
         injectAd('ad-src-mid', 'ad-box-mid');      
-        
         injectAd('ad-src-title', 'ad-box-title');  
         injectAd('ad-src-p1', 'ad-box-p1');        
         injectAd('ad-src-p2', 'ad-box-p2');        
