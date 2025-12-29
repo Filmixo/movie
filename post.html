@@ -22,12 +22,16 @@
     .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
     header > div { display: flex; align-items: center; gap: 2px; }
         
-    /* --- [স্মার্ট অ্যাড বক্স - অটো সাইজ] --- */
-    /* কোনো হাইট দেওয়া হয়নি, অ্যাড লোড হলে অটোমেটিক জায়গা নিবে */
-    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: height 0.3s ease; overflow: hidden; }
-    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
-    /* অ্যাড কন্টেইনারের গ্যাপ কন্ট্রোল (শুধুমাত্র লোড হলেই গ্যাপ পাবে) */
-    .ad-box:not(:empty) { margin: 10px 0; }
+    /* --- [স্মার্ট অ্যাড বক্স - ZERO HEIGHT INITIALIZATION] --- */
+    /* শুরুতে হাইট ০ এবং কোনো মার্জিন নেই। অ্যাড লোড হলে JS দিয়ে হাইট এবং মার্জিন সেট হবে */
+    .ad-box { 
+        width: 100%; 
+        height: 0; 
+        overflow: hidden; 
+        transition: height 0.4s ease, margin 0.4s ease; /* স্মুথ এনিমেশন */
+        margin: 0; 
+        display: block;
+    }
 
     /* --- ভিডিও প্লেয়ার সেকশন --- */
      .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
@@ -63,7 +67,7 @@
     .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 20px; border-radius: 8px; overflow: hidden; background: #000; display: none; }
     .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* --- ডাউনলোড সেকশন (LUXURY STYLE - RESTORED) --- */  
+    /* --- ডাউনলোড সেকশন (LUXURY STYLE) --- */  
     .download-title-text { 
         font-size: 20px; 
         font-weight: 800; 
@@ -239,7 +243,7 @@
 <script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script>
 </template>
 
-<!-- 5. দ্বিতীয় প্যারাগ্রাফের নিচে -->
+<!-- 5. দ্বিতীয় প্যারাগ্রাফের নিচে -->
 <template id="ad-src-p2">
 <script>
   atOptions = {
@@ -333,57 +337,62 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- অ্যাড ইনজেক্ট ফাংশন (Smart Auto-Resizing) ---
-    // এই ফাংশনটি প্রতিটি অ্যাডের জন্য একটি আলাদা জগত তৈরি করে (Iframe),
-    // কিন্তু ভেতরে একটি ছোট্ট স্ক্রিপ্ট ঢুকিয়ে দেয় যা অ্যাডের সাইজ মাপে 
-    // এবং বাইরের কন্টেইনারকে বলে দেয় "আমার হাইট এত, তুমি বড় হও"।
-    // ফলে অ্যাডের অরিজিনাল সাইজ যাই হোক, সে সেই সাইজেই দেখাবে।
+    // --- অ্যাড ইনজেক্ট ফাংশন (Smart Zero-Height Logic) ---
+    // শুরুতে হাইট ০ থাকবে। অ্যাড লোড হলে ভেতর থেকে সিগন্যাল পেয়ে হাইট বাড়বে।
     function injectAd(tid, cid) {
         const t = document.getElementById(tid);
         const c = document.getElementById(cid);
         if (t && c) {
-            c.innerHTML = ''; // আগের কন্টেন্ট ক্লিয়ার
-            const iframe = document.createElement('iframe');
+            c.innerHTML = ''; 
             
-            // আইফ্রেমের স্টাইল এমনভাবে দেওয়া হয়েছে যাতে সে প্রথমে চুপচাপ থাকে
-            // এবং ভেতরের কন্টেন্ট অনুযায়ী নিজেকে এডজাস্ট করে।
+            // আইফ্রেম তৈরি (শুরুতে ০ হাইট)
+            const iframe = document.createElement('iframe');
             iframe.style.width = '100%';
+            iframe.style.height = '0px'; // Initial Height 0
             iframe.style.border = 'none';
             iframe.style.overflow = 'hidden';
             iframe.style.display = 'block';
-            iframe.scrolling = 'no'; // স্ক্রলবার বন্ধ
+            iframe.scrolling = 'no'; 
             
             c.appendChild(iframe);
             
-            // আইফ্রেমের ভেতরের কোড। এখানে একটি "ResizeObserver" এবং "window.onload" 
-            // ব্যবহার করা হয়েছে যা কন্টিনুয়াসলি হাইট চেক করে।
             const content = `
                 <html>
                 <head>
                 <style>
-                    body { margin:0; padding:0; overflow:hidden; background:transparent; display: flex; justify-content: center; }
-                    /* ইমেজ বা আইফ্রেম যাই আসুক, সে যেন রেস্পন্সিভ থাকে */
+                    body { margin:0; padding:0; overflow:hidden; background:transparent; display:flex; justify-content:center; }
+                    /* ইমেজ বা অন্য কন্টেন্ট আসলে যাতে ফুল সাইজ পায় */
                     img, iframe, div { max-width: 100%; }
                 </style>
                 </head>
                 <body>
                     ${t.innerHTML}
                     <script>
-                        // এই ফাংশনটি ভেতরের উচ্চতা মেপে বাইরের আইফ্রেমকে বড় করে দেয়
+                        // এই ফাংশনটি হাইট মাপবে এবং প্যারেন্টকে বড় করবে
                         function resize() {
-                            if(window.frameElement) {
-                                const h = document.body.scrollHeight;
-                                // যদি হাইট ০ এর বেশি হয়, তবেই রিসাইজ করবে
-                                if (h > 0) {
+                            // হাইট মাপার লজিক
+                            const h = document.body.scrollHeight;
+                            
+                            // যদি হাইট ১০ এর বেশি হয় (মানে অ্যাড লোড হয়েছে)
+                            if (h > 10) {
+                                if(window.frameElement) {
+                                    // ১. আইফ্রেমের হাইট সেট করো
                                     window.frameElement.style.height = h + 'px';
+                                    
+                                    // ২. প্যারেন্ট কন্টেইনার (.ad-box) এর হাইট সেট করো এবং মার্জিন দাও
+                                    // (ধাক্কা দিয়ে জায়গা বের করার লজিক)
+                                    window.frameElement.parentElement.style.height = h + 'px';
+                                    window.frameElement.parentElement.style.marginTop = '10px';
+                                    window.frameElement.parentElement.style.marginBottom = '10px';
                                 }
                             }
                         }
-                        // লোড হওয়ার সাথে সাথে এবং প্রতি ৫০০ মিলিসেকেন্ড পর পর চেক করবে (দেরিতে লোড হওয়া অ্যাডের জন্য)
-                        window.onload = resize;
-                        setInterval(resize, 500); 
                         
-                        // আধুনিক ব্রাউজারের জন্য লাইভ মনিটরিং
+                        // লোড হওয়ার সাথে সাথে এবং কিছুক্ষণ পর পর চেক করবে
+                        window.onload = resize;
+                        setInterval(resize, 500);
+                        
+                        // লাইভ মনিটরিং
                         if(window.ResizeObserver) {
                             new ResizeObserver(resize).observe(document.body);
                         }
