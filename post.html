@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -161,21 +162,21 @@
 <div id="container-1608cb6a976841a38e804d64801334bb"></div>
 </template>
 
-<!-- [AD SECTION 3] Title এর নিচের অ্যাড (NEW - আপাতত Top Ad এর কোড ব্যবহার করা হয়েছে) -->
+<!-- [AD SECTION 3] Title এর নিচের অ্যাড -->
 <template id="ad-src-title">
     <script>
   atOptions = {
-    'key' : 'fd8120b632b230ae9b293d2eb29be171',
+    'key' : 'da9154b956691d2aa7c677010e7b6501',
     'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
+    'height' : 60,
+    'width' : 468,
     'params' : {}
   };
 </script>
-<script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script>
+<script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 4] 1st Paragraph এর নিচের অ্যাড (NEW - আপাতত Top Ad এর কোড ব্যবহার করা হয়েছে) -->
+<!-- [AD SECTION 4] 1st Paragraph এর নিচের অ্যাড -->
 <template id="ad-src-p1">
     <script>
   atOptions = {
@@ -189,7 +190,7 @@
 <script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 5] 2nd Paragraph এর নিচের অ্যাড (NEW - আপাতত Top Ad এর কোড ব্যবহার করা হয়েছে) -->
+<!-- [AD SECTION 5] 2nd Paragraph এর নিচের অ্যাড -->
 <template id="ad-src-p2">
     <script>
   atOptions = {
@@ -268,8 +269,44 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- অ্যাড ইনজেক্ট ফাংশন ---
-    function injectAd(tid, cid) { const t=document.getElementById(tid), c=document.getElementById(cid); if(t&&c){ c.appendChild(t.content.cloneNode(true)); } }
+    // --- 🔥 UPDATED: Robust Ad Injection Function (Forces Scripts to Run) ---
+    function injectAd(tid, cid) {
+        const t = document.getElementById(tid);
+        const c = document.getElementById(cid);
+        if (!t || !c) return;
+
+        c.innerHTML = ""; // Clear any existing content to prevent duplicates
+
+        // Create a clone of the template content
+        const clone = t.content.cloneNode(true);
+        
+        // Convert NodeList to Array to iterate safely
+        const nodes = Array.from(clone.childNodes);
+
+        nodes.forEach(node => {
+            // If the node is a script, we must recreate it to force execution
+            if (node.nodeName === 'SCRIPT') {
+                const s = document.createElement('script');
+                
+                // Copy all attributes (src, async, type, etc.)
+                if (node.attributes) {
+                    Array.from(node.attributes).forEach(attr => {
+                        s.setAttribute(attr.name, attr.value);
+                    });
+                }
+                
+                // Copy inner script content (for inline scripts like atOptions)
+                if (node.innerHTML) {
+                    s.appendChild(document.createTextNode(node.innerHTML));
+                }
+                
+                c.appendChild(s);
+            } else {
+                // If it's not a script (like div, style), just append it
+                c.appendChild(node.cloneNode(true));
+            }
+        });
+    }
       
     // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
@@ -278,7 +315,7 @@
         
         // 2. প্যারাগ্রাফ লজিক
         if(post.paragraphs) { 
-            const pLen = post.paragraphs.length; // মোট প্যারাগ্রাফ সংখ্যা
+            const pLen = post.paragraphs.length; 
 
             post.paragraphs.forEach((p, index) => { 
                 content += `<p class="article-para">${p}</p>`; 
