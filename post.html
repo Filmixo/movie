@@ -274,9 +274,13 @@
           
         document.getElementById('post-details-container').innerHTML = `<div class="post-author-area"><div class="author-info"><div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div><div class="author-text"><h3>FILMIXO<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div></div><div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div></div><div id="ad-box-top" class="ad-box"></div><div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="eager" decoding="sync" fetchpriority="high" alt="Movie Thumbnail"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><div class="time-text">${post.videoDuration}</div><div class="prog-bg"><div class="prog-fill"></div></div><div style="display:flex; align-items:center; gap:6px;"><i class="fa-solid fa-volume-high"></i><span class="hd-badge">HD</span></div></div></div><div class="content-body">${content}<div id="ad-box-mid" class="ad-box"></div>${youtubeHTML}${videoAdHTML}${downloadSectionHTML}<div class="stats-section"><div class="stats-left"><div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">0</span> Views</div><div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div></div></div><div class="share-icons"><div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div><div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div><div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div><div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div><div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div></div></div></div>`;  
           
-        setTimeout(() => { injectAd('ad-src-top', 'ad-box-top'); injectAd('ad-src-title', 'ad-box-title'); }, 50);
-        setTimeout(() => { injectAd('ad-src-p1', 'ad-box-p1'); injectAd('ad-src-p2', 'ad-box-p2-left'); injectAd('ad-src-p2', 'ad-box-p2-right'); }, 150);
-        setTimeout(() => { injectAd('ad-src-mid', 'ad-box-mid'); injectAd('ad-src-video', 'ad-box-video'); }, 300);
+        injectAd('ad-src-top', 'ad-box-top');
+        injectAd('ad-src-title', 'ad-box-title');
+        injectAd('ad-src-p1', 'ad-box-p1');
+        injectAd('ad-src-p2', 'ad-box-p2-left');
+        injectAd('ad-src-p2', 'ad-box-p2-right');
+        injectAd('ad-src-mid', 'ad-box-mid');
+        injectAd('ad-src-video', 'ad-box-video');
 
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
