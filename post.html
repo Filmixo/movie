@@ -15,19 +15,19 @@
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- [AD CONTROLLERS - Simple & Effective] --- */
-    /* অ্যাড বক্স ডিফল্টভাবে দেখাবে না, তাই সাদা জায়গা থাকবে না */
-    .ad-box { min-height: 0; width: 100%; display: none; justify-content: center; align-items: center; background: transparent; overflow: hidden; }
+    /* --- [AD BOX STYLES] --- */
+    /* ডিফল্টভাবে অ্যাড বক্স দেখা যাবে না (No White Space) */
+    .ad-box { display: none; width: 100%; margin: 0; padding: 0; background: transparent; text-align: center; border: none; }
     
-    /* অ্যাড লোড হলে বা কন্টেন্ট থাকলে তখন এটি দৃশ্যমান হবে */
-    .ad-box:not(:empty) { display: flex; margin: 10px 0; }
+    /* আইফ্রেমের স্টাইল - ফুল উইডথ */
+    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; margin: 0 auto; }
 
-    /* ৫টি পজিশনের জন্য আলাদা মার্জিন কন্ট্রোল (যদি দরকার হয়) */
-    #ad-box-top:not(:empty) { margin: 5px 0; }
-    #ad-box-title:not(:empty) { margin: 10px 0; }
-    #ad-box-p1:not(:empty) { margin: 10px 0; }
-    #ad-box-p2:not(:empty) { margin: 10px 0; }
-    #ad-box-mid:not(:empty) { margin: 15px 0; }
+    /* গ্যাপ কন্ট্রোলার (শুধুমাত্র যখন অ্যাড লোড হবে তখন কাজ করবে) */
+    #ad-box-top { margin: 5px 0; }
+    #ad-box-title { margin: 10px 0; }
+    #ad-box-p1 { margin: 10px 0; }
+    #ad-box-p2 { margin: 10px 0; }
+    #ad-box-mid { margin: 15px 0; }
 
     /* --- হেডার --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
@@ -154,12 +154,12 @@
             'params' : {}
         };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
 <!-- [AD SECTION 2] Native/Mid Ad -->
 <template id="ad-src-mid">
-    <script async="async" data-cfasync="false" src="//pl25679905.profitablecpmrate.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script>
+    <script async="async" data-cfasync="false" src="https://pl25679905.profitablecpmrate.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script>
     <div id="container-1608cb6a976841a38e804d64801334bb"></div>
 </template>
 
@@ -174,7 +174,7 @@
             'params' : {}
         };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
 <!-- [AD SECTION 4] 1st Paragraph এর নিচের অ্যাড -->
@@ -188,7 +188,7 @@
             'params' : {}
         };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
 <!-- [AD SECTION 5] 2nd Paragraph এর নিচের অ্যাড -->
@@ -202,7 +202,7 @@
             'params' : {}
         };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
 
@@ -270,34 +270,52 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- DIRECT SCRIPT INJECTION (The "Old Way" that works) ---
-    // CSS এর মাধ্যমে আমরা display: none করে রেখেছি, যাতে ফাঁকা জায়গা না দেখায়
-    // যখন স্ক্রিপ্ট কন্টেন্ট দেবে, তখন ব্রাউজার নিজে থেকেই জায়গা বানাবে
+    // --- 🔥 FINAL ROBUST INJECTOR (Isolated Iframe + Auto Resize) ---
     function injectAd(tid, cid) {
         const t = document.getElementById(tid);
         const c = document.getElementById(cid);
         if (!t || !c) return;
 
         c.innerHTML = ""; 
+        c.style.display = "none"; // Hide initially
+
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.border = 'none';
+        iframe.style.overflow = 'hidden';
+        iframe.scrolling = "no";
+        iframe.style.height = '0px';
+
+        c.appendChild(iframe);
+
+        const doc = iframe.contentWindow.document;
+        doc.open();
         
-        // টেম্পলেটের ভেতরের কোড কপি করা
-        const clone = t.content.cloneNode(true);
-        const scripts = clone.querySelectorAll('script');
+        const adContent = t.innerHTML;
+        
+        // Internal script to resize iframe dynamically
+        const resizeScript = `
+            <script>
+                function resize() {
+                    const body = document.body;
+                    const html = document.documentElement;
+                    const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+                    
+                    if (height > 10) { 
+                        window.frameElement.style.height = height + 'px';
+                        window.frameElement.parentElement.style.display = 'flex'; // Show container
+                    }
+                }
+                setInterval(resize, 500); // Check repeatedly for changes
+                window.onload = resize;
+            <\/script>
+        `;
 
-        // সাধারণ এলিমেন্টগুলো আগে ঢুকাই
-        Array.from(clone.childNodes).forEach(node => {
-            if (node.nodeName !== 'SCRIPT') {
-                c.appendChild(node.cloneNode(true));
-            }
-        });
-
-        // স্ক্রিপ্টগুলোকে নতুন করে তৈরি করে রান করানো (যাতে ব্রাউজার এক্সিকিউট করে)
-        scripts.forEach(oldScript => {
-            const newScript = document.createElement('script');
-            Array.from(oldScript.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value));
-            newScript.appendChild(document.createTextNode(oldScript.innerHTML));
-            c.appendChild(newScript);
-        });
+        doc.write('<html><head><style>body{margin:0;padding:0;background:transparent;text-align:center;overflow:hidden;}</style></head><body>');
+        doc.write(adContent);
+        doc.write(resizeScript);
+        doc.write('</body></html>');
+        doc.close();
     }
       
     // --- মেইন পোস্ট রেন্ডার ---  
