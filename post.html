@@ -137,7 +137,7 @@
 </head>  
 <body>  
 
-<!-- [AD SECTION 1] Thumbnail এর উপরের অ্যাড (EXISTING) -->
+<!-- [AD SECTION 1] Thumbnail এর উপরের অ্যাড -->
 <template id="ad-src-top">
     <script>
   atOptions = {
@@ -151,7 +151,7 @@
 <script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 2] Article এর নিচের অ্যাড (EXISTING) -->
+<!-- [AD SECTION 2] Article এর নিচের অ্যাড -->
 <template id="ad-src-mid">
     <script
   async="async"
@@ -161,23 +161,8 @@
 <div id="container-1608cb6a976841a38e804d64801334bb"></div>
 </template>
 
-<!-- [AD SECTION 3] Title এর নিচের অ্যাড (NEW - PLACEHOLDER) -->
+<!-- [AD SECTION 3] Title এর নিচের অ্যাড (NEW - আপাতত Top Ad এর কোড ব্যবহার করা হয়েছে) -->
 <template id="ad-src-title">
-      <script>
-  atOptions = {
-    'key' : 'fd8120b632b230ae9b293d2eb29be171',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
-</script>
-<script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script>
-</template>
-
-<!-- [AD SECTION 4] 1st Paragraph এর নিচের অ্যাড (NEW - PLACEHOLDER) -->
-<template id="ad-src-p1">
-    <!-- এখানে আপনি পরবর্তীতে ১ম প্যারাগ্রাফের নিচের অ্যাড কোড বসাবেন -->
     <script>
   atOptions = {
     'key' : 'da9154b956691d2aa7c677010e7b6501',
@@ -190,9 +175,22 @@
 <script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 5] 2nd Paragraph এর নিচের অ্যাড (NEW - PLACEHOLDER) -->
+<!-- [AD SECTION 4] 1st Paragraph এর নিচের অ্যাড (NEW - আপাতত Top Ad এর কোড ব্যবহার করা হয়েছে) -->
+<template id="ad-src-p1">
+    <script>
+  atOptions = {
+    'key' : 'da9154b956691d2aa7c677010e7b6501',
+    'format' : 'iframe',
+    'height' : 60,
+    'width' : 468,
+    'params' : {}
+  };
+</script>
+<script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+</template>
+
+<!-- [AD SECTION 5] 2nd Paragraph এর নিচের অ্যাড (NEW - আপাতত Top Ad এর কোড ব্যবহার করা হয়েছে) -->
 <template id="ad-src-p2">
-    <!-- এখানে আপনি পরবর্তীতে ২য় প্যারাগ্রাফের নিচের অ্যাড কোড বসাবেন -->
     <script>
   atOptions = {
     'key' : 'da9154b956691d2aa7c677010e7b6501',
@@ -275,15 +273,25 @@
       
     // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
-        // 1. টাইটেল + টাইটেলের নিচের অ্যাড কন্টেইনার
+        // 1. টাইটেল + টাইটেলের নিচের অ্যাড (সবসময় থাকবে)
         let content = `<h1 class="article-title">${post.title}</h1><div id="ad-box-title" class="ad-box"></div>`;  
         
-        // 2. প্যারাগ্রাফ লুপ (১ম ও ২য় প্যারাগ্রাফের পর অ্যাড কন্টেইনার)
+        // 2. প্যারাগ্রাফ লজিক
         if(post.paragraphs) { 
+            const pLen = post.paragraphs.length; // মোট প্যারাগ্রাফ সংখ্যা
+
             post.paragraphs.forEach((p, index) => { 
                 content += `<p class="article-para">${p}</p>`; 
-                if (index === 0) content += `<div id="ad-box-p1" class="ad-box"></div>`; // 1st Para Ad
-                if (index === 1) content += `<div id="ad-box-p2" class="ad-box"></div>`; // 2nd Para Ad
+                
+                // শর্ত: যদি প্যারাগ্রাফ ২টি বা তার বেশি হয়, তবে ১ম প্যারাগ্রাফের নিচে অ্যাড বসবে
+                if (index === 0 && pLen >= 2) {
+                    content += `<div id="ad-box-p1" class="ad-box"></div>`;
+                }
+
+                // শর্ত: যদি প্যারাগ্রাফ ৩টি বা তার বেশি হয়, তবে ২য় প্যারাগ্রাফের নিচে অ্যাড বসবে
+                if (index === 1 && pLen >= 3) {
+                    content += `<div id="ad-box-p2" class="ad-box"></div>`;
+                }
             }); 
         }
         
