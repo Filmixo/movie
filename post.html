@@ -23,8 +23,8 @@
     header > div { display: flex; align-items: center; gap: 2px; }
         
     /* --- [স্মার্ট অ্যাড বক্স] --- */
-    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; }
-    .ad-box:not(:empty) { margin: 3px 0; }
+    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; overflow: hidden; }
+    .ad-box:not(:empty) { margin: 5px 0; }
 
     /* --- ভিডিও প্লেয়ার সেকশন --- */
      .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
@@ -328,8 +328,41 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- অ্যাড ইনজেক্ট ফাংশন ---
-    function injectAd(tid, cid) { const t=document.getElementById(tid), c=document.getElementById(cid); if(t&&c){ c.appendChild(t.content.cloneNode(true)); } }
+    // --- অ্যাড ইনজেক্ট ফাংশন (UPDATED: FIXED LOADING ISSUE) ---
+    // এই ফাংশনটি এখন প্রতিটি অ্যাডকে আলাদা আইফ্রেমের মধ্যে লোড করবে।
+    // ফলে একই কোড বারবার ব্যবহার করলেও কোনো কনফ্লিক্ট হবে না এবং সব অ্যাড দেখা যাবে।
+    function injectAd(tid, cid) {
+        const t = document.getElementById(tid);
+        const c = document.getElementById(cid);
+        if (t && c) {
+            c.innerHTML = ''; // Clear container
+            const iframe = document.createElement('iframe');
+            iframe.style.width = '100%';
+            iframe.style.border = 'none';
+            iframe.style.overflow = 'hidden';
+            iframe.style.display = 'block';
+            
+            // ডিফল্ট হাইট সেট করা হচ্ছে, তবে টেমপ্লেট থেকে হাইট ডিটেক্ট করার চেষ্টা করা হবে
+            let h = 60; // Default
+            if(t.innerHTML.includes('height : 50')) h = 50;
+            iframe.style.height = h + 'px';
+            
+            c.appendChild(iframe);
+            
+            // আইফ্রেমের ভেতরে কোড লেখা হচ্ছে যাতে গ্লোবাল ভেরিয়েবল কনফ্লিক্ট না করে
+            const content = `
+                <html>
+                <body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;">
+                    ${t.innerHTML}
+                </body>
+                </html>
+            `;
+            
+            iframe.contentWindow.document.open();
+            iframe.contentWindow.document.write(content);
+            iframe.contentWindow.document.close();
+        }
+    }
       
     // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
