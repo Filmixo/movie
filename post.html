@@ -15,7 +15,7 @@
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- তোমার বর্তমান কোড --- */
+    /* --- হেডার --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
     .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
@@ -23,9 +23,8 @@
     header > div { display: flex; align-items: center; gap: 2px; }
         
     /* --- [স্মার্ট অ্যাড বক্স] --- */
-    /* অ্যাড না থাকলে হাইট ০ থাকবে, অ্যাড আসলে অটোমেটিক জায়গা নিবে */
     .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; }
-    .ad-box:not(:empty) { margin: 3px 0; } /* অ্যাড লোড হলেই কেবল মার্জিন পাবে */
+    .ad-box:not(:empty) { margin: 3px 0; }
 
     /* --- ভিডিও প্লেয়ার সেকশন --- */
      .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
@@ -57,15 +56,14 @@
     .article-title { font-size: 18px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-bottom: 10px; text-align: left; letter-spacing: -0.3px; }  
 
-    /* --- ডাউনলোড সেকশন --- */  
+    /* --- ডাউনলোড সেকশন (MODIFIED) --- */  
     .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 15px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
-    .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: column; gap: 12px; }  
-    .download-btn-v2 { display: flex; align-items: center; justify-content: center; width: 100%; padding: 14px 10px; border-radius: 8px; font-weight: bold; font-size: 15px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; position: relative; }  
+    /* ফ্লেক্স-ডাইরেকশন row করা হয়েছে যাতে বাটনগুলো এক লাইনে থাকে */
+    .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; gap: 6px; justify-content: space-between; }  
+    /* বাটন স্টাইল আপডেট */
+    .download-btn-v2 { display: flex; align-items: center; justify-content: center; flex: 1; padding: 10px 2px; border-radius: 8px; font-weight: bold; font-size: 11px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; position: relative; white-space: nowrap; }  
     .download-btn-v2:active { transform: scale(0.98); }  
-    .download-btn-v2.completed-step { cursor: default; pointer-events: none; box-shadow: none; }
-    .final-download-btn { display: none; background: linear-gradient(135deg, #1e1e2f, #3a3a5e, #1e1e2f) !important; color: #FFD700 !important; border: 2px solid #FFD700; text-transform: uppercase; letter-spacing: 1px; font-weight: 900; font-size: 16px; animation: luxuryGlow 2s infinite alternate; margin-top: 10px; }
-    .final-download-btn:active { transform: scale(0.98); }
-    @keyframes luxuryGlow { 0% { box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); transform: scale(1); } 100% { box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); transform: scale(1.02); } }
+    .download-btn-v2 i { margin-right: 4px; }
 
     /* --- স্ট্যাটস ও শেয়ার --- */  
     .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; font-size: 15px; color: #536471; font-weight: 500; }  
@@ -201,7 +199,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";  
     import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";  
   
-    const MIN_VISIT_TIME_MS = 5000; 
     const PERMANENT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg";  
     const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };  
     const app = initializeApp(firebaseConfig);  
@@ -212,53 +209,10 @@
     
     const urlParams = new URLSearchParams(window.location.search);  
     const postId = urlParams.get('id');  
-    const PENDING_CLICK_BTN_KEY = `pending_click_btn_${postId}`;
-    const CLICK_TIME_KEY = `click_time_${postId}`;
-    const getVisitedKey = (btnId) => `visited_${btnId}_${postId}`;
-    
-    function checkVisitStatus() {
-        const pendingBtn = localStorage.getItem(PENDING_CLICK_BTN_KEY);
-        const clickTime = localStorage.getItem(CLICK_TIME_KEY);
-        if (pendingBtn && clickTime) {
-            const timeSpent = Date.now() - parseInt(clickTime);
-            if (timeSpent >= MIN_VISIT_TIME_MS) { localStorage.setItem(getVisitedKey(pendingBtn), 'true'); } 
-            else { showNotification("Please stay on the new page for at least 10 seconds! ⏳"); }
-            localStorage.removeItem(PENDING_CLICK_BTN_KEY); localStorage.removeItem(CLICK_TIME_KEY);
-        }
-        updateButtonState();
-    }
-
-    window.handleAdClick = function(btnId, url) {
-        if (localStorage.getItem(getVisitedKey(btnId)) === 'true') return; 
-        localStorage.setItem(PENDING_CLICK_BTN_KEY, btnId);
-        localStorage.setItem(CLICK_TIME_KEY, Date.now());
-        window.location.href = url;
-    };
-
-    window.handleFinalDownload = function() {
-        localStorage.removeItem(getVisitedKey('btn-1080'));
-        localStorage.removeItem(getVisitedKey('btn-720'));
-        window.open(`download.html?id=${postId}`, '_blank');
-    };
-
-    function updateButtonState() {
-        const btn1080 = document.getElementById('btn-1080');
-        const btn720 = document.getElementById('btn-720');
-        const finalBtn = document.getElementById('btn-final');
-        let totalRequired = 0; let totalVisited = 0;
-
-        if (btn1080) { totalRequired++; if (localStorage.getItem(getVisitedKey('btn-1080')) === 'true') { totalVisited++; btn1080.innerHTML = '<i class="fa-solid fa-circle-check"></i> Step 1 Successful'; btn1080.classList.add('completed-step'); } }
-        if (btn720) { totalRequired++; if (localStorage.getItem(getVisitedKey('btn-720')) === 'true') { totalVisited++; const stepNum = btn1080 ? "2" : "1"; btn720.innerHTML = `<i class="fa-solid fa-circle-check"></i> Step ${stepNum} Successful`; btn720.classList.add('completed-step'); } }
-
-        if (totalRequired > 0 && totalVisited === totalRequired) { if(finalBtn) { finalBtn.style.display = 'flex'; } } else { if(finalBtn) finalBtn.style.display = 'none'; }
-    }
-
-    window.addEventListener('pageshow', (event) => { checkVisitStatus(); });
 
     const CONFIG = { GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea", TOTAL_RELATED_POSTS: 10, BATCH_SIZE_SCROLL: 5, footer: { about: "#", contact: "#", privacy: "#", terms: "#" } };  
     let availablePosts = []; let currentStartIndex = 0; let observer; let sentinelObserver; let timeElementsToUpdate = [];  
   
-    function getRandomColor() { const c=['#1da1f2','#e0245e','#17bf63']; return c[Math.floor(Math.random()*c.length)]; }   
     function formatCount(n) { if(!n) return 0; return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }  
     function timeAgo(dateString) { const d = new Date(dateString); const seconds = Math.floor((new Date() - d) / 1000); let interval = seconds / 31536000; if (interval > 1) return Math.floor(interval) + "y ago"; interval = seconds / 86400; if (interval > 1) return Math.floor(interval) + "d ago"; interval = seconds / 3600; if (interval > 1) return Math.floor(interval) + "h ago"; interval = seconds / 60; if (interval > 1) return Math.floor(interval) + "m ago"; return "Just now"; }  
     function updateAllTimeElements() { timeElementsToUpdate.forEach(item => { if (item.element && item.element.parentNode) { item.element.innerText = timeAgo(item.dateString); } else { timeElementsToUpdate = timeElementsToUpdate.filter(i => i !== item); } }); }  
@@ -277,15 +231,24 @@
     // --- অ্যাড ইনজেক্ট ফাংশন ---
     function injectAd(tid, cid) { const t=document.getElementById(tid), c=document.getElementById(cid); if(t&&c){ c.appendChild(t.content.cloneNode(true)); } }
       
-    // --- মেইন পোস্ট রেন্ডার ---  
+    // --- মেইন পোস্ট রেন্ডার (লজিক এবং বাটন পরিবর্তন করা হয়েছে) ---  
     function renderMainPost(post) {  
         let content = `<h1 class="article-title">${post.title}</h1>`;  
         if(post.paragraphs) { post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; }); }
         
-        let downloadSectionHTML = '';  
-        if (post.downloadLink2 || post.downloadLink3) {  
-            downloadSectionHTML += `<div class="download-title-text">Download Full Movie in HD</div><div class="download-buttons-container">${post.downloadLink2 ? `<div id="btn-1080" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-1080', '${post.downloadLink2}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i>Download 1080p Full HD</div>` : ''}${post.downloadLink3 ? `<div id="btn-720" class="download-btn-v2" style="background:${getRandomColor()};" onclick="handleAdClick('btn-720', '${post.downloadLink3}')"><i class="fa-solid fa-cloud-arrow-down" style="margin-right: 5px;"></i>Download 720p HD</div>` : ''}<div id="btn-final" class="download-btn-v2 final-download-btn" onclick="handleFinalDownload()"><i class="fa-solid fa-film" style="margin-right: 8px;"></i>Ready to movie Download</div></div>`;  
-        }  
+        // --- এইখানে আপনার লিংকগুলো সেট করুন ---
+        const LINK_1080 = "https://your-link-here.com/1080"; 
+        const LINK_720 = "https://your-link-here.com/720";
+        const LINK_360 = "https://your-link-here.com/360";
+
+        // ফিক্সড ডাউনলোড বাটন সেকশন (যেকোনো পোস্টের জন্য একই লিংক)
+        let downloadSectionHTML = `
+            <div class="download-title-text">Download Full Movie in HD</div>
+            <div class="download-buttons-container">
+                <div class="download-btn-v2" style="background:#17bf63;" onclick="window.location.href='${LINK_1080}'"><i class="fa-solid fa-cloud-arrow-down"></i> 1080p Full HD</div>
+                <div class="download-btn-v2" style="background:#1da1f2;" onclick="window.location.href='${LINK_720}'"><i class="fa-solid fa-cloud-arrow-down"></i> 720p HD</div>
+                <div class="download-btn-v2" style="background:#e0245e;" onclick="window.location.href='${LINK_360}'"><i class="fa-solid fa-cloud-arrow-down"></i> 360p SD</div>
+            </div>`;  
           
         document.getElementById('post-details-container').innerHTML = `  
             <div class="post-author-area">  
@@ -336,7 +299,6 @@
 
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
-        checkVisitStatus();
     }  
   
     async function init() {  
