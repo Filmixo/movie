@@ -151,29 +151,21 @@
 
 <!-- [AD 3: টাইটেলের নিচে] -->
 <template id="ad-src-title">
-<script>atOptions = {'key' : 'caf6ea59dc8711a1d0bfb5ad9dd98638','format' : 'iframe','height' : 90,'width' : 728,'params' : {}};</script>
-<script src="https://prototypesorting.com/caf6ea59dc8711a1d0bfb5ad9dd98638/invoke.js"></script>
+
 </template>
 
 <!-- [AD 4: প্রথম প্যারাগ্রাফের নিচে] -->
 <template id="ad-src-p1">
-    <script>
-  atOptions = {
-    'key' : '54012419216a1778423343e5706cb92e',
-    'format' : 'iframe',
-    'height' : 300,
-    'width' : 160,
-    'params' : {}
-  };
-</script>
-<script src="https://prototypesorting.com/54012419216a1778423343e5706cb92e/invoke.js"></script>
+
 </template>
 
 <!-- [AD 5: দ্বিতীয় প্যারাগ্রাফের নিচে] -->
-<template id="ad-src-p2"><script>atOptions={'key':'fd8120b632b230ae9b293d2eb29be171','format':'iframe','height':50,'width':320,'params':{}};</script><script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script></template>
+<template id="ad-src-p2">
+
+</template>
 
 <!-- [AD 6: এমবেড ভিডিওর নিচে] -->
-<template id="ad-src-video"><
+<template id="ad-src-video">
 <script>
   atOptions = {
     'key' : 'dbae51ad68fb44f5c8a6b535812c9f54',
@@ -272,7 +264,7 @@
         if(post.paragraphs) { post.paragraphs.forEach((p, index) => { content += `<p class="article-para">${p}</p>`; if(index === 0) content += `<div id="ad-box-p1" class="ad-box"></div>`; if(index === 1) content += `<div id="ad-box-p2" class="ad-box"></div>`; }); }
         let youtubeHTML = post.youtubeEmbed ? `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div>` : '';
         let videoAdHTML = `<div id="ad-box-video" class="ad-box"></div>`;
-        let downloadSectionHTML = `<div class="download-title-text">Download Full Movie</div><div class="download-buttons-container"><a href="LINK_FOR_1080_HERE" class="download-btn-v2 btn-1080"><span class="btn-res">1080p</span><span class="btn-tag">FULL HD</span></a><a href="LINK_FOR_720_HERE" class="download-btn-v2 btn-720"><span class="btn-res">720p</span><span class="btn-tag">HD READY</span></a><a href="LINK_FOR_360_HERE" class="download-btn-v2 btn-360"><span class="btn-res">360p</span><span class="btn-tag">MOBILE</span></a></div>`;  
+        let downloadSectionHTML = `<div class="download-title-text">Download Full Movie</div><div class="download-buttons-container"><a href="LINK_FOR_1080_HERE" class="download-btn-v2 btn-1080"><span class="btn-res">1080P</span><span class="btn-tag">FULL HD</span></a><a href="LINK_FOR_720_HERE" class="download-btn-v2 btn-720"><span class="btn-res">720P</span><span class="btn-tag">HD</span></a><a href="LINK_FOR_360_HERE" class="download-btn-v2 btn-360"><span class="btn-res">360P</span><span class="btn-tag">SD</span></a></div>`;  
           
         document.getElementById('post-details-container').innerHTML = `<div class="post-author-area"><div class="author-info"><div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div><div class="author-text"><h3>FILMIXO<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div></div><div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div></div><div id="ad-box-top" class="ad-box"></div><div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="eager" decoding="sync" fetchpriority="high" alt="Movie Thumbnail"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><div class="time-text">${post.videoDuration}</div><div class="prog-bg"><div class="prog-fill"></div></div><div style="display:flex; align-items:center; gap:6px;"><i class="fa-solid fa-volume-high"></i><span class="hd-badge">HD</span></div></div></div><div class="content-body">${content}<div id="ad-box-mid" class="ad-box"></div>${youtubeHTML}${videoAdHTML}${downloadSectionHTML}<div class="stats-section"><div class="stats-left"><div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">0</span> Views</div><div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div></div></div><div class="share-icons"><div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div><div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div><div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div><div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div><div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div></div></div></div>`;  
           
