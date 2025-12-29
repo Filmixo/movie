@@ -8,6 +8,16 @@
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js"></script>
 
     <style>  
+    /* --- [AD GAP CONTROLLER - উপরের এবং নিচের গ্যাপ কন্ট্রোল করুন] --- */
+    /* অ্যাড লোড হলেই কেবল এই গ্যাপ পাবে। লোড না হলে কোনো জায়গা নিবে না। */
+    
+    #ad-box-top.ad-show   { margin-top: 0px; margin-bottom: 0px; } /* 1. Thumbnail এর উপরের অ্যাড */
+    #ad-box-mid.ad-show   { margin-top: 0px; margin-bottom: 0px; } /* 2. Article এর নিচের অ্যাড */
+    #ad-box-title.ad-show { margin-top: 5px; margin-bottom: 0px; } /* 3. টাইটেলের নিচের অ্যাড */
+    #ad-box-p1.ad-show    { margin-top: 0px; margin-bottom: 0px; } /* 4. ১ম প্যারাগ্রাফের নিচের অ্যাড */
+    #ad-box-p2.ad-show    { margin-top: 0px; margin-bottom: 0px; } /* 5. ২য় প্যারাগ্রাফের নিচের অ্যাড */
+    #ad-box-video.ad-show { margin-top: 0px; margin-bottom: 0px; } /* 6. ভিডিওর নিচের অ্যাড (ডাউনলোড সেকশনের উপরে) */
+
     /* --- বেসিক সেটআপ --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }  
@@ -21,10 +31,10 @@
     .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
     header > div { display: flex; align-items: center; gap: 2px; }
         
-    /* --- স্মার্ট অ্যাড বক্স (অটো হাইট) --- */
+    /* --- স্মার্ট অ্যাড বক্স --- */
     .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
-    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; }
-        
+    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
+
     /* --- ভিডিও প্লেয়ার সেকশন --- */
      .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
      .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
@@ -109,7 +119,7 @@
     .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }  
     .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }  
     
-    /* --- ফুটার ও শেয়ার --- */
+    /* --- ফুটার কার্ড ও লিংক --- */
     .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; color: #536471; font-size: 16px; font-weight: 500; }  
     .footer-left { display: flex; align-items: center; gap: 6px; }  
     .footer-right { display: flex; align-items: center; gap: 20px; }  
@@ -144,59 +154,22 @@
 <body>  
 
 <!-- [AD 1: Thumbnail এর উপরে] -->
-<template id="ad-src-top">
-<script>
-  atOptions = {
-    'key' : 'caf6ea59dc8711a1d0bfb5ad9dd98638',
-    'format' : 'iframe',
-    'height' : 90,
-    'width' : 728,
-    'params' : {}
-  };
-</script>
-<script src="https://prototypesorting.com/caf6ea59dc8711a1d0bfb5ad9dd98638/invoke.js"></script>
-</template>
+<template id="ad-src-top"><script>atOptions={'key':'da9154b956691d2aa7c677010e7b6501','format':'iframe','height':60,'width':468,'params':{}};</script><script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script></template>
 
 <!-- [AD 2: Article এর নিচে] -->
 <template id="ad-src-mid"><script async="async" data-cfasync="false" src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script><div id="container-1608cb6a976841a38e804d64801334bb"></div></template>
 
 <!-- [AD 3: টাইটেলের নিচে] -->
-<template id="ad-src-title">
-<script>
-  atOptions = {
-    'key' : 'da9154b956691d2aa7c677010e7b6501',
-    'format' : 'iframe',
-    'height' : 60,
-    'width' : 468,
-    'params' : {}
-  };
-</script>
-<script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
-</template>
+<template id="ad-src-title"><script>atOptions={'key':'fd8120b632b230ae9b293d2eb29be171','format':'iframe','height':50,'width':320,'params':{}};</script><script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script></template>
 
 <!-- [AD 4: প্রথম প্যারাগ্রাফের নিচে] -->
-<template id="ad-src-p1">
-
-</template>
+<template id="ad-src-p1"><script>atOptions={'key':'fd8120b632b230ae9b293d2eb29be171','format':'iframe','height':50,'width':320,'params':{}};</script><script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script></template>
 
 <!-- [AD 5: দ্বিতীয় প্যারাগ্রাফের নিচে] -->
-<template id="ad-src-p2">
-
-</template>
+<template id="ad-src-p2"><script>atOptions={'key':'fd8120b632b230ae9b293d2eb29be171','format':'iframe','height':50,'width':320,'params':{}};</script><script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script></template>
 
 <!-- [AD 6: এমবেড ভিডিওর নিচে] -->
-<template id="ad-src-video">
-<script>
-  atOptions = {
-    'key' : 'dbae51ad68fb44f5c8a6b535812c9f54',
-    'format' : 'iframe',
-    'height' : 250,
-    'width' : 300,
-    'params' : {}
-  };
-</script>
-<script src="https://prototypesorting.com/dbae51ad68fb44f5c8a6b535812c9f54/invoke.js"></script>                
-</template>
+<template id="ad-src-video"><script>atOptions={'key':'fd8120b632b230ae9b293d2eb29be171','format':'iframe','height':50,'width':320,'params':{}};</script><script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script></template>
 
 
 <div class="main-wrapper">  
@@ -264,7 +237,7 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- অ্যাড ইনজেক্ট ফাংশন (Smart Auto-Resize) ---
+    // --- অ্যাড ইনজেক্ট ফাংশন (Smart Auto-Resize + CSS Class) ---
     function injectAd(tid, cid) {
         const t = document.getElementById(tid); const c = document.getElementById(cid);
         if (t && c) {
@@ -272,7 +245,7 @@
             const iframe = document.createElement('iframe');
             iframe.style.width = '100%'; iframe.style.height = '0px'; iframe.style.border = 'none'; iframe.style.overflow = 'hidden'; iframe.style.display = 'block'; iframe.scrolling = 'no'; 
             c.appendChild(iframe);
-            const content = `<html><head><style>body{margin:0;padding:0;overflow:hidden;background:transparent;display:flex;justify-content:center;}img,iframe,div{max-width:100%;}</style></head><body>${t.innerHTML}<script>function resize(){const h=document.body.scrollHeight;if(h>10){if(window.frameElement){window.frameElement.style.height=h+'px';window.frameElement.parentElement.style.height=h+'px';window.frameElement.parentElement.style.marginTop='10px';window.frameElement.parentElement.style.marginBottom='10px';}}}window.onload=resize;setInterval(resize,500);if(window.ResizeObserver){new ResizeObserver(resize).observe(document.body);}<\/script></body></html>`;
+            const content = `<html><head><style>body{margin:0;padding:0;overflow:hidden;background:transparent;display:flex;justify-content:center;}img,iframe,div{max-width:100%;}</style></head><body>${t.innerHTML}<script>function resize(){const h=document.body.scrollHeight;if(h>10){if(window.frameElement){window.frameElement.style.height=h+'px';window.frameElement.parentElement.style.height=h+'px';window.frameElement.parentElement.classList.add('ad-show');}}}window.onload=resize;setInterval(resize,500);if(window.ResizeObserver){new ResizeObserver(resize).observe(document.body);}<\/script></body></html>`;
             const doc = iframe.contentWindow.document; doc.open(); doc.write(content); doc.close();
         }
     }
@@ -284,7 +257,7 @@
         if(post.paragraphs) { post.paragraphs.forEach((p, index) => { content += `<p class="article-para">${p}</p>`; if(index === 0) content += `<div id="ad-box-p1" class="ad-box"></div>`; if(index === 1) content += `<div id="ad-box-p2" class="ad-box"></div>`; }); }
         let youtubeHTML = post.youtubeEmbed ? `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div>` : '';
         let videoAdHTML = `<div id="ad-box-video" class="ad-box"></div>`;
-        let downloadSectionHTML = `<div class="download-title-text">Download Full Movie in HD</div><div class="download-buttons-container"><a href="LINK_FOR_1080_HERE" class="download-btn-v2 btn-1080"><span class="btn-res">1080P</span><span class="btn-tag">FULL HD</span></a><a href="LINK_FOR_720_HERE" class="download-btn-v2 btn-720"><span class="btn-res">720P</span><span class="btn-tag">HD</span></a><a href="LINK_FOR_360_HERE" class="download-btn-v2 btn-360"><span class="btn-res">360P</span><span class="btn-tag">SD</span></a></div>`;  
+        let downloadSectionHTML = `<div class="download-title-text">Download Full Movie</div><div class="download-buttons-container"><a href="LINK_FOR_1080_HERE" class="download-btn-v2 btn-1080"><span class="btn-res">1080p</span><span class="btn-tag">FULL HD</span></a><a href="LINK_FOR_720_HERE" class="download-btn-v2 btn-720"><span class="btn-res">720p</span><span class="btn-tag">HD READY</span></a><a href="LINK_FOR_360_HERE" class="download-btn-v2 btn-360"><span class="btn-res">360p</span><span class="btn-tag">MOBILE</span></a></div>`;  
           
         document.getElementById('post-details-container').innerHTML = `<div class="post-author-area"><div class="author-info"><div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div><div class="author-text"><h3>FILMIXO<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div></div><div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div></div><div id="ad-box-top" class="ad-box"></div><div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="eager" decoding="sync" fetchpriority="high" alt="Movie Thumbnail"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><div class="time-text">${post.videoDuration}</div><div class="prog-bg"><div class="prog-fill"></div></div><div style="display:flex; align-items:center; gap:6px;"><i class="fa-solid fa-volume-high"></i><span class="hd-badge">HD</span></div></div></div><div class="content-body">${content}<div id="ad-box-mid" class="ad-box"></div>${youtubeHTML}${videoAdHTML}${downloadSectionHTML}<div class="stats-section"><div class="stats-left"><div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">0</span> Views</div><div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div></div></div><div class="share-icons"><div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div><div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div><div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div><div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div><div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div></div></div></div>`;  
           
