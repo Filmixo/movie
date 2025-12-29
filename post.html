@@ -9,22 +9,25 @@
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js"></script>
 
     <style>  
-    /* --- বেসিক সেটআপ (আগের মতো) --- */
+    /* --- বেসিক সেটআপ --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }  
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- হেডার (আগের অরিজিনাল কোড) --- */
+    /* --- হেডার --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
     .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
     .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
     header > div { display: flex; align-items: center; gap: 2px; }
         
-    /* --- [স্মার্ট অ্যাড বক্স] --- */
-    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; overflow: hidden; }
-    .ad-box:not(:empty) { margin: 5px 0; }
+    /* --- [স্মার্ট অ্যাড বক্স - অটো সাইজ] --- */
+    /* কোনো হাইট দেওয়া হয়নি, অ্যাড লোড হলে অটোমেটিক জায়গা নিবে */
+    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: height 0.3s ease; overflow: hidden; }
+    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
+    /* অ্যাড কন্টেইনারের গ্যাপ কন্ট্রোল (শুধুমাত্র লোড হলেই গ্যাপ পাবে) */
+    .ad-box:not(:empty) { margin: 10px 0; }
 
     /* --- ভিডিও প্লেয়ার সেকশন --- */
      .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
@@ -56,11 +59,11 @@
     .article-title { font-size: 18px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-bottom: 10px; text-align: left; letter-spacing: -0.3px; }  
 
-    /* --- ইউটিউব এমবেড কন্টেইনার --- */
+    /* --- ইউটিউব এমবেড --- */
     .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 20px; border-radius: 8px; overflow: hidden; background: #000; display: none; }
     .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* --- ডাউনলোড সেকশন --- */  
+    /* --- ডাউনলোড সেকশন (LUXURY STYLE - RESTORED) --- */  
     .download-title-text { 
         font-size: 20px; 
         font-weight: 800; 
@@ -182,7 +185,9 @@
 </head>  
 <body>  
 
-<!-- [AD SECTION: EXISTING 1] Thumbnail এর উপরের অ্যাড -->
+<!-- [AD TEMPLATES] -->
+
+<!-- 1. Thumbnail এর উপরে -->
 <template id="ad-src-top">
     <script>
   atOptions = {
@@ -196,7 +201,7 @@
 <script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION: EXISTING 2] Article এর নিচের অ্যাড -->
+<!-- 2. Article এর একদম নিচে -->
 <template id="ad-src-mid">
     <script
   async="async"
@@ -206,7 +211,7 @@
 <div id="container-1608cb6a976841a38e804d64801334bb"></div>
 </template>
 
-<!-- [AD SECTION: NEW 1] টাইটেলের নিচে -->
+<!-- 3. টাইটেলের নিচে -->
 <template id="ad-src-title">
 <script>
   atOptions = {
@@ -220,7 +225,7 @@
 <script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION: NEW 2] প্রথম প্যারাগ্রাফের নিচে -->
+<!-- 4. প্রথম প্যারাগ্রাফের নিচে -->
 <template id="ad-src-p1">
 <script>
   atOptions = {
@@ -234,7 +239,7 @@
 <script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION: NEW 3] দ্বিতীয় প্যারাগ্রাফের নিচে -->
+<!-- 5. দ্বিতীয় প্যারাগ্রাফের নিচে -->
 <template id="ad-src-p2">
 <script>
   atOptions = {
@@ -248,7 +253,7 @@
 <script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION: NEW 4] এমবেড ভিডিওর নিচে (ডাউনলোড সেকশনের উপরে) -->
+<!-- 6. এমবেড ভিডিওর নিচে (ডাউনলোড সেকশনের উপরে) -->
 <template id="ad-src-video">
 <script>
   atOptions = {
@@ -328,74 +333,100 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- অ্যাড ইনজেক্ট ফাংশন (UPDATED: FIXED LOADING ISSUE) ---
-    // এই ফাংশনটি এখন প্রতিটি অ্যাডকে আলাদা আইফ্রেমের মধ্যে লোড করবে।
-    // ফলে একই কোড বারবার ব্যবহার করলেও কোনো কনফ্লিক্ট হবে না এবং সব অ্যাড দেখা যাবে।
+    // --- অ্যাড ইনজেক্ট ফাংশন (Smart Auto-Resizing) ---
+    // এই ফাংশনটি প্রতিটি অ্যাডের জন্য একটি আলাদা জগত তৈরি করে (Iframe),
+    // কিন্তু ভেতরে একটি ছোট্ট স্ক্রিপ্ট ঢুকিয়ে দেয় যা অ্যাডের সাইজ মাপে 
+    // এবং বাইরের কন্টেইনারকে বলে দেয় "আমার হাইট এত, তুমি বড় হও"।
+    // ফলে অ্যাডের অরিজিনাল সাইজ যাই হোক, সে সেই সাইজেই দেখাবে।
     function injectAd(tid, cid) {
         const t = document.getElementById(tid);
         const c = document.getElementById(cid);
         if (t && c) {
-            c.innerHTML = ''; // Clear container
+            c.innerHTML = ''; // আগের কন্টেন্ট ক্লিয়ার
             const iframe = document.createElement('iframe');
+            
+            // আইফ্রেমের স্টাইল এমনভাবে দেওয়া হয়েছে যাতে সে প্রথমে চুপচাপ থাকে
+            // এবং ভেতরের কন্টেন্ট অনুযায়ী নিজেকে এডজাস্ট করে।
             iframe.style.width = '100%';
             iframe.style.border = 'none';
             iframe.style.overflow = 'hidden';
             iframe.style.display = 'block';
-            
-            // ডিফল্ট হাইট সেট করা হচ্ছে, তবে টেমপ্লেট থেকে হাইট ডিটেক্ট করার চেষ্টা করা হবে
-            let h = 60; // Default
-            if(t.innerHTML.includes('height : 50')) h = 50;
-            iframe.style.height = h + 'px';
+            iframe.scrolling = 'no'; // স্ক্রলবার বন্ধ
             
             c.appendChild(iframe);
             
-            // আইফ্রেমের ভেতরে কোড লেখা হচ্ছে যাতে গ্লোবাল ভেরিয়েবল কনফ্লিক্ট না করে
+            // আইফ্রেমের ভেতরের কোড। এখানে একটি "ResizeObserver" এবং "window.onload" 
+            // ব্যবহার করা হয়েছে যা কন্টিনুয়াসলি হাইট চেক করে।
             const content = `
                 <html>
-                <body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;">
+                <head>
+                <style>
+                    body { margin:0; padding:0; overflow:hidden; background:transparent; display: flex; justify-content: center; }
+                    /* ইমেজ বা আইফ্রেম যাই আসুক, সে যেন রেস্পন্সিভ থাকে */
+                    img, iframe, div { max-width: 100%; }
+                </style>
+                </head>
+                <body>
                     ${t.innerHTML}
+                    <script>
+                        // এই ফাংশনটি ভেতরের উচ্চতা মেপে বাইরের আইফ্রেমকে বড় করে দেয়
+                        function resize() {
+                            if(window.frameElement) {
+                                const h = document.body.scrollHeight;
+                                // যদি হাইট ০ এর বেশি হয়, তবেই রিসাইজ করবে
+                                if (h > 0) {
+                                    window.frameElement.style.height = h + 'px';
+                                }
+                            }
+                        }
+                        // লোড হওয়ার সাথে সাথে এবং প্রতি ৫০০ মিলিসেকেন্ড পর পর চেক করবে (দেরিতে লোড হওয়া অ্যাডের জন্য)
+                        window.onload = resize;
+                        setInterval(resize, 500); 
+                        
+                        // আধুনিক ব্রাউজারের জন্য লাইভ মনিটরিং
+                        if(window.ResizeObserver) {
+                            new ResizeObserver(resize).observe(document.body);
+                        }
+                    <\/script>
                 </body>
                 </html>
             `;
             
-            iframe.contentWindow.document.open();
-            iframe.contentWindow.document.write(content);
-            iframe.contentWindow.document.close();
+            const doc = iframe.contentWindow.document;
+            doc.open();
+            doc.write(content);
+            doc.close();
         }
     }
       
     // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
         
-        // 1. Title
         let content = `<h1 class="article-title">${post.title}</h1>`;  
         
-        // NEW AD 1: Below Title
+        // NEW AD 1
         content += `<div id="ad-box-title" class="ad-box"></div>`;
 
-        // 2. Paragraphs with Ads
         if(post.paragraphs) { 
             post.paragraphs.forEach((p, index) => { 
                 content += `<p class="article-para">${p}</p>`; 
                 
-                // NEW AD 2: Below 1st Paragraph (index 0)
+                // NEW AD 2
                 if(index === 0) content += `<div id="ad-box-p1" class="ad-box"></div>`;
                 
-                // NEW AD 3: Below 2nd Paragraph (index 1)
+                // NEW AD 3
                 if(index === 1) content += `<div id="ad-box-p2" class="ad-box"></div>`;
             }); 
         }
         
-        // --- ইউটিউব এমবেড লজিক ---
         let youtubeHTML = '';
         if (post.youtubeEmbed) {
             youtubeHTML = `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div>`;
         }
         
-        // NEW AD 4: Below Embedded Video (Above Download Section)
+        // NEW AD 4
         let videoAdHTML = `<div id="ad-box-video" class="ad-box"></div>`;
 
-        // --- ডাউনলোড সেকশন ---
         let downloadSectionHTML = `
             <div class="download-title-text">Download Full Movie</div>
             <div class="download-buttons-container">
@@ -444,7 +475,7 @@
                 
                 ${youtubeHTML}
                 
-                ${videoAdHTML} <!-- NEW AD 4 Placement -->
+                ${videoAdHTML} 
 
                 ${downloadSectionHTML}   
 
@@ -463,11 +494,9 @@
                 </div>  
             </div>`;  
           
-        // Inject Existing Ads
+        // Inject ALL Ads
         injectAd('ad-src-top', 'ad-box-top'); 
         injectAd('ad-src-mid', 'ad-box-mid');
-
-        // Inject New Ads
         injectAd('ad-src-title', 'ad-box-title');
         injectAd('ad-src-p1', 'ad-box-p1');
         injectAd('ad-src-p2', 'ad-box-p2');
