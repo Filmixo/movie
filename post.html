@@ -26,7 +26,7 @@
     .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; }
     .ad-box:not(:empty) { margin: 3px 0; }
 
-    /* --- ভিডিও প্লেয়ার সেকশন (আগের মতো) --- */
+    /* --- ভিডিও প্লেয়ার সেকশন --- */
      .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
      .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
      .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
@@ -42,7 +42,7 @@
      .video-container.is-loading .video-controls { display: none !important; }
      .video-container.is-loading .play-btn-center { display: none !important; }
 
-    /* --- পোস্ট ডিটেইলস (আগের মতো) --- */  
+    /* --- পোস্ট ডিটেইলস --- */  
     .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
     .author-info { display: flex; align-items: center; gap: 10px; }  
     .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
@@ -51,7 +51,7 @@
     .author-text span { font-size: 12px; color: #1da1f2; display: block; margin-top: -1px; }  
     .post-time { font-size: 14px; color: #536471; font-weight: bold; }  
 
-    /* --- আর্টিকেল ও কন্টেন্ট (আগের মতো) --- */
+    /* --- আর্টিকেল ও কন্টেন্ট --- */
     .content-body { padding: 15px 15px 0 15px; }  
     .article-title { font-size: 18px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-bottom: 10px; text-align: left; letter-spacing: -0.3px; }  
@@ -60,15 +60,15 @@
     .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 20px; border-radius: 8px; overflow: hidden; background: #000; display: none; }
     .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* --- ডাউনলোড সেকশন (MODIFIED as per instruction) --- */  
+    /* --- ডাউনলোড সেকশন --- */  
     .download-title-text { 
         font-size: 20px; 
         font-weight: 800; 
         color: #0f1419; 
-        text-align: center; /* CENTERED */
-        margin: 5px 0 25px 0; /* MORE GAP BELOW */
+        text-align: center; 
+        margin: 5px 0 25px 0; 
         padding: 0 15px; 
-        border-top: 1px solid #e1e8ed; /* TOP BORDER RESTORED */
+        border-top: 1px solid #e1e8ed; 
         padding-top: 15px; 
     }  
 
@@ -81,7 +81,6 @@
         gap: 10px; 
     }  
     
-    /* --- NEW LUXURY BUTTON STYLE (Your Choice) --- */
     .download-btn-v2 { 
         display: flex; 
         flex-direction: column;
@@ -97,25 +96,19 @@
         position: relative;
         overflow: hidden;
         transition: transform 0.1s ease;
-        border: 1px solid rgba(255, 255, 255, 0.15); /* Sharp look */
+        border: 1px solid rgba(255, 255, 255, 0.15); 
     }
 
     .download-btn-v2:active { transform: scale(0.98); }
 
-    /* Typography inside buttons */
     .btn-res { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; line-height: 1; display: block; margin-bottom: 3px; }
     .btn-tag { font-size: 10px; font-weight: 600; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px; display: block; }
     
-    /* 1080p - Red Gradient */
     .btn-1080 { background: linear-gradient(180deg, #D32F2F 0%, #B71C1C 100%); border-bottom: 3px solid #7f0000; }
-    
-    /* 720p - Blue Gradient */
     .btn-720 { background: linear-gradient(180deg, #1976D2 0%, #0D47A1 100%); border-bottom: 3px solid #002171; }
-    
-    /* 360p - Green Gradient */
     .btn-360 { background: linear-gradient(180deg, #388E3C 0%, #1B5E20 100%); border-bottom: 3px solid #003300; }
 
-    /* --- স্ট্যাটস ও শেয়ার (আগের মতো) --- */  
+    /* --- স্ট্যাটস ও শেয়ার --- */  
     .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; font-size: 15px; color: #536471; font-weight: 500; }  
     .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }  
     .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
@@ -126,7 +119,7 @@
     .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: transform 0.2s; user-select: none; }  
     .share-icon:active { transform: scale(0.9); }
 
-    /* --- রিলেটেড পোস্ট কার্ড (আগের মতো) --- */
+    /* --- রিলেটেড পোস্ট কার্ড --- */
     .related-header { padding: 13px; font-weight: 900; color: #000000; border-top: 2px solid #cfd9de; border-bottom: 2px solid #e1e8ed; text-transform: uppercase; }  
     .post-card { padding: 5px 15px 5px 15px; border-bottom: 1.5px solid #e1e8ed; display: flex; flex-direction: column; gap: 6px; }  
     .post-title, .post-excerpt { cursor: pointer; user-select: none; transition: color 0.1s ease; }
@@ -155,7 +148,7 @@
     .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }  
     .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }  
     
-    /* --- ফুটার কার্ড ও লিংক (আগের মতো) --- */
+    /* --- ফুটার কার্ড ও লিংক --- */
     .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; color: #536471; font-size: 16px; font-weight: 500; }  
     .footer-left { display: flex; align-items: center; gap: 6px; }  
     .footer-right { display: flex; align-items: center; gap: 20px; }  
@@ -177,7 +170,7 @@
     .footer-copyright { color: #536471; font-size: 13px; }  
     .footer-copyright a { color: #1da1f2; font-weight: bold; }
     
-    /* --- নোটিফিকেশন (আগের মতো) --- */
+    /* --- নোটিফিকেশন --- */
     .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 8px 15px; border-radius: 20px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 500; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; width: auto; max-width: 90%; white-space: nowrap; }  
     .notification.show { opacity: 1; }  
     #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }  
@@ -189,7 +182,7 @@
 </head>  
 <body>  
 
-<!-- [AD SECTION 1] -->
+<!-- [AD SECTION: EXISTING 1] Thumbnail এর উপরের অ্যাড -->
 <template id="ad-src-top">
     <script>
   atOptions = {
@@ -203,7 +196,7 @@
 <script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 2] -->
+<!-- [AD SECTION: EXISTING 2] Article এর নিচের অ্যাড -->
 <template id="ad-src-mid">
     <script
   async="async"
@@ -211,6 +204,62 @@
   src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"
 ></script>
 <div id="container-1608cb6a976841a38e804d64801334bb"></div>
+</template>
+
+<!-- [AD SECTION: NEW 1] টাইটেলের নিচে -->
+<template id="ad-src-title">
+<script>
+  atOptions = {
+    'key' : 'fd8120b632b230ae9b293d2eb29be171',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script>
+</template>
+
+<!-- [AD SECTION: NEW 2] প্রথম প্যারাগ্রাফের নিচে -->
+<template id="ad-src-p1">
+<script>
+  atOptions = {
+    'key' : 'fd8120b632b230ae9b293d2eb29be171',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script>
+</template>
+
+<!-- [AD SECTION: NEW 3] দ্বিতীয় প্যারাগ্রাফের নিচে -->
+<template id="ad-src-p2">
+<script>
+  atOptions = {
+    'key' : 'fd8120b632b230ae9b293d2eb29be171',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script>
+</template>
+
+<!-- [AD SECTION: NEW 4] এমবেড ভিডিওর নিচে (ডাউনলোড সেকশনের উপরে) -->
+<template id="ad-src-video">
+<script>
+  atOptions = {
+    'key' : 'fd8120b632b230ae9b293d2eb29be171',
+    'format' : 'iframe',
+    'height' : 50,
+    'width' : 320,
+    'params' : {}
+  };
+</script>
+<script src="https://prototypesorting.com/fd8120b632b230ae9b293d2eb29be171/invoke.js"></script>
 </template>
 
 
@@ -284,16 +333,36 @@
       
     // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
+        
+        // 1. Title
         let content = `<h1 class="article-title">${post.title}</h1>`;  
-        if(post.paragraphs) { post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; }); }
+        
+        // NEW AD 1: Below Title
+        content += `<div id="ad-box-title" class="ad-box"></div>`;
+
+        // 2. Paragraphs with Ads
+        if(post.paragraphs) { 
+            post.paragraphs.forEach((p, index) => { 
+                content += `<p class="article-para">${p}</p>`; 
+                
+                // NEW AD 2: Below 1st Paragraph (index 0)
+                if(index === 0) content += `<div id="ad-box-p1" class="ad-box"></div>`;
+                
+                // NEW AD 3: Below 2nd Paragraph (index 1)
+                if(index === 1) content += `<div id="ad-box-p2" class="ad-box"></div>`;
+            }); 
+        }
         
         // --- ইউটিউব এমবেড লজিক ---
         let youtubeHTML = '';
         if (post.youtubeEmbed) {
             youtubeHTML = `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div>`;
         }
+        
+        // NEW AD 4: Below Embedded Video (Above Download Section)
+        let videoAdHTML = `<div id="ad-box-video" class="ad-box"></div>`;
 
-        // --- ডাউনলোড সেকশন (RESTORED ALIGNMENT & BORDER) ---
+        // --- ডাউনলোড সেকশন ---
         let downloadSectionHTML = `
             <div class="download-title-text">Download Full Movie</div>
             <div class="download-buttons-container">
@@ -341,6 +410,9 @@
                 <div id="ad-box-mid" class="ad-box"></div>
                 
                 ${youtubeHTML}
+                
+                ${videoAdHTML} <!-- NEW AD 4 Placement -->
+
                 ${downloadSectionHTML}   
 
                 <div class="stats-section">  
@@ -358,8 +430,15 @@
                 </div>  
             </div>`;  
           
+        // Inject Existing Ads
         injectAd('ad-src-top', 'ad-box-top'); 
         injectAd('ad-src-mid', 'ad-box-mid');
+
+        // Inject New Ads
+        injectAd('ad-src-title', 'ad-box-title');
+        injectAd('ad-src-p1', 'ad-box-p1');
+        injectAd('ad-src-p2', 'ad-box-p2');
+        injectAd('ad-src-video', 'ad-box-video');
 
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
