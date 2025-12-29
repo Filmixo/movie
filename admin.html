@@ -3,42 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Admin - Post Generator</title>
+    <title>Filmixo Admin - Smart Ad Link Generator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root{--primary:#1da1f2;--primary-hover:#0c85d0;--dark:#1f2937;--light-bg:#f3f4f6;--border:#e5e7eb}
-        body{font-family:'Inter',sans-serif;background:var(--light-bg);padding:30px 15px;color:var(--dark);min-height:100vh}
-        .container{max-width:800px;margin:0 auto;background:white;padding:35px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.05);border:1px solid white}
-        h2{text-align:center;color:var(--dark);margin-bottom:25px;font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px}
-        h2 i{color:var(--primary)}
-        .form-row{display:grid;grid-template-columns:2fr 1fr;gap:15px;margin-bottom:15px}
-        .form-group{margin-bottom:15px}
-        label{display:block;margin-bottom:6px;font-weight:600;font-size:13px;color:#4b5563;text-transform:uppercase;letter-spacing:0.5px}
-        input,textarea{width:100%;padding:12px 15px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:#fff;color:#111;transition:all .2s ease;box-sizing:border-box}
-        input:focus,textarea:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px rgba(29,161,242,.15)}
-        textarea{height:100px;resize:vertical;line-height:1.5}
-        
-        /* YouTube Section Style */
-        .youtube-section{background:#fff0f0;border:1px solid #ffcaca;padding:15px;border-radius:8px;margin-bottom:15px}
-        .youtube-section label{color:#d32f2f}
-        .youtube-section textarea{height:60px;border-color:#ffcaca}
-        .youtube-section textarea:focus{border-color:#ff0000;box-shadow:0 0 0 3px rgba(255, 0, 0, 0.1)}
-
-        .generate-btn{width:100%;padding:14px;background:var(--primary);color:white;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;margin-top:10px;transition:all .2s ease;display:flex;justify-content:center;align-items:center;gap:8px}
-        .generate-btn:hover{background:var(--primary-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(29,161,242,.25)}
-        .generate-btn:active{transform:scale(.99)}
-        .output-box{margin-top:25px;display:none;position:relative;background:#1e1e1e;border-radius:8px;overflow:hidden;border:1px solid #333}
-        pre{color:#a5d6ff;padding:20px;font-family:'Consolas',monospace;font-size:13px;white-space:pre-wrap;margin:0;max-height:300px;overflow-y:auto;line-height:1.4}
-        .copy-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.15);color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:.2s;display:flex;align-items:center;gap:5px}
-        .copy-btn:hover{background:rgba(255,255,255,.3)}
-        @media (max-width:768px){.form-row{grid-template-columns:1fr;gap:10px}.container{padding:20px}}
+        :root{--primary:#1da1f2;--primary-hover:#0c85d0;--dark:#1f2937;--light-bg:#f3f4f6;--border:#e5e7eb}body{font-family:'Inter',sans-serif;background:var(--light-bg);padding:30px 15px;color:var(--dark);min-height:100vh}.container{max-width:900px;margin:0 auto;background:white;padding:35px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.05);border:1px solid white}h2{text-align:center;color:var(--dark);margin-bottom:25px;font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px}h2 i{color:var(--primary)}.form-row{display:grid;grid-template-columns:2fr 1fr;gap:15px;margin-bottom:15px}.form-group{margin-bottom:15px}label{display:block;margin-bottom:6px;font-weight:600;font-size:13px;color:#4b5563;text-transform:uppercase;letter-spacing:0.5px}input,textarea{width:100%;padding:12px 15px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:#fff;color:#111;transition:all .2s ease;box-sizing:border-box}input:focus,textarea:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px rgba(29,161,242,.15)}textarea{height:100px;resize:vertical;line-height:1.5}.generate-btn{width:100%;padding:14px;background:var(--primary);color:white;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;margin-top:25px;transition:all .2s ease;display:flex;justify-content:center;align-items:center;gap:8px}.generate-btn:hover{background:var(--primary-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(29,161,242,.25)}.generate-btn:active{transform:scale(.99)}.output-box{margin-top:25px;display:none;position:relative;background:#1e1e1e;border-radius:8px;overflow:hidden;border:1px solid #333}pre{color:#a5d6ff;padding:20px;font-family:'Consolas',monospace;font-size:13px;white-space:pre-wrap;margin:0;max-height:300px;overflow-y:auto;line-height:1.4}.copy-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.15);color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:.2s;display:flex;align-items:center;gap:5px}.copy-btn:hover{background:rgba(255,255,255,.3)}@media (max-width:768px){.form-row,.links-grid{grid-template-columns:1fr;gap:10px}.container{padding:20px}}
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2><i class="fa-solid fa-clapperboard"></i> JSON Generator</h2>
+    <h2><i class="fa-solid fa-file-code"></i> Smart JSON Generator</h2>
     
     <div class="form-group">
         <label>Post Title</label>
@@ -57,9 +32,9 @@
     </div>
 
     <!-- YouTube Embed Section (NEW) -->
-    <div class="youtube-section">
-        <label><i class="fa-brands fa-youtube"></i> YouTube Embed Code (Optional)</label>
-        <textarea id="youtubeEmbed" placeholder='Paste your iframe code here. Example: <iframe width="560" height="315"...></iframe>'></textarea>
+    <div class="form-group">
+        <label style="color: #ff0000;"><i class="fa-brands fa-youtube"></i> YouTube Embed Code (Optional)</label>
+        <textarea id="youtubeEmbed" style="height: 80px;" placeholder='Paste iframe code here (e.g., <iframe...>) if needed. If empty, it will be ignored.'></textarea>
     </div>
 
     <div class="form-group">
@@ -70,7 +45,7 @@
     <input type="hidden" id="generatedId">
     
     <button class="generate-btn" onclick="generateJSON()">
-        <i class="fa-solid fa-code"></i> Generate JSON Code
+        <i class="fa-solid fa-bolt"></i> Generate JSON Code
     </button>
 
     <div class="output-box" id="output-area">
@@ -85,11 +60,10 @@
     });
 
     function setupDefaults() {
-        // Random ID Generation
         const id = 'post-' + Math.random().toString(36).substr(2, 6);
         document.getElementById('generatedId').value = id;
         
-        // Random Duration: 1h 50m (6600s) to 2h 30m (9000s)
+        // Random Duration logic remains same
         const minSeconds = 6600;
         const maxSeconds = 9000;
         const totalSec = Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;
@@ -107,21 +81,21 @@
         const title = document.getElementById('title').value.trim();
         const media = document.getElementById('media').value.trim();
         const duration = document.getElementById('duration').value.trim();
-        const youtubeCode = document.getElementById('youtubeEmbed').value.trim(); // YouTube Input
+        const youtubeCode = document.getElementById('youtubeEmbed').value.trim(); // YouTube Input Captured
         const paraRaw = document.getElementById('paragraphs').value.trim();
         
         const paragraphs = paraRaw ? paraRaw.split('\n').filter(line => line.trim() !== '') : [];
         const date = new Date();
         const uploadTime = date.toISOString();
 
-        // Construct JSON Object (NO download links included)
+        // New JSON Structure without Link Logic
         const postData = {
             id: id,
             uploadTime: uploadTime,
             title: title,
             mediaImage: media,
             videoDuration: duration,
-            youtubeEmbed: youtubeCode, // Added new logic
+            youtubeEmbed: youtubeCode, // Added here
             paragraphs: paragraphs,
             hashtags: "#filmixo #viralfilm #trendingmovie #blockbuster #popular"
         };
@@ -130,7 +104,7 @@
         document.getElementById('json-output').innerText = jsonString.trim() + ",";
         document.getElementById('output-area').style.display = 'block';
         
-        // Setup for next post (New ID)
+        // Reset defaults for next generation
         setupDefaults();
     }
 
