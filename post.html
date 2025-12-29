@@ -9,82 +9,79 @@
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js"></script>
 
     <style>  
-    /* --- বেসিক সেটআপ --- */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; text-decoration: none; }  
-    body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; background: #f4f6f8; }  
-    .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #e1e4e8; border-right: 1px solid #e1e4e8; padding-bottom: 0; opacity: 0; }  
+    /* --- বেসিক সেটআপ (আগের মতো) --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
+    body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }  
+    .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- হেডার --- */
-    header { background: #1da1f2; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }  
-    .logo-area { font-weight: 900; font-size: 22px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; letter-spacing: 0.5px; }  
-    .header-btn { background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); color: white; padding: 6px 14px; border-radius: 6px; font-weight: 600; font-size: 12px; margin-left: 5px; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.3); }  
-    .header-btn:active { transform: scale(0.95); background: rgba(255,255,255,0.3); }
+    /* --- হেডার (আগের অরিজিনাল কোড) --- */
+    header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
+    .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
+    .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
+    .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
     header > div { display: flex; align-items: center; gap: 2px; }
         
     /* --- [স্মার্ট অ্যাড বক্স] --- */
     .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; }
     .ad-box:not(:empty) { margin: 3px 0; }
 
-    /* --- ভিডিও প্লেয়ার সেকশন --- */
-     .video-container { position: relative; width: 94%; margin: 10px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; border-radius: 8px; }
-     .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; display: block; will-change: transform; transition: all 0.3s ease; }
-     .play-btn-center { position: absolute; width: 55px; height: 55px; background: rgba(0,0,0,0.5); border-radius: 50%; border: 2px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; backdrop-filter: blur(3px); }
-     .play-btn-center::after { content: ''; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }
-     .main-video-spinner { display: none; position: absolute; width: 40px; height: 40px; border: 4px solid rgba(255, 255, 255, 0.3); border-top: 4px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
-     .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; height: 35px; padding: 0 12px; display: flex; align-items: center; gap: 10px; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); z-index: 10; color: white; font-size: 11px; }
+    /* --- ভিডিও প্লেয়ার সেকশন (আগের মতো) --- */
+     .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
+     .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
+     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
+     .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
+     .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
+     .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; height: 35px; padding: 0 10px; display: flex; align-items: center; gap: 10px; background: rgba(0, 0, 0, 0.5); z-index: 10; color: white; font-size: 11px; }
      .time-text { font-weight: 600; white-space: nowrap; }
-     .prog-bg { flex-grow: 1; height: 3px; background: rgba(255, 255, 255, 0.4); border-radius: 4px; }
-     .prog-fill { width: 1.5%; height: 100%; background: #1da1f2; border-radius: 4px; }
-     .video-controls i { font-size: 12px; }
-     .hd-badge { background: white; color: #000; padding: 1px 4px; border-radius: 2px; font-size: 9px; font-weight: 800; }
+     .prog-bg { flex-grow: 1; height: 6px; background: rgba(255, 255, 255, 0.5); border-radius: 4px; }
+     .prog-fill { width: 1.5%; height: 100%; background: #ff0000; border-radius: 4px; }
+     .video-controls i { font-size: 13px; }
+     .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 900; }
      .video-container.is-loading img { filter: brightness(0.6); opacity: 0.7; }
      .video-container.is-loading .video-controls { display: none !important; }
      .video-container.is-loading .play-btn-center { display: none !important; }
 
-    /* --- পোস্ট ডিটেইলস --- */  
-    .post-author-area { padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #f0f2f5; }  
+    /* --- পোস্ট ডিটেইলস (আগের মতো) --- */  
+    .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
     .author-info { display: flex; align-items: center; gap: 10px; }  
-    .pfp { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; background: #f0f2f5; }  
+    .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
     .pfp img { width: 100%; height: 100%; object-fit: cover; }  
-    .author-text h3 { font-size: 16px; margin: 0; color: #0f1419; display: inline-flex; align-items: center; gap: 4px; font-weight: 700; }  
-    .author-text span { font-size: 13px; color: #536471; display: block; }  
-    .post-time { font-size: 13px; color: #536471; font-weight: 500; }  
+    .author-text h3 { font-size: 18px; margin: 0; color: #0f1419; display: inline-flex; align-items: center; gap: 5px; }  
+    .author-text span { font-size: 12px; color: #1da1f2; display: block; margin-top: -1px; }  
+    .post-time { font-size: 14px; color: #536471; font-weight: bold; }  
 
-    /* --- আর্টিকেল ও কন্টেন্ট --- */
+    /* --- আর্টিকেল ও কন্টেন্ট (আগের মতো) --- */
     .content-body { padding: 15px 15px 0 15px; }  
-    .article-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; color: #0f1419; line-height: 1.35; }  
-    .article-para { font-size: 15px; line-height: 1.5; color: #333; margin-bottom: 10px; text-align: left; }  
+    .article-title { font-size: 18px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
+    .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-bottom: 10px; text-align: left; letter-spacing: -0.3px; }  
 
     /* --- ইউটিউব এমবেড কন্টেইনার --- */
     .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 20px; border-radius: 8px; overflow: hidden; background: #000; display: none; }
     .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* --- ডাউনলোড সেকশন (ULTRA PREMIUM FLAT DESIGN - NO SHADOW) --- */  
+    /* --- ডাউনলোড সেকশন (MODIFIED as per instruction) --- */  
     .download-title-text { 
-        font-size: 16px; 
+        font-size: 20px; 
         font-weight: 800; 
-        color: #1f2937; 
-        text-align: left; 
-        margin: 20px 0 12px 0; 
-        text-transform: uppercase; 
-        letter-spacing: 0.5px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
+        color: #0f1419; 
+        text-align: center; /* CENTERED */
+        margin: 5px 0 25px 0; /* MORE GAP BELOW */
+        padding: 0 15px; 
+        border-top: 1px solid #e1e8ed; /* TOP BORDER RESTORED */
+        padding-top: 15px; 
     }  
-    .download-title-text i { color: #1da1f2; }
 
     .download-buttons-container { 
-        padding: 0; 
-        margin-bottom: 25px; 
+        padding: 0 15px; 
+        margin-bottom: 20px; 
         display: flex; 
         flex-direction: row; 
         justify-content: space-between; 
         gap: 10px; 
     }  
     
-    /* Clean, Sharp, Professional Button Base */
+    /* --- NEW LUXURY BUTTON STYLE (Your Choice) --- */
     .download-btn-v2 { 
         display: flex; 
         flex-direction: column;
@@ -92,110 +89,99 @@
         justify-content: center; 
         flex: 1; 
         padding: 12px 5px; 
-        border-radius: 6px; /* Slightly sharp corners for professional look */
+        border-radius: 6px; 
         text-align: center; 
         color: white; 
         cursor: pointer; 
         text-decoration: none; 
         position: relative;
         overflow: hidden;
-        transition: transform 0.1s ease, filter 0.2s ease;
-        /* Key: No shadow, but a subtle border for definition */
-        border: 1px solid rgba(255, 255, 255, 0.15);
+        transition: transform 0.1s ease;
+        border: 1px solid rgba(255, 255, 255, 0.15); /* Sharp look */
     }
 
-    .download-btn-v2:active { transform: scale(0.98); filter: brightness(0.9); }
+    .download-btn-v2:active { transform: scale(0.98); }
 
     /* Typography inside buttons */
     .btn-res { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; line-height: 1; display: block; margin-bottom: 3px; }
     .btn-tag { font-size: 10px; font-weight: 600; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px; display: block; }
     
-    /* 1080p - Deep Crimson (Professional Red) */
-    .btn-1080 {
-        background: linear-gradient(180deg, #D32F2F 0%, #B71C1C 100%);
-        border-bottom: 3px solid #7f0000; /* Physical depth without shadow blur */
-    }
+    /* 1080p - Red Gradient */
+    .btn-1080 { background: linear-gradient(180deg, #D32F2F 0%, #B71C1C 100%); border-bottom: 3px solid #7f0000; }
     
-    /* 720p - Royal Blue (Professional Blue) */
-    .btn-720 {
-        background: linear-gradient(180deg, #1976D2 0%, #0D47A1 100%);
-        border-bottom: 3px solid #002171;
-    }
+    /* 720p - Blue Gradient */
+    .btn-720 { background: linear-gradient(180deg, #1976D2 0%, #0D47A1 100%); border-bottom: 3px solid #002171; }
     
-    /* 360p - Forest Green (Professional Green) */
-    .btn-360 {
-        background: linear-gradient(180deg, #388E3C 0%, #1B5E20 100%);
-        border-bottom: 3px solid #003300;
-    }
+    /* 360p - Green Gradient */
+    .btn-360 { background: linear-gradient(180deg, #388E3C 0%, #1B5E20 100%); border-bottom: 3px solid #003300; }
 
-    /* Subtle Shine Overlay for "New/Clean" look */
-    .download-btn-v2::before {
-        content: '';
-        position: absolute;
-        top: 0; left: 0; width: 100%; height: 50%;
-        background: linear-gradient(to bottom, rgba(255,255,255,0.1), transparent);
-        pointer-events: none;
-    }
-
-    /* --- স্ট্যাটস ও শেয়ার --- */  
-    .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; font-size: 14px; color: #536471; font-weight: 500; }  
-    .stats-left { display: flex; align-items: center; gap: 15px; flex-grow: 1; overflow: hidden; }  
-    .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 600; }  
+    /* --- স্ট্যাটস ও শেয়ার (আগের মতো) --- */  
+    .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; font-size: 15px; color: #536471; font-weight: 500; }  
+    .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }  
+    .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
     .like-stat-container { flex: 1 1 auto; display: flex; justify-content: center; }  
-    .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 600; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; }  
-    .love-btn.liked { color: #e0245e; background: rgba(224, 36, 94, 0.05); } .love-btn.liked i { font-weight: 900; }  
+    .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; }  
+    .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
     .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }  
-    .share-icon { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: opacity 0.2s; user-select: none; }  
-    .share-icon:active { opacity: 0.8; }
+    .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: transform 0.2s; user-select: none; }  
+    .share-icon:active { transform: scale(0.9); }
 
-    /* --- রিলেটেড পোস্ট কার্ড --- */
-    .related-header { padding: 12px 15px; font-weight: 800; color: #0f1419; border-top: 1px solid #e1e8ed; border-bottom: 1px solid #e1e8ed; text-transform: uppercase; font-size: 14px; background: #fafafa; }  
-    .post-card { padding: 12px 15px; border-bottom: 1px solid #eff3f4; display: flex; flex-direction: column; gap: 8px; background: white; }  
-    .post-title:active, .post-excerpt:active { color: #1da1f2; } 
+    /* --- রিলেটেড পোস্ট কার্ড (আগের মতো) --- */
+    .related-header { padding: 13px; font-weight: 900; color: #000000; border-top: 2px solid #cfd9de; border-bottom: 2px solid #e1e8ed; text-transform: uppercase; }  
+    .post-card { padding: 5px 15px 5px 15px; border-bottom: 1.5px solid #e1e8ed; display: flex; flex-direction: column; gap: 6px; }  
+    .post-title, .post-excerpt { cursor: pointer; user-select: none; transition: color 0.1s ease; }
+    .post-title:active { color: #1da1f2; } 
+    .post-excerpt:active { color: #1da1f2; } 
     .media-container img { width: 100%; height: 100%; object-fit: cover; margin: 0 auto; max-height: none; transition: transform 0.1s ease; }
-    .media-container:active img { transform: scale(1.01); }
-    .post-header { display: flex; gap: 10px; align-items: center; margin-bottom: 2px; }  
-    .post-pfp { width: 38px; height: 38px; border-radius: 50%; overflow: hidden; background: #ddd; }  
+    .media-container:active img { transform: scale(1.02); }
+    .post-header { display: flex; gap: 10px; align-items: center; }  
+    .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
     .post-pfp img { width: 100%; height: 100%; object-fit: cover; }  
     .post-meta-text { display: flex; flex-direction: column; justify-content: center; }  
-    .name-row { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }   
-    .name-row h3 { font-size: 15px; font-weight: 700; color: #0f1419; margin: 0; display: inline-flex; align-items: center; gap: 3px; }  
-    .post-username { font-size: 13px; color: #536471; margin-top: 0; }  
-    .verified-badge { color: #1da1f2; font-size: 14px; margin-left: -2px; display: inline-flex; align-items: center; }  
-    .time-ago { font-size: 13px; color: #536471; }  
-    .dot-separator { font-size: 13px; color: #536471; margin: 0 2px; }  
-    .post-title { font-size: 16px; font-weight: 700; color: #0f1419; margin-bottom: 2px; line-height: 1.3; }  
-    .post-excerpt { font-size: 14px; color: #536471; line-height: 1.4; margin-bottom: 0px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }  
-    .read-more-text { color: #1da1f2; font-weight: 600; font-size: 13px; }  
-    .hashtags { color: #1d9bf0; font-size: 13px; margin-bottom: 4px; cursor: default; }  
-    .media-container { position: relative; width: 100%; border-radius: 8px; overflow: hidden; margin-top: 4px; margin-bottom: 4px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; border: 1px solid rgba(0,0,0,0.05); }  
+    .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }   
+    .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; display: inline-flex; align-items: center; gap: 5px; }  
+    .post-username { font-size: 14px; color: #1da1f2; margin-top: 0; }  
+    .verified-badge { color: #1da1f2; font-size: 15px; margin-left: -2px; margin-right: 0; display: inline-flex; align-items: center; }  
+    .time-ago { font-size: 15px; color: #536471; }  
+    .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }  
+    .post-title { font-size: 18px; font-weight: 700; color: #0f1419; margin-bottom: 4px; margin-top: -3px; line-height: 1.3; }  
+    .post-excerpt { font-size: 15px; color: #0f1419; line-height: 1.4; margin-bottom: 0px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }  
+    .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }  
+    .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 1px; cursor: default; }  
+    .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 1px; margin-bottom: 1px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; -webkit-tap-highlight-color: transparent; }  
     .media-container.auto-fit { aspect-ratio: initial; height: auto; }  
     .media-container.auto-fit img { height: auto; object-fit: contain; }  
-    .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 45px; height: 45px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }  
-    .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 14px solid white; border-top: 9px solid transparent; border-bottom: 9px solid transparent; margin-left: 3px; }  
-    .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: bold; pointer-events: none; z-index: 5; }  
+    .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }  
+    .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }  
+    .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }  
     
-    /* --- ফুটার --- */
-    .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; color: #536471; font-size: 14px; font-weight: 500; }  
+    /* --- ফুটার কার্ড ও লিংক (আগের মতো) --- */
+    .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; color: #536471; font-size: 16px; font-weight: 500; }  
     .footer-left { display: flex; align-items: center; gap: 6px; }  
-    .footer-right { display: flex; align-items: center; gap: 15px; }  
-    .love-btn-rel { cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; user-select: none; font-weight: 600; }  
-    .love-btn-rel:hover { color: #e0245e; }  
-    .love-btn-rel.liked { color: #e0245e !important; }  
-    .footer-share-btn { cursor: pointer; padding: 6px; border-radius: 50%; display: flex; align-items: center; justify-content: center; user-select: none; transition: background 0.2s; }  
+    .footer-right { display: flex; align-items: center; gap: 20px; }  
+    .count-text { font-weight: 500; font-size: 15px; } 
+    .label-text { font-weight: 500; font-size: 15px; }
+    .love-btn-rel { cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; user-select: none; font-weight: 500; font-size: 15px; }  
+    .love-btn-rel i { font-size: 18px; } 
+    .love-btn-rel:hover { color: #e0245e; background-color: rgba(224, 36, 94, 0.1); padding: 4px 8px; border-radius: 15px; margin: -4px -8px; }  
+    .love-btn-rel.liked { color: #e0245e !important; } .love-btn-rel.liked i { font-weight: 900; }  
+    .post-date-display { font-size: 14px; color: #65676b; font-weight: 500; }
+    .footer-share-btn i { font-size: 16px; color: #536471; transition: color 0.1s ease; }
+    .footer-share-btn:active i { color: #1da1f2; }
+    .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; user-select: none; }  
     .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }  
-    .site-footer { padding: 30px 20px; text-align: center; border-top: none; background: white; margin-top: 10px; }  
-    .footer-links { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 15px; }  
-    .footer-links a { color: #536471; font-size: 13px; font-weight: 500; transition: color 0.2s; }  
+    .site-footer { padding: 20px 20px; text-align: center; border-top: none; }  
+    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
+    .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; user-select: none; }  
     .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
-    .footer-copyright { color: #536471; font-size: 12px; }  
+    .footer-copyright { color: #536471; font-size: 13px; }  
     .footer-copyright a { color: #1da1f2; font-weight: bold; }
     
-    /* --- নোটিফিকেশন --- */
-    .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(31, 41, 55, 0.95); color: white; padding: 10px 20px; border-radius: 30px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 500; font-size: 13px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); text-align: center; white-space: nowrap; }  
+    /* --- নোটিফিকেশন (আগের মতো) --- */
+    .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 8px 15px; border-radius: 20px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 500; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; width: auto; max-width: 90%; white-space: nowrap; }  
     .notification.show { opacity: 1; }  
     #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }  
-    .load-more-spinner { width: 24px; height: 24px; border: 2px solid #e1e4e8; border-top: 2px solid #1da1f2; border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }  
+    .load-more-spinner { width: 24px; height: 24px; border: 3px solid #ccc; border-top: 3px solid #1da1f2; border-radius: 50%; animation: spin 1s linear infinite; display: none; }  
     #sentinel.loading .load-more-spinner { display: block; }  
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }  
 </style>
@@ -307,9 +293,9 @@
             youtubeHTML = `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div>`;
         }
 
-        // --- ডাউনলোড সেকশন (ULTRA PRO - FLAT & SHARP) ---
+        // --- ডাউনলোড সেকশন (RESTORED ALIGNMENT & BORDER) ---
         let downloadSectionHTML = `
-            <div class="download-title-text"><i class="fa-solid fa-download"></i> Download Quality</div>
+            <div class="download-title-text">Download Full Movie</div>
             <div class="download-buttons-container">
                 <a href="LINK_FOR_1080_HERE" class="download-btn-v2 btn-1080">
                     <span class="btn-res">1080p</span>
