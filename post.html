@@ -15,30 +15,21 @@
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- [AD CONTROLLERS - ৫টি এডের আলাদা গ্যাপ কন্ট্রোলার] --- */
-    /* নোট: এখানে কোনো height দেওয়া হয়নি, যাতে অ্যাড তার অরিজিনাল সাইজ পায় */
+    /* --- [SMART AD BOX] --- */
+    /* অ্যাড লোড না হলে জায়গা দখল করবে না (display: none) */
+    .ad-box { width: 100%; display: block; text-align: center; background: transparent; min-height: 0; padding: 0; margin: 0; }
+    .ad-box:empty { display: none !important; margin: 0 !important; height: 0 !important; }
     
-    /* ১. ইমেজ কন্টেইনারের উপরের অ্যাড */
-    #ad-box-top { margin-top: 5px; margin-bottom: 5px; } 
+    /* অ্যাড লোড হলে গ্যাপ কন্ট্রোল (Margin) */
+    /* প্রতিটি সেকশনের জন্য আলাদা কন্ট্রোলার */
+    #ad-box-top { margin: 5px 0; }
+    #ad-box-title { margin: 10px 0; }
+    #ad-box-p1 { margin: 10px 0; }
+    #ad-box-p2 { margin: 10px 0; }
+    #ad-box-mid { margin: 15px 0; }
 
-    /* ২. টাইটেলের নিচের অ্যাড */
-    #ad-box-title { margin-top: 10px; margin-bottom: 10px; }
-
-    /* ৩. ১ম প্যারাগ্রাফের নিচের অ্যাড */
-    #ad-box-p1 { margin-top: 10px; margin-bottom: 10px; }
-
-    /* ৪. ২য় প্যারাগ্রাফের নিচের অ্যাড */
-    #ad-box-p2 { margin-top: 10px; margin-bottom: 10px; }
-
-    /* ৫. ডাউনলোড সেকশনের উপরের অ্যাড (আর্টিকেলের শেষে) */
-    #ad-box-mid { margin-top: 15px; margin-bottom: 5px; }
-
-    /* কমন অ্যাড স্টাইল (হাত দেবেন না) */
-    /* অ্যাড লোড না হলে জায়গা দখল করবে না */
-    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; background: transparent; min-height: 0; }
-    .ad-box:empty { display: none !important; margin: 0 !important; padding: 0 !important; }
-    /* আইফ্রেম যাতে কন্টেইনারের বাইরে না যায় */
-    .ad-box iframe { max-width: 100%; display: block; border: none; overflow: hidden; }
+    /* আইফ্রেম স্টাইল (ফুল উইডথ এবং বর্ডারলেস) */
+    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; }
 
     /* --- হেডার --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
@@ -285,52 +276,69 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- 🔥 UPDATED: Auto-Resizing Iframe Injection ---
+    // --- 🔥 FIX: Ultimate Ad Injector with Auto-Height Detection ---
     function injectAd(tid, cid) {
         const t = document.getElementById(tid);
         const c = document.getElementById(cid);
         if (!t || !c) return;
 
-        c.innerHTML = ""; 
+        c.innerHTML = ""; // Clear existing content
 
+        // ১. টেম্পলেট থেকে কোড নেওয়া
+        const rawCode = t.innerHTML;
+
+        // ২. হাইট ডিটেকশন (যদি কোডে নির্দিষ্ট height থাকে, সেটা ধরবে)
+        let detectedHeight = null;
+        const match = rawCode.match(/'height'\s*:\s*(\d+)/);
+        if (match && match[1]) {
+            detectedHeight = match[1] + 'px';
+        }
+
+        // ৩. আইফ্রেম তৈরি (কনফ্লিক্ট এড়াতে)
         const iframe = document.createElement('iframe');
         iframe.style.width = '100%';
         iframe.style.border = 'none';
         iframe.style.overflow = 'hidden';
         iframe.scrolling = "no";
+        iframe.style.display = 'block';
         
-        // Initial height check only for placeholder, actual resize happens via script
-        iframe.style.height = '0px'; 
+        // ৪. হাইট সেট করা (ফিক্সড হাইট থাকলে সেটা, না থাকলে অটো রিসাইজ)
+        if (detectedHeight) {
+            iframe.style.height = detectedHeight;
+        } else {
+            iframe.style.height = '0px'; // ইনিশিয়াল হাইট
+        }
 
         c.appendChild(iframe);
 
+        // ৫. আইফ্রেমের ভেতরে কোড লেখা এবং অটো রিসাইজার স্ক্রিপ্ট যোগ করা
         const doc = iframe.contentWindow.document;
         doc.open();
-        // The script inside the iframe will auto-resize the iframe based on content height
-        doc.write(`
-            <html>
-            <head>
-                <style>
-                    body { margin:0; padding:0; display:flex; justify-content:center; align-items:center; background:transparent; overflow:hidden; }
-                </style>
-            </head>
-            <body>
-                ${t.innerHTML}
-                <script>
-                    function resize() {
-                        const height = document.body.scrollHeight;
-                        if(height > 0) {
-                            window.frameElement.style.height = height + 'px';
-                        }
+        
+        // --- IMPORTANT: Internal script to force resize for Native Ads ---
+        const resizeScript = `
+            <script>
+                function autoResize() {
+                    var body = document.body;
+                    var html = document.documentElement;
+                    var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+                    if (height > 0) {
+                        window.frameElement.style.height = height + 'px';
                     }
-                    // Resize on load and after short delay for async ads
-                    window.onload = resize;
-                    setTimeout(resize, 1000);
-                    setTimeout(resize, 3000);
-                <\/script>
-            </body>
-            </html>
-        `);
+                }
+                // চেক করবে বারবার যাতে অ্যাড লোড হওয়ার সাথে সাথে বড় হয়
+                setInterval(autoResize, 200);
+                window.onload = autoResize;
+            <\/script>
+        `;
+
+        // Body style margin 0 to prevent scrollbars
+        doc.write('<html><head><style>body{margin:0;padding:0;overflow:hidden;background:transparent;text-align:center;}</style></head><body>');
+        doc.write(rawCode); // আসল অ্যাড কোড
+        if (!detectedHeight) {
+            doc.write(resizeScript); // শুধু নেটিভ অ্যাডের জন্য রিসাইজার চলবে
+        }
+        doc.write('</body></html>');
         doc.close();
     }
       
