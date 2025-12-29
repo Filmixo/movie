@@ -15,20 +15,21 @@
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- [SMART AD BOX] --- */
-    /* অ্যাড লোড না হলে জায়গা দখল করবে না (display: none) */
-    .ad-box { width: 100%; display: block; text-align: center; background: transparent; min-height: 0; padding: 0; margin: 0; }
-    .ad-box:empty { display: none !important; margin: 0 !important; height: 0 !important; }
+    /* --- [SMART AD BOX - FIX] --- */
+    /* ডিফল্টভাবে অ্যাড বক্স হাইড থাকবে, যাতে লোড না হলে ফাঁকা জায়গা না দেখায় */
+    .ad-box { display: none; width: 100%; justify-content: center; align-items: center; background: transparent; padding: 0; border: none; }
     
-    /* অ্যাড লোড হলে গ্যাপ কন্ট্রোল (Margin) */
-    /* প্রতিটি সেকশনের জন্য আলাদা কন্ট্রোলার */
-    #ad-box-top { margin: 5px 0; }
-    #ad-box-title { margin: 10px 0; }
-    #ad-box-p1 { margin: 10px 0; }
-    #ad-box-p2 { margin: 10px 0; }
-    #ad-box-mid { margin: 15px 0; }
+    /* যখন অ্যাড লোড হবে, তখন জাভাস্ক্রিপ্ট এই ক্লাস যোগ করবে */
+    .ad-box.loaded { display: flex; }
 
-    /* আইফ্রেম স্টাইল (ফুল উইডথ এবং বর্ডারলেস) */
+    /* গ্যাপ কন্ট্রোলার (শুধুমাত্র যখন অ্যাড দৃশ্যমান হবে তখনই অ্যাপ্লাই হবে) */
+    #ad-box-top.loaded { margin: 5px 0; }
+    #ad-box-title.loaded { margin: 10px 0; }
+    #ad-box-p1.loaded { margin: 10px 0; }
+    #ad-box-p2.loaded { margin: 10px 0; }
+    #ad-box-mid.loaded { margin: 15px 0; }
+
+    /* আইফ্রেম স্টাইল */
     .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; }
 
     /* --- হেডার --- */
@@ -276,68 +277,49 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- 🔥 FIX: Ultimate Ad Injector with Auto-Height Detection ---
+    // --- 🔥 UPDATED INJECT AD LOGIC (ZERO LAYOUT SHIFT + INSTANT LOAD) ---
     function injectAd(tid, cid) {
         const t = document.getElementById(tid);
         const c = document.getElementById(cid);
         if (!t || !c) return;
 
-        c.innerHTML = ""; // Clear existing content
+        c.innerHTML = ""; 
+        c.style.display = "none"; // Hide parent container initially to prevent white space
 
-        // ১. টেম্পলেট থেকে কোড নেওয়া
-        const rawCode = t.innerHTML;
-
-        // ২. হাইট ডিটেকশন (যদি কোডে নির্দিষ্ট height থাকে, সেটা ধরবে)
-        let detectedHeight = null;
-        const match = rawCode.match(/'height'\s*:\s*(\d+)/);
-        if (match && match[1]) {
-            detectedHeight = match[1] + 'px';
-        }
-
-        // ৩. আইফ্রেম তৈরি (কনফ্লিক্ট এড়াতে)
         const iframe = document.createElement('iframe');
         iframe.style.width = '100%';
         iframe.style.border = 'none';
         iframe.style.overflow = 'hidden';
         iframe.scrolling = "no";
-        iframe.style.display = 'block';
-        
-        // ৪. হাইট সেট করা (ফিক্সড হাইট থাকলে সেটা, না থাকলে অটো রিসাইজ)
-        if (detectedHeight) {
-            iframe.style.height = detectedHeight;
-        } else {
-            iframe.style.height = '0px'; // ইনিশিয়াল হাইট
-        }
+        iframe.style.height = '0px'; // Start with 0 height
 
         c.appendChild(iframe);
 
-        // ৫. আইফ্রেমের ভেতরে কোড লেখা এবং অটো রিসাইজার স্ক্রিপ্ট যোগ করা
         const doc = iframe.contentWindow.document;
         doc.open();
         
-        // --- IMPORTANT: Internal script to force resize for Native Ads ---
-        const resizeScript = `
+        // This script inside the iframe calculates height and shows the parent container ONLY when ready
+        const magicScript = `
             <script>
-                function autoResize() {
+                function checkSize() {
                     var body = document.body;
                     var html = document.documentElement;
                     var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-                    if (height > 0) {
+                    
+                    if (height > 10) { // If ad content is present (height > 10px)
                         window.frameElement.style.height = height + 'px';
+                        window.frameElement.parentElement.classList.add('loaded'); // Show the parent
                     }
                 }
-                // চেক করবে বারবার যাতে অ্যাড লোড হওয়ার সাথে সাথে বড় হয়
-                setInterval(autoResize, 200);
-                window.onload = autoResize;
+                // Run immediately and on load
+                window.onload = checkSize;
+                setInterval(checkSize, 100); // Check repeatedly for fast response
             <\/script>
         `;
 
-        // Body style margin 0 to prevent scrollbars
-        doc.write('<html><head><style>body{margin:0;padding:0;overflow:hidden;background:transparent;text-align:center;}</style></head><body>');
-        doc.write(rawCode); // আসল অ্যাড কোড
-        if (!detectedHeight) {
-            doc.write(resizeScript); // শুধু নেটিভ অ্যাডের জন্য রিসাইজার চলবে
-        }
+        doc.write('<html><head><style>body{margin:0;padding:0;background:transparent;text-align:center;overflow:hidden;}</style></head><body>');
+        doc.write(t.innerHTML); 
+        doc.write(magicScript);
         doc.write('</body></html>');
         doc.close();
     }
