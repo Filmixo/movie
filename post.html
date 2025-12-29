@@ -4,7 +4,9 @@
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">  
     <title>FILMIXO movie watch & Download</title>  
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">  
+    <link rel="preconnect" href="https://prototypesorting.com">
+    <link rel="dns-prefetch" href="https://prototypesorting.com">
+
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js"></script>
 
     <style>  
@@ -247,16 +249,19 @@
 
     // --- অ্যাড ইনজেক্ট ফাংশন (Smart Auto-Resize) ---
     function injectAd(tid, cid) {
-        const t = document.getElementById(tid); const c = document.getElementById(cid);
-        if (t && c) {
-            c.innerHTML = ''; 
-            const iframe = document.createElement('iframe');
-            iframe.style.width = '100%'; iframe.style.height = '0px'; iframe.style.border = 'none'; iframe.style.overflow = 'hidden'; iframe.style.display = 'block'; iframe.scrolling = 'no'; 
-            c.appendChild(iframe);
-            const content = `<html><head><style>body{margin:0;padding:0;overflow:hidden;background:transparent;display:flex;justify-content:center;}img,iframe,div{max-width:100%;}</style></head><body>${t.innerHTML}<script>function resize(){const h=document.body.scrollHeight;if(h>10){if(window.frameElement){const adM='4px';window.frameElement.style.height=h+'px';window.frameElement.parentElement.style.height=h+'px';window.frameElement.parentElement.style.marginTop=adM;window.frameElement.parentElement.style.marginBottom=adM;}}}window.onload=resize;setInterval(resize,500);if(window.ResizeObserver){new ResizeObserver(resize).observe(document.body);}<\/script></body></html>`;
-            const doc = iframe.contentWindow.document; doc.open(); doc.write(content); doc.close();
-        }
-    }
+    const t = document.getElementById(tid); const c = document.getElementById(cid);
+    if (!t || !c) return;
+    const adM = '4px';
+    const content = `<html><head><style>body{margin:0;padding:0;overflow:hidden;background:transparent;display:flex;justify-content:center;}img,iframe,div{max-width:100%;}</style></head><body>${t.innerHTML}<script>function resize(){const h=document.body.scrollHeight;if(h>10 && window.frameElement){window.frameElement.style.height=h+'px';window.frameElement.parentElement.style.height=h+'px';window.frameElement.parentElement.style.marginTop='${adM}';window.frameElement.parentElement.style.marginBottom='${adM}';}}window.onload=resize;setInterval(resize,600);<\/script></body></html>`;
+    
+    requestAnimationFrame(() => {
+        c.innerHTML = '';
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%'; iframe.style.height = '1px'; iframe.style.border = 'none'; iframe.style.display = 'block'; iframe.scrolling = 'no';
+        c.appendChild(iframe);
+        const doc = iframe.contentWindow.document; doc.open(); doc.write(content); doc.close();
+    });
+}
       
     // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
@@ -269,7 +274,10 @@
           
         document.getElementById('post-details-container').innerHTML = `<div class="post-author-area"><div class="author-info"><div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div><div class="author-text"><h3>FILMIXO<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div></div><div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div></div><div id="ad-box-top" class="ad-box"></div><div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="eager" decoding="sync" fetchpriority="high" alt="Movie Thumbnail"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><div class="time-text">${post.videoDuration}</div><div class="prog-bg"><div class="prog-fill"></div></div><div style="display:flex; align-items:center; gap:6px;"><i class="fa-solid fa-volume-high"></i><span class="hd-badge">HD</span></div></div></div><div class="content-body">${content}<div id="ad-box-mid" class="ad-box"></div>${youtubeHTML}${videoAdHTML}${downloadSectionHTML}<div class="stats-section"><div class="stats-left"><div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">0</span> Views</div><div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div></div></div><div class="share-icons"><div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div><div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div><div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div><div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div><div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div></div></div></div>`;  
           
-        injectAd('ad-src-top', 'ad-box-top'); injectAd('ad-src-mid', 'ad-box-mid'); injectAd('ad-src-title', 'ad-box-title'); injectAd('ad-src-p1', 'ad-box-p1'); injectAd('ad-src-p2', 'ad-box-p2-left'); injectAd('ad-src-p2', 'ad-box-p2-right'); injectAd('ad-src-video', 'ad-box-video');
+        setTimeout(() => { injectAd('ad-src-top', 'ad-box-top'); injectAd('ad-src-title', 'ad-box-title'); }, 50);
+        setTimeout(() => { injectAd('ad-src-p1', 'ad-box-p1'); injectAd('ad-src-p2', 'ad-box-p2-left'); injectAd('ad-src-p2', 'ad-box-p2-right'); }, 150);
+        setTimeout(() => { injectAd('ad-src-mid', 'ad-box-mid'); injectAd('ad-src-video', 'ad-box-video'); }, 300);
+
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
     }  
