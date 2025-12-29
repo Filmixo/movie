@@ -15,22 +15,22 @@
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- [SMART AD BOX - FIX] --- */
-    /* ডিফল্টভাবে অ্যাড বক্স হাইড থাকবে, যাতে লোড না হলে ফাঁকা জায়গা না দেখায় */
-    .ad-box { display: none; width: 100%; justify-content: center; align-items: center; background: transparent; padding: 0; border: none; }
+    /* --- [SMART AD SYSTEM] --- */
+    /* অ্যাড কন্টেইনার ডিফল্টভাবে হাইড থাকবে (No White Space) */
+    .ad-container { display: none; width: 100%; margin: 0; padding: 0; border: none; background: transparent; transition: height 0.2s ease; }
     
-    /* যখন অ্যাড লোড হবে, তখন জাভাস্ক্রিপ্ট এই ক্লাস যোগ করবে */
-    .ad-box.loaded { display: flex; }
+    /* যখন অ্যাড লোড হবে তখন এই ক্লাসটি যুক্ত হবে */
+    .ad-container.visible { display: block; }
 
-    /* গ্যাপ কন্ট্রোলার (শুধুমাত্র যখন অ্যাড দৃশ্যমান হবে তখনই অ্যাপ্লাই হবে) */
-    #ad-box-top.loaded { margin: 5px 0; }
-    #ad-box-title.loaded { margin: 10px 0; }
-    #ad-box-p1.loaded { margin: 10px 0; }
-    #ad-box-p2.loaded { margin: 10px 0; }
-    #ad-box-mid.loaded { margin: 15px 0; }
+    /* ৫টি অ্যাডের আলাদা গ্যাপ কন্ট্রোলার (মার্জিন) */
+    #ad-pos-top.visible { margin: 5px 0; }
+    #ad-pos-title.visible { margin: 10px 0; }
+    #ad-pos-p1.visible { margin: 10px 0; }
+    #ad-pos-p2.visible { margin: 10px 0; }
+    #ad-pos-mid.visible { margin: 15px 0; }
 
     /* আইফ্রেম স্টাইল */
-    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; }
+    .ad-container iframe { width: 100%; border: none; overflow: hidden; display: block; margin: 0 auto; }
 
     /* --- হেডার --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
@@ -146,70 +146,66 @@
 </head>  
 <body>  
 
-<!-- [AD SECTION 1] Thumbnail এর উপরের অ্যাড -->
+<!-- [AD SECTION 1] Top Ad (Example 468x60) -->
 <template id="ad-src-top">
-    <script>
-  atOptions = {
-    'key' : 'da9154b956691d2aa7c677010e7b6501',
-    'format' : 'iframe',
-    'height' : 60,
-    'width' : 468,
-    'params' : {}
-  };
-</script>
-<script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript">
+        atOptions = {
+            'key' : 'da9154b956691d2aa7c677010e7b6501',
+            'format' : 'iframe',
+            'height' : 60,
+            'width' : 468,
+            'params' : {}
+        };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 2] Article এর নিচের অ্যাড (Native Banner) -->
+<!-- [AD SECTION 2] Native/Mid Ad (Example) -->
 <template id="ad-src-mid">
-    <script
-  async="async"
-  data-cfasync="false"
-  src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"
-></script>
-<div id="container-1608cb6a976841a38e804d64801334bb"></div>
+    <script async="async" data-cfasync="false" src="//pl25679905.profitablecpmrate.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script>
+    <div id="container-1608cb6a976841a38e804d64801334bb"></div>
 </template>
 
-<!-- [AD SECTION 3] Title এর নিচের অ্যাড -->
+<!-- [AD SECTION 3] Title Ad -->
 <template id="ad-src-title">
-    <script>
-  atOptions = {
-    'key' : 'da9154b956691d2aa7c677010e7b6501',
-    'format' : 'iframe',
-    'height' : 60,
-    'width' : 468,
-    'params' : {}
-  };
-</script>
-<script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript">
+        atOptions = {
+            'key' : 'da9154b956691d2aa7c677010e7b6501',
+            'format' : 'iframe',
+            'height' : 60,
+            'width' : 468,
+            'params' : {}
+        };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 4] 1st Paragraph এর নিচের অ্যাড -->
+<!-- [AD SECTION 4] P1 Ad -->
 <template id="ad-src-p1">
-    <script>
-  atOptions = {
-    'key' : 'da9154b956691d2aa7c677010e7b6501',
-    'format' : 'iframe',
-    'height' : 60,
-    'width' : 468,
-    'params' : {}
-  };
-</script>
-<script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript">
+        atOptions = {
+            'key' : 'da9154b956691d2aa7c677010e7b6501',
+            'format' : 'iframe',
+            'height' : 60,
+            'width' : 468,
+            'params' : {}
+        };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 5] 2nd Paragraph এর নিচের অ্যাড -->
+<!-- [AD SECTION 5] P2 Ad -->
 <template id="ad-src-p2">
-    <script>
-  atOptions = {
-    'key' : 'da9154b956691d2aa7c677010e7b6501',
-    'format' : 'iframe',
-    'height' : 60,
-    'width' : 468,
-    'params' : {}
-  };
-</script>
-<script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript">
+        atOptions = {
+            'key' : 'da9154b956691d2aa7c677010e7b6501',
+            'format' : 'iframe',
+            'height' : 60,
+            'width' : 468,
+            'params' : {}
+        };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
 
@@ -277,63 +273,67 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- 🔥 UPDATED INJECT AD LOGIC (ZERO LAYOUT SHIFT + INSTANT LOAD) ---
+    // --- 🔥 ROBUST AD INJECTION (Instant & Resizable) ---
     function injectAd(tid, cid) {
         const t = document.getElementById(tid);
         const c = document.getElementById(cid);
         if (!t || !c) return;
 
         c.innerHTML = ""; 
-        c.style.display = "none"; // Hide parent container initially to prevent white space
+        c.classList.remove('visible'); // Ensure hidden initially
 
+        // Create a dedicated Iframe for isolation
         const iframe = document.createElement('iframe');
         iframe.style.width = '100%';
         iframe.style.border = 'none';
         iframe.style.overflow = 'hidden';
         iframe.scrolling = "no";
-        iframe.style.height = '0px'; // Start with 0 height
+        iframe.style.height = '0px'; // Start invisible
 
         c.appendChild(iframe);
 
         const doc = iframe.contentWindow.document;
         doc.open();
         
-        // This script inside the iframe calculates height and shows the parent container ONLY when ready
-        const magicScript = `
+        // This script runs INSIDE the iframe to auto-resize it based on the ad content
+        const resizerScript = `
             <script>
-                function checkSize() {
-                    var body = document.body;
-                    var html = document.documentElement;
-                    var height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
+                function resize() {
+                    const body = document.body;
+                    const html = document.documentElement;
+                    // Calculate exact content height
+                    const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
                     
-                    if (height > 10) { // If ad content is present (height > 10px)
+                    if (height > 10) { // If ad has loaded (height > 10px)
+                        // Resize iframe from inside
                         window.frameElement.style.height = height + 'px';
-                        window.frameElement.parentElement.classList.add('loaded'); // Show the parent
+                        // Tell parent to show the container (removes white space)
+                        window.frameElement.parentElement.classList.add('visible');
                     }
                 }
-                // Run immediately and on load
-                window.onload = checkSize;
-                setInterval(checkSize, 100); // Check repeatedly for fast response
+                // Run aggressively to ensure instant load
+                window.onload = resize;
+                setInterval(resize, 200); // Check repeatedly for dynamic/native ads
             <\/script>
         `;
 
         doc.write('<html><head><style>body{margin:0;padding:0;background:transparent;text-align:center;overflow:hidden;}</style></head><body>');
-        doc.write(t.innerHTML); 
-        doc.write(magicScript);
+        doc.write(t.innerHTML); // The actual Ad Code
+        doc.write(resizerScript);
         doc.write('</body></html>');
         doc.close();
     }
       
     // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
-        let content = `<h1 class="article-title">${post.title}</h1><div id="ad-box-title" class="ad-box"></div>`;  
+        let content = `<h1 class="article-title">${post.title}</h1><div id="ad-pos-title" class="ad-container"></div>`;  
         
         if(post.paragraphs) { 
             const pLen = post.paragraphs.length; 
             post.paragraphs.forEach((p, index) => { 
                 content += `<p class="article-para">${p}</p>`; 
-                if (index === 0 && pLen >= 2) { content += `<div id="ad-box-p1" class="ad-box"></div>`; }
-                if (index === 1 && pLen >= 3) { content += `<div id="ad-box-p2" class="ad-box"></div>`; }
+                if (index === 0 && pLen >= 2) { content += `<div id="ad-pos-p1" class="ad-container"></div>`; }
+                if (index === 1 && pLen >= 3) { content += `<div id="ad-pos-p2" class="ad-container"></div>`; }
             }); 
         }
         
@@ -358,7 +358,7 @@
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
             
-            <div id="ad-box-top" class="ad-box"></div>
+            <div id="ad-pos-top" class="ad-container"></div>
 
            <div class="video-container" onclick="handleVideoClick()">
                 <img src="${post.mediaImage}" loading="eager" decoding="sync" fetchpriority="high" alt="Movie Thumbnail">
@@ -376,7 +376,7 @@
 
             <div class="content-body">  
                 ${content} 
-                <div id="ad-box-mid" class="ad-box"></div>
+                <div id="ad-pos-mid" class="ad-container"></div>
                 ${downloadSectionHTML}   
                 <div class="stats-section">  
                     <div class="stats-left">  
@@ -393,11 +393,12 @@
                 </div>  
             </div>`;  
         
-        injectAd('ad-src-top', 'ad-box-top');      
-        injectAd('ad-src-mid', 'ad-box-mid');      
-        injectAd('ad-src-title', 'ad-box-title');  
-        injectAd('ad-src-p1', 'ad-box-p1');        
-        injectAd('ad-src-p2', 'ad-box-p2');        
+        // --- INJECT ADS INTO CONTAINERS ---
+        injectAd('ad-src-top', 'ad-pos-top');      
+        injectAd('ad-src-mid', 'ad-pos-mid');      
+        injectAd('ad-src-title', 'ad-pos-title');  
+        injectAd('ad-src-p1', 'ad-pos-p1');        
+        injectAd('ad-src-p2', 'ad-pos-p2');        
 
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
