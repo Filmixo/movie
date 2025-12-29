@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -254,7 +253,7 @@
             const iframe = document.createElement('iframe');
             iframe.style.width = '100%'; iframe.style.height = '0px'; iframe.style.border = 'none'; iframe.style.overflow = 'hidden'; iframe.style.display = 'block'; iframe.scrolling = 'no'; 
             c.appendChild(iframe);
-            const content = `<html><head><style>body{margin:0;padding:0;overflow:hidden;background:transparent;display:flex;justify-content:center;}img,iframe,div{max-width:100%;}</style></head><body>${t.innerHTML}<script>function resize(){const h=document.body.scrollHeight;if(h>10){if(window.frameElement){const adMargin='0px';window.frameElement.style.height=h+'px';window.frameElement.parentElement.style.height=h+'px';window.frameElement.parentElement.style.marginTop=adMargin;window.frameElement.parentElement.style.marginBottom=adMargin;}}}window.onload=resize;setInterval(resize,500);if(window.ResizeObserver){new ResizeObserver(resize).observe(document.body);}<\/script></body></html>`;
+            const content = `<html><head><style>body{margin:0;padding:0;overflow:hidden;background:transparent;display:flex;justify-content:center;}img,iframe,div{max-width:100%;}</style></head><body>${t.innerHTML}<script>function resize(){const h=document.body.scrollHeight;if(h>10){if(window.frameElement){const adM='4px';window.frameElement.style.height=h+'px';window.frameElement.parentElement.style.height=h+'px';window.frameElement.parentElement.style.marginTop=adM;window.frameElement.parentElement.style.marginBottom=adM;}}}window.onload=resize;setInterval(resize,500);if(window.ResizeObserver){new ResizeObserver(resize).observe(document.body);}<\/script></body></html>`;
             const doc = iframe.contentWindow.document; doc.open(); doc.write(content); doc.close();
         }
     }
