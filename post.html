@@ -22,8 +22,8 @@
     header > div { display: flex; align-items: center; gap: 2px; }
         
     /* --- স্মার্ট অ্যাড বক্স (অটো হাইট) --- */
-    .ad-box { width: 100%; height: auto; overflow: hidden; margin: 0 !important; line-height: 0 !important; font-size: 0 !important; display: block; text-align: center; }
-.ad-box iframe, .ad-box div, .ad-box ins { margin: 0 !important; padding: 0 !important; vertical-align: bottom !important; display: inline-block !important; }
+    .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
+    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; }
         
     /* --- ভিডিও প্লেয়ার সেকশন --- */
      .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
