@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -10,31 +9,36 @@
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js"></script>
 
     <style>  
-    /* --- বেসিক রিসেট --- */
+    /* --- বেসিক সেটআপ --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }  
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- [AD CONTROLLERS - ৫টি এডের আলাদা আলাদা কন্ট্রোল] --- */
+    /* --- [AD CONTROLLERS - ৫টি এডের আলাদা গ্যাপ কন্ট্রোলার] --- */
+    /* নোট: এখানে কোনো height দেওয়া হয়নি, যাতে অ্যাড তার অরিজিনাল সাইজ পায় */
+    
     /* ১. ইমেজ কন্টেইনারের উপরের অ্যাড */
-    #ad-box-top { width: 100%; height: 65px; margin-top: 5px; margin-bottom: 5px; } 
+    #ad-box-top { margin-top: 5px; margin-bottom: 5px; } 
 
     /* ২. টাইটেলের নিচের অ্যাড */
-    #ad-box-title { width: 100%; height: 65px; margin-top: 10px; margin-bottom: 15px; }
+    #ad-box-title { margin-top: 10px; margin-bottom: 10px; }
 
     /* ৩. ১ম প্যারাগ্রাফের নিচের অ্যাড */
-    #ad-box-p1 { width: 100%; height: 65px; margin-top: 10px; margin-bottom: 10px; }
+    #ad-box-p1 { margin-top: 10px; margin-bottom: 10px; }
 
     /* ৪. ২য় প্যারাগ্রাফের নিচের অ্যাড */
-    #ad-box-p2 { width: 100%; height: 65px; margin-top: 10px; margin-bottom: 10px; }
+    #ad-box-p2 { margin-top: 10px; margin-bottom: 10px; }
 
     /* ৫. ডাউনলোড সেকশনের উপরের অ্যাড (আর্টিকেলের শেষে) */
-    #ad-box-mid { width: 100%; height: 65px; margin-top: 15px; margin-bottom: 5px; }
+    #ad-box-mid { margin-top: 15px; margin-bottom: 5px; }
 
-    /* কমন অ্যাড স্টাইল (হাত দেওয়ার দরকার নেই) */
-    .ad-box { display: flex; justify-content: center; align-items: center; overflow: hidden; background: transparent; }
-    .ad-box iframe { width: 100%; height: 100%; border: none; }
+    /* কমন অ্যাড স্টাইল (হাত দেবেন না) */
+    /* অ্যাড লোড না হলে জায়গা দখল করবে না */
+    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; background: transparent; min-height: 0; }
+    .ad-box:empty { display: none !important; margin: 0 !important; padding: 0 !important; }
+    /* আইফ্রেম যাতে কন্টেইনারের বাইরে না যায় */
+    .ad-box iframe { max-width: 100%; display: block; border: none; overflow: hidden; }
 
     /* --- হেডার --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
@@ -59,7 +63,7 @@
      .video-container.is-loading .video-controls { display: none !important; }
      .video-container.is-loading .play-btn-center { display: none !important; }
 
-    /* --- পোস্ট ইনফো --- */  
+    /* --- পোস্ট ডিটেইলস --- */  
     .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
     .author-info { display: flex; align-items: center; gap: 10px; }  
     .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
@@ -68,9 +72,9 @@
     .author-text span { font-size: 12px; color: #1da1f2; display: block; margin-top: -1px; }  
     .post-time { font-size: 14px; color: #536471; font-weight: bold; }  
 
-    /* --- কন্টেন্ট --- */
+    /* --- আর্টিকেল ও কন্টেন্ট --- */
     .content-body { padding: 15px 15px 0 15px; }  
-    .article-title { font-size: 18px; font-weight: 800; margin-bottom: 0px; color: #0f1419; line-height: 1.3; }  
+    .article-title { font-size: 18px; font-weight: 800; margin-bottom: 5px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-bottom: 10px; text-align: left; letter-spacing: -0.3px; }  
 
     /* --- ডাউনলোড সেকশন --- */  
@@ -133,8 +137,6 @@
     .footer-share-btn:active i { color: #1da1f2; }
     .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; user-select: none; }  
     .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }  
-    
-    /* --- ফুটার ও অন্যান্য --- */
     .site-footer { padding: 20px 20px; text-align: center; border-top: none; }  
     .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
     .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; user-select: none; }  
@@ -166,7 +168,7 @@
 <script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 2] Article এর নিচের অ্যাড -->
+<!-- [AD SECTION 2] Article এর নিচের অ্যাড (Native Banner) -->
 <template id="ad-src-mid">
     <script
   async="async"
@@ -283,7 +285,7 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- 🔥 FIX: Iframe Injection + Centering + Full Height ---
+    // --- 🔥 UPDATED: Auto-Resizing Iframe Injection ---
     function injectAd(tid, cid) {
         const t = document.getElementById(tid);
         const c = document.getElementById(cid);
@@ -292,20 +294,43 @@
         c.innerHTML = ""; 
 
         const iframe = document.createElement('iframe');
-        iframe.style.width = '100%'; 
-        iframe.style.height = '100%'; // কন্টেইনারের হাইট থেকে নেবে
+        iframe.style.width = '100%';
         iframe.style.border = 'none';
         iframe.style.overflow = 'hidden';
         iframe.scrolling = "no";
+        
+        // Initial height check only for placeholder, actual resize happens via script
+        iframe.style.height = '0px'; 
 
         c.appendChild(iframe);
 
         const doc = iframe.contentWindow.document;
         doc.open();
-        // বডি মার্জিন ০ এবং ফ্লেক্স দিয়ে সেন্টার করা হয়েছে যাতে অ্যাড কেটে না যায়
-        doc.write('<html><head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;width:100%;height:100%;}</style></head><body>');
-        doc.write(t.innerHTML); 
-        doc.write('</body></html>');
+        // The script inside the iframe will auto-resize the iframe based on content height
+        doc.write(`
+            <html>
+            <head>
+                <style>
+                    body { margin:0; padding:0; display:flex; justify-content:center; align-items:center; background:transparent; overflow:hidden; }
+                </style>
+            </head>
+            <body>
+                ${t.innerHTML}
+                <script>
+                    function resize() {
+                        const height = document.body.scrollHeight;
+                        if(height > 0) {
+                            window.frameElement.style.height = height + 'px';
+                        }
+                    }
+                    // Resize on load and after short delay for async ads
+                    window.onload = resize;
+                    setTimeout(resize, 1000);
+                    setTimeout(resize, 3000);
+                <\/script>
+            </body>
+            </html>
+        `);
         doc.close();
     }
       
