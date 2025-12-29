@@ -15,28 +15,18 @@
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- [AD BOX STYLES] --- */
-    /* ডিফল্টভাবে অ্যাড বক্স দেখা যাবে না (No White Space) */
-    .ad-box { display: none; width: 100%; margin: 0; padding: 0; background: transparent; text-align: center; border: none; }
-    
-    /* আইফ্রেমের স্টাইল - ফুল উইডথ */
-    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; margin: 0 auto; }
-
-    /* গ্যাপ কন্ট্রোলার (শুধুমাত্র যখন অ্যাড লোড হবে তখন কাজ করবে) */
-    #ad-box-top { margin: 5px 0; }
-    #ad-box-title { margin: 10px 0; }
-    #ad-box-p1 { margin: 10px 0; }
-    #ad-box-p2 { margin: 10px 0; }
-    #ad-box-mid { margin: 15px 0; }
-
-    /* --- হেডার --- */
+    /* --- তোমার বর্তমান কোড --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
     .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
     .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
     header > div { display: flex; align-items: center; gap: 2px; }
+        
+    /* --- [স্মার্ট অ্যাড বক্স] --- */
+    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; }
+    .ad-box:not(:empty) { margin: 3px 0; }
 
-    /* --- ভিডিও প্লেয়ার --- */
+    /* --- ভিডিও প্লেয়ার সেকশন --- */
      .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
      .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
      .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
@@ -63,17 +53,17 @@
 
     /* --- আর্টিকেল ও কন্টেন্ট --- */
     .content-body { padding: 15px 15px 0 15px; }  
-    .article-title { font-size: 18px; font-weight: 800; margin-bottom: 5px; color: #0f1419; line-height: 1.3; }  
+    .article-title { font-size: 18px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-bottom: 10px; text-align: left; letter-spacing: -0.3px; }  
 
-    /* --- ডাউনলোড সেকশন --- */  
+    /* --- ডাউনলোড সেকশন (MODIFIED) --- */  
     .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 15px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
-    .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; gap: 6px; justify-content: space-between; }  
-    .download-btn-v2 { display: flex; align-items: center; justify-content: center; flex: 1; padding: 10px 2px; border-radius: 8px; font-weight: bold; font-size: 11px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; position: relative; white-space: nowrap; }  
+    /* Flex Row ব্যবহার করা হয়েছে যাতে বাটনগুলো এক লাইনে থাকে */
+    .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 8px; }  
+    .download-btn-v2 { display: flex; align-items: center; justify-content: center; flex: 1; padding: 12px 2px; border-radius: 8px; font-weight: bold; font-size: 12px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; text-decoration: none; }  
     .download-btn-v2:active { transform: scale(0.98); }  
-    .download-btn-v2 i { margin-right: 4px; }
 
-    /* --- স্ট্যাটস --- */  
+    /* --- স্ট্যাটস ও শেয়ার --- */  
     .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; font-size: 15px; color: #536471; font-weight: 500; }  
     .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }  
     .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
@@ -84,7 +74,7 @@
     .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: transform 0.2s; user-select: none; }  
     .share-icon:active { transform: scale(0.9); }
 
-    /* --- রিলেটেড পোস্টস --- */
+    /* --- রিলেটেড পোস্ট কার্ড --- */
     .related-header { padding: 13px; font-weight: 900; color: #000000; border-top: 2px solid #cfd9de; border-bottom: 2px solid #e1e8ed; text-transform: uppercase; }  
     .post-card { padding: 5px 15px 5px 15px; border-bottom: 1.5px solid #e1e8ed; display: flex; flex-direction: column; gap: 6px; }  
     .post-title, .post-excerpt { cursor: pointer; user-select: none; transition: color 0.1s ease; }
@@ -112,6 +102,8 @@
     .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }  
     .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }  
     .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }  
+    
+    /* --- ফুটার কার্ড ও লিংক --- */
     .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; color: #536471; font-size: 16px; font-weight: 500; }  
     .footer-left { display: flex; align-items: center; gap: 6px; }  
     .footer-right { display: flex; align-items: center; gap: 20px; }  
@@ -132,6 +124,8 @@
     .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
     .footer-copyright { color: #536471; font-size: 13px; }  
     .footer-copyright a { color: #1da1f2; font-weight: bold; }
+    
+    /* --- নোটিফিকেশন --- */
     .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 8px 15px; border-radius: 20px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 500; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; width: auto; max-width: 90%; white-space: nowrap; }  
     .notification.show { opacity: 1; }  
     #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }  
@@ -145,64 +139,26 @@
 
 <!-- [AD SECTION 1] Thumbnail এর উপরের অ্যাড -->
 <template id="ad-src-top">
-    <script type="text/javascript">
-        atOptions = {
-            'key' : 'da9154b956691d2aa7c677010e7b6501',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-        };
-    </script>
-    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script>
+  atOptions = {
+    'key' : 'da9154b956691d2aa7c677010e7b6501',
+    'format' : 'iframe',
+    'height' : 60,
+    'width' : 468,
+    'params' : {}
+  };
+</script>
+<script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 2] Native/Mid Ad -->
+<!-- [AD SECTION 2] Article এর নিচের অ্যাড -->
 <template id="ad-src-mid">
-    <script async="async" data-cfasync="false" src="https://pl25679905.profitablecpmrate.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script>
-    <div id="container-1608cb6a976841a38e804d64801334bb"></div>
-</template>
-
-<!-- [AD SECTION 3] Title এর নিচের অ্যাড -->
-<template id="ad-src-title">
-    <script type="text/javascript">
-        atOptions = {
-            'key' : 'da9154b956691d2aa7c677010e7b6501',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-        };
-    </script>
-    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
-</template>
-
-<!-- [AD SECTION 4] 1st Paragraph এর নিচের অ্যাড -->
-<template id="ad-src-p1">
-    <script type="text/javascript">
-        atOptions = {
-            'key' : 'da9154b956691d2aa7c677010e7b6501',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-        };
-    </script>
-    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
-</template>
-
-<!-- [AD SECTION 5] 2nd Paragraph এর নিচের অ্যাড -->
-<template id="ad-src-p2">
-    <script type="text/javascript">
-        atOptions = {
-            'key' : 'da9154b956691d2aa7c677010e7b6501',
-            'format' : 'iframe',
-            'height' : 60,
-            'width' : 468,
-            'params' : {}
-        };
-    </script>
-    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script
+  async="async"
+  data-cfasync="false"
+  src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"
+></script>
+<div id="container-1608cb6a976841a38e804d64801334bb"></div>
 </template>
 
 
@@ -255,6 +211,7 @@
     const CONFIG = { GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea", TOTAL_RELATED_POSTS: 10, BATCH_SIZE_SCROLL: 5, footer: { about: "#", contact: "#", privacy: "#", terms: "#" } };  
     let availablePosts = []; let currentStartIndex = 0; let observer; let sentinelObserver; let timeElementsToUpdate = [];  
   
+    function getRandomColor() { const c=['#1da1f2','#e0245e','#17bf63']; return c[Math.floor(Math.random()*c.length)]; }   
     function formatCount(n) { if(!n) return 0; return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }  
     function timeAgo(dateString) { const d = new Date(dateString); const seconds = Math.floor((new Date() - d) / 1000); let interval = seconds / 31536000; if (interval > 1) return Math.floor(interval) + "y ago"; interval = seconds / 86400; if (interval > 1) return Math.floor(interval) + "d ago"; interval = seconds / 3600; if (interval > 1) return Math.floor(interval) + "h ago"; interval = seconds / 60; if (interval > 1) return Math.floor(interval) + "m ago"; return "Just now"; }  
     function updateAllTimeElements() { timeElementsToUpdate.forEach(item => { if (item.element && item.element.parentNode) { item.element.innerText = timeAgo(item.dateString); } else { timeElementsToUpdate = timeElementsToUpdate.filter(i => i !== item); } }); }  
@@ -270,77 +227,23 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- 🔥 FINAL ROBUST INJECTOR (Isolated Iframe + Auto Resize) ---
-    function injectAd(tid, cid) {
-        const t = document.getElementById(tid);
-        const c = document.getElementById(cid);
-        if (!t || !c) return;
-
-        c.innerHTML = ""; 
-        c.style.display = "none"; // Hide initially
-
-        const iframe = document.createElement('iframe');
-        iframe.style.width = '100%';
-        iframe.style.border = 'none';
-        iframe.style.overflow = 'hidden';
-        iframe.scrolling = "no";
-        iframe.style.height = '0px';
-
-        c.appendChild(iframe);
-
-        const doc = iframe.contentWindow.document;
-        doc.open();
-        
-        const adContent = t.innerHTML;
-        
-        // Internal script to resize iframe dynamically
-        const resizeScript = `
-            <script>
-                function resize() {
-                    const body = document.body;
-                    const html = document.documentElement;
-                    const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-                    
-                    if (height > 10) { 
-                        window.frameElement.style.height = height + 'px';
-                        window.frameElement.parentElement.style.display = 'flex'; // Show container
-                    }
-                }
-                setInterval(resize, 500); // Check repeatedly for changes
-                window.onload = resize;
-            <\/script>
-        `;
-
-        doc.write('<html><head><style>body{margin:0;padding:0;background:transparent;text-align:center;overflow:hidden;}</style></head><body>');
-        doc.write(adContent);
-        doc.write(resizeScript);
-        doc.write('</body></html>');
-        doc.close();
-    }
+    // --- অ্যাড ইনজেক্ট ফাংশন ---
+    function injectAd(tid, cid) { const t=document.getElementById(tid), c=document.getElementById(cid); if(t&&c){ c.appendChild(t.content.cloneNode(true)); } }
       
     // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
-        let content = `<h1 class="article-title">${post.title}</h1><div id="ad-box-title" class="ad-box"></div>`;  
+        let content = `<h1 class="article-title">${post.title}</h1>`;  
+        if(post.paragraphs) { post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; }); }
         
-        if(post.paragraphs) { 
-            const pLen = post.paragraphs.length; 
-            post.paragraphs.forEach((p, index) => { 
-                content += `<p class="article-para">${p}</p>`; 
-                if (index === 0 && pLen >= 2) { content += `<div id="ad-box-p1" class="ad-box"></div>`; }
-                if (index === 1 && pLen >= 3) { content += `<div id="ad-box-p2" class="ad-box"></div>`; }
-            }); 
-        }
-        
-        const LINK_1080 = "https://your-link-here.com/1080"; 
-        const LINK_720 = "https://your-link-here.com/720";
-        const LINK_360 = "https://your-link-here.com/360";
-
+        // --- নতুন ডাউনলোড সেকশন (সম্পূর্ণ পরিবর্তিত) ---
+        // আপনি নিচের href="" এর মধ্যে আপনার লিঙ্কগুলো সেট করবেন।
+        // তিনটি বাটন এখন এক লাইনে থাকবে এবং ক্লিক করলে সরাসরি লিঙ্কে যাবে।
         let downloadSectionHTML = `
-            <div class="download-title-text">Download Full Movie in HD</div>
+            <div class="download-title-text">Download Full Movie</div>
             <div class="download-buttons-container">
-                <div class="download-btn-v2" style="background:#17bf63;" onclick="window.location.href='${LINK_1080}'"><i class="fa-solid fa-cloud-arrow-down"></i> 1080p Full HD</div>
-                <div class="download-btn-v2" style="background:#1da1f2;" onclick="window.location.href='${LINK_720}'"><i class="fa-solid fa-cloud-arrow-down"></i> 720p HD</div>
-                <div class="download-btn-v2" style="background:#e0245e;" onclick="window.location.href='${LINK_360}'"><i class="fa-solid fa-cloud-arrow-down"></i> 360p SD</div>
+                <a href="https://google.com" class="download-btn-v2" style="background: #e0245e;">1080 Full HD</a>
+                <a href="https://google.com" class="download-btn-v2" style="background: #1da1f2;">720 HD</a>
+                <a href="https://google.com" class="download-btn-v2" style="background: #17bf63;">360 SD</a>
             </div>`;  
           
         document.getElementById('post-details-container').innerHTML = `  
@@ -386,12 +289,9 @@
                     </div>  
                 </div>  
             </div>`;  
-        
-        injectAd('ad-src-top', 'ad-box-top');      
-        injectAd('ad-src-mid', 'ad-box-mid');      
-        injectAd('ad-src-title', 'ad-box-title');  
-        injectAd('ad-src-p1', 'ad-box-p1');        
-        injectAd('ad-src-p2', 'ad-box-p2');        
+          
+        injectAd('ad-src-top', 'ad-box-top'); 
+        injectAd('ad-src-mid', 'ad-box-mid');
 
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
