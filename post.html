@@ -15,22 +15,19 @@
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- [SMART AD SYSTEM] --- */
-    /* অ্যাড কন্টেইনার ডিফল্টভাবে হাইড থাকবে (No White Space) */
-    .ad-container { display: none; width: 100%; margin: 0; padding: 0; border: none; background: transparent; transition: height 0.2s ease; }
+    /* --- [FINAL AD SYSTEM] --- */
+    /* ডিফল্টভাবে অ্যাড বক্স হাইড থাকবে (No White Space) */
+    .ad-box { display: none; width: 100%; margin: 0; padding: 0; background: transparent; text-align: center; }
     
-    /* যখন অ্যাড লোড হবে তখন এই ক্লাসটি যুক্ত হবে */
-    .ad-container.visible { display: block; }
-
-    /* ৫টি অ্যাডের আলাদা গ্যাপ কন্ট্রোলার (মার্জিন) */
-    #ad-pos-top.visible { margin: 5px 0; }
-    #ad-pos-title.visible { margin: 10px 0; }
-    #ad-pos-p1.visible { margin: 10px 0; }
-    #ad-pos-p2.visible { margin: 10px 0; }
-    #ad-pos-mid.visible { margin: 15px 0; }
+    /* মার্জিন কন্ট্রোলার (শুধুমাত্র যখন অ্যাড লোড হবে তখনই কাজ করবে) */
+    #ad-box-top { margin: 5px 0; }
+    #ad-box-title { margin: 10px 0; }
+    #ad-box-p1 { margin: 10px 0; }
+    #ad-box-p2 { margin: 10px 0; }
+    #ad-box-mid { margin: 15px 0; }
 
     /* আইফ্রেম স্টাইল */
-    .ad-container iframe { width: 100%; border: none; overflow: hidden; display: block; margin: 0 auto; }
+    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; margin: 0 auto; }
 
     /* --- হেডার --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
@@ -146,7 +143,7 @@
 </head>  
 <body>  
 
-<!-- [AD SECTION 1] Top Ad (Example 468x60) -->
+<!-- [AD SECTION 1] Thumbnail এর উপরের অ্যাড (HTTPS Fix Added) -->
 <template id="ad-src-top">
     <script type="text/javascript">
         atOptions = {
@@ -157,16 +154,16 @@
             'params' : {}
         };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 2] Native/Mid Ad (Example) -->
+<!-- [AD SECTION 2] Native/Mid Ad -->
 <template id="ad-src-mid">
-    <script async="async" data-cfasync="false" src="//pl25679905.profitablecpmrate.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script>
+    <script async="async" data-cfasync="false" src="https://pl25679905.profitablecpmrate.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script>
     <div id="container-1608cb6a976841a38e804d64801334bb"></div>
 </template>
 
-<!-- [AD SECTION 3] Title Ad -->
+<!-- [AD SECTION 3] Title এর নিচের অ্যাড -->
 <template id="ad-src-title">
     <script type="text/javascript">
         atOptions = {
@@ -177,10 +174,10 @@
             'params' : {}
         };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 4] P1 Ad -->
+<!-- [AD SECTION 4] 1st Paragraph এর নিচের অ্যাড -->
 <template id="ad-src-p1">
     <script type="text/javascript">
         atOptions = {
@@ -191,10 +188,10 @@
             'params' : {}
         };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
-<!-- [AD SECTION 5] P2 Ad -->
+<!-- [AD SECTION 5] 2nd Paragraph এর নিচের অ্যাড -->
 <template id="ad-src-p2">
     <script type="text/javascript">
         atOptions = {
@@ -205,7 +202,7 @@
             'params' : {}
         };
     </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+    <script type="text/javascript" src="https://www.highperformanceformat.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
 </template>
 
 
@@ -273,67 +270,48 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- 🔥 ROBUST AD INJECTION (Instant & Resizable) ---
+    // --- 🔥 FINAL ROBUST INJECTOR: SIMPLE & EFFECTIVE ---
     function injectAd(tid, cid) {
         const t = document.getElementById(tid);
         const c = document.getElementById(cid);
         if (!t || !c) return;
 
         c.innerHTML = ""; 
-        c.classList.remove('visible'); // Ensure hidden initially
+        c.style.display = 'none'; // Initially hidden to prevent whitespace
 
-        // Create a dedicated Iframe for isolation
+        // Create Iframe
         const iframe = document.createElement('iframe');
         iframe.style.width = '100%';
         iframe.style.border = 'none';
         iframe.style.overflow = 'hidden';
         iframe.scrolling = "no";
-        iframe.style.height = '0px'; // Start invisible
+        iframe.style.height = '0px'; 
 
         c.appendChild(iframe);
 
         const doc = iframe.contentWindow.document;
         doc.open();
         
-        // This script runs INSIDE the iframe to auto-resize it based on the ad content
-        const resizerScript = `
-            <script>
-                function resize() {
-                    const body = document.body;
-                    const html = document.documentElement;
-                    // Calculate exact content height
-                    const height = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-                    
-                    if (height > 10) { // If ad has loaded (height > 10px)
-                        // Resize iframe from inside
-                        window.frameElement.style.height = height + 'px';
-                        // Tell parent to show the container (removes white space)
-                        window.frameElement.parentElement.classList.add('visible');
-                    }
-                }
-                // Run aggressively to ensure instant load
-                window.onload = resize;
-                setInterval(resize, 200); // Check repeatedly for dynamic/native ads
-            <\/script>
-        `;
-
-        doc.write('<html><head><style>body{margin:0;padding:0;background:transparent;text-align:center;overflow:hidden;}</style></head><body>');
-        doc.write(t.innerHTML); // The actual Ad Code
-        doc.write(resizerScript);
+        // Write standard HTML structure
+        doc.write('<html><head><style>body{margin:0;padding:0;text-align:center;}</style></head><body>');
+        // Inject Ad Code
+        doc.write(t.innerHTML);
+        // Auto-show script inside iframe: Checks height, expands iframe, and shows container
+        doc.write('<script>window.onload=function(){var h=document.body.scrollHeight;if(h>10){window.frameElement.style.height=h+"px";window.frameElement.parentElement.style.display="block";}}<\/script>');
         doc.write('</body></html>');
         doc.close();
     }
       
     // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
-        let content = `<h1 class="article-title">${post.title}</h1><div id="ad-pos-title" class="ad-container"></div>`;  
+        let content = `<h1 class="article-title">${post.title}</h1><div id="ad-box-title" class="ad-box"></div>`;  
         
         if(post.paragraphs) { 
             const pLen = post.paragraphs.length; 
             post.paragraphs.forEach((p, index) => { 
                 content += `<p class="article-para">${p}</p>`; 
-                if (index === 0 && pLen >= 2) { content += `<div id="ad-pos-p1" class="ad-container"></div>`; }
-                if (index === 1 && pLen >= 3) { content += `<div id="ad-pos-p2" class="ad-container"></div>`; }
+                if (index === 0 && pLen >= 2) { content += `<div id="ad-box-p1" class="ad-box"></div>`; }
+                if (index === 1 && pLen >= 3) { content += `<div id="ad-box-p2" class="ad-box"></div>`; }
             }); 
         }
         
@@ -358,7 +336,7 @@
                 <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>  
             </div>  
             
-            <div id="ad-pos-top" class="ad-container"></div>
+            <div id="ad-box-top" class="ad-box"></div>
 
            <div class="video-container" onclick="handleVideoClick()">
                 <img src="${post.mediaImage}" loading="eager" decoding="sync" fetchpriority="high" alt="Movie Thumbnail">
@@ -376,7 +354,7 @@
 
             <div class="content-body">  
                 ${content} 
-                <div id="ad-pos-mid" class="ad-container"></div>
+                <div id="ad-box-mid" class="ad-box"></div>
                 ${downloadSectionHTML}   
                 <div class="stats-section">  
                     <div class="stats-left">  
@@ -393,12 +371,11 @@
                 </div>  
             </div>`;  
         
-        // --- INJECT ADS INTO CONTAINERS ---
-        injectAd('ad-src-top', 'ad-pos-top');      
-        injectAd('ad-src-mid', 'ad-pos-mid');      
-        injectAd('ad-src-title', 'ad-pos-title');  
-        injectAd('ad-src-p1', 'ad-pos-p1');        
-        injectAd('ad-src-p2', 'ad-pos-p2');        
+        injectAd('ad-src-top', 'ad-box-top');      
+        injectAd('ad-src-mid', 'ad-box-mid');      
+        injectAd('ad-src-title', 'ad-box-title');  
+        injectAd('ad-src-p1', 'ad-box-p1');        
+        injectAd('ad-src-p2', 'ad-box-p2');        
 
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
