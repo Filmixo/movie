@@ -15,7 +15,7 @@
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- তোমার বর্তমান কোড --- */
+    /* --- হেডার --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
     .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
@@ -56,11 +56,16 @@
     .article-title { font-size: 18px; font-weight: 800; margin-bottom: 15px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-bottom: 10px; text-align: left; letter-spacing: -0.3px; }  
 
-    /* --- ডাউনলোড সেকশন (MODIFIED) --- */  
+    /* --- ইউটিউব এমবেড কন্টেইনার (নতুন) --- */
+    .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; /* 16:9 Ratio */ height: 0; margin-bottom: 20px; border-radius: 8px; overflow: hidden; background: #000; display: none; /* ডিফল্ট ভাবে লুকানো */ }
+    .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+    /* --- ডাউনলোড সেকশন --- */  
     .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 15px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
-    /* Flex Row ব্যবহার করা হয়েছে যাতে বাটনগুলো এক লাইনে থাকে */
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 8px; }  
-    .download-btn-v2 { display: flex; align-items: center; justify-content: center; flex: 1; padding: 12px 2px; border-radius: 8px; font-weight: bold; font-size: 12px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; text-decoration: none; }  
+    
+    /* বাটনের ফন্ট সাইজ এবং স্টাইল আপডেট করা হয়েছে */
+    .download-btn-v2 { display: flex; align-items: center; justify-content: center; flex: 1; padding: 12px 2px; border-radius: 8px; font-weight: 800; font-size: 14px; text-align: center; color: white; cursor: pointer; text-transform: uppercase; box-shadow: 0 3px 6px rgba(0,0,0,0.15); transition: all 0.2s; text-decoration: none; white-space: nowrap; }  
     .download-btn-v2:active { transform: scale(0.98); }  
 
     /* --- স্ট্যাটস ও শেয়ার --- */  
@@ -235,15 +240,21 @@
         let content = `<h1 class="article-title">${post.title}</h1>`;  
         if(post.paragraphs) { post.paragraphs.forEach((p) => { content += `<p class="article-para">${p}</p>`; }); }
         
-        // --- নতুন ডাউনলোড সেকশন (সম্পূর্ণ পরিবর্তিত) ---
-        // আপনি নিচের href="" এর মধ্যে আপনার লিঙ্কগুলো সেট করবেন।
-        // তিনটি বাটন এখন এক লাইনে থাকবে এবং ক্লিক করলে সরাসরি লিঙ্কে যাবে।
+        // --- ইউটিউব এমবেড লজিক ---
+        // JSON ফাইলে যদি "youtubeEmbed": "<iframe...>" থাকে তবেই দেখাবে, না হলে দেখাবে না।
+        let youtubeHTML = '';
+        if (post.youtubeEmbed) {
+            youtubeHTML = `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div>`;
+        }
+
+        // --- ডাউনলোড সেকশন ---
+        // এখানে href এর মধ্যে লিংক বসাতে হবে
         let downloadSectionHTML = `
             <div class="download-title-text">Download Full Movie</div>
             <div class="download-buttons-container">
-                <a href="https://google.com" class="download-btn-v2" style="background: #e0245e;">1080 Full HD</a>
-                <a href="https://google.com" class="download-btn-v2" style="background: #1da1f2;">720 HD</a>
-                <a href="https://google.com" class="download-btn-v2" style="background: #17bf63;">360 SD</a>
+                <a href="LINK_FOR_1080_HERE" class="download-btn-v2" style="background: #e0245e;">1080 Full HD</a>
+                <a href="LINK_FOR_720_HERE" class="download-btn-v2" style="background: #1da1f2;">720 HD</a>
+                <a href="LINK_FOR_360_HERE" class="download-btn-v2" style="background: #17bf63;">360 HD</a>
             </div>`;  
           
         document.getElementById('post-details-container').innerHTML = `  
@@ -274,7 +285,10 @@
             <div class="content-body">  
                 ${content} 
                 <div id="ad-box-mid" class="ad-box"></div>
+                
+                ${youtubeHTML}
                 ${downloadSectionHTML}   
+
                 <div class="stats-section">  
                     <div class="stats-left">  
                         <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">0</span> Views</div>  
