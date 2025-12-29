@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -24,8 +23,8 @@
     header > div { display: flex; align-items: center; gap: 2px; }
         
     /* --- [স্মার্ট অ্যাড বক্স] --- */
-    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; }
-    .ad-box:not(:empty) { margin: 3px 0; }
+    .ad-box { width: 100%; display: flex; justify-content: center; align-items: center; min-height: 0; transition: all 0.3s ease; overflow: hidden; }
+    .ad-box:not(:empty) { margin: 10px 0; }
 
     /* --- ভিডিও প্লেয়ার সেকশন --- */
      .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
@@ -269,43 +268,31 @@
         if (imgElement.complete) { imgElement.onload(); }  
     }  
 
-    // --- 🔥 UPDATED: Robust Ad Injection Function (Forces Scripts to Run) ---
+    // --- 🔥 FIX: Iframe Injection for Ads (Solves Conflict Issue) ---
     function injectAd(tid, cid) {
         const t = document.getElementById(tid);
         const c = document.getElementById(cid);
         if (!t || !c) return;
 
-        c.innerHTML = ""; // Clear any existing content to prevent duplicates
+        c.innerHTML = ""; 
 
-        // Create a clone of the template content
-        const clone = t.content.cloneNode(true);
-        
-        // Convert NodeList to Array to iterate safely
-        const nodes = Array.from(clone.childNodes);
+        // Create an iframe to isolate the ad script
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '80px'; // Adjust height as needed
+        iframe.style.border = 'none';
+        iframe.style.overflow = 'hidden';
+        iframe.scrolling = "no";
 
-        nodes.forEach(node => {
-            // If the node is a script, we must recreate it to force execution
-            if (node.nodeName === 'SCRIPT') {
-                const s = document.createElement('script');
-                
-                // Copy all attributes (src, async, type, etc.)
-                if (node.attributes) {
-                    Array.from(node.attributes).forEach(attr => {
-                        s.setAttribute(attr.name, attr.value);
-                    });
-                }
-                
-                // Copy inner script content (for inline scripts like atOptions)
-                if (node.innerHTML) {
-                    s.appendChild(document.createTextNode(node.innerHTML));
-                }
-                
-                c.appendChild(s);
-            } else {
-                // If it's not a script (like div, style), just append it
-                c.appendChild(node.cloneNode(true));
-            }
-        });
+        c.appendChild(iframe);
+
+        // Write the ad code inside the iframe
+        const doc = iframe.contentWindow.document;
+        doc.open();
+        doc.write('<html><head><style>body{margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;}</style></head><body>');
+        doc.write(t.innerHTML); // Inject the script from template
+        doc.write('</body></html>');
+        doc.close();
     }
       
     // --- মেইন পোস্ট রেন্ডার ---  
@@ -388,13 +375,13 @@
                 </div>  
             </div>`;  
         
-        // --- 5 DISTINCT AD INJECTIONS ---
-        injectAd('ad-src-top', 'ad-box-top');      // 1. Top Ad
-        injectAd('ad-src-mid', 'ad-box-mid');      // 2. Bottom/Mid Ad
+        // --- 5 DISTINCT AD INJECTIONS (Iframe Method) ---
+        injectAd('ad-src-top', 'ad-box-top');      
+        injectAd('ad-src-mid', 'ad-box-mid');      
         
-        injectAd('ad-src-title', 'ad-box-title');  // 3. Title Ad (New)
-        injectAd('ad-src-p1', 'ad-box-p1');        // 4. Para 1 Ad (New)
-        injectAd('ad-src-p2', 'ad-box-p2');        // 5. Para 2 Ad (New)
+        injectAd('ad-src-title', 'ad-box-title');  
+        injectAd('ad-src-p1', 'ad-box-p1');        
+        injectAd('ad-src-p2', 'ad-box-p2');        
 
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
