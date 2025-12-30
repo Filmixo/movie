@@ -6,120 +6,181 @@
     <title>FILMIXO movie watch & Download</title>  
     <link rel="preconnect" href="https://prototypesorting.com">
     <link rel="dns-prefetch" href="https://prototypesorting.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js"></script>
 
     <style>  
-    /* --- বেসিক সেটআপ (১০০% অরিজিনাল লজিক) --- */
+    /* --- বেসিক সেটআপ --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }  
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- হেডার সেকশন (অরিজিনাল) --- */
+    /* --- হেডার সেকশন --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
     .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
     .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
     header > div { display: flex; align-items: center; gap: 2px; }
         
-    /* --- অ্যাড বক্স ও ভিডিও প্লেয়ার --- */
+    /* --- স্মার্ট অ্যাড বক্স (অটো হাইট) --- */
     .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
     .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
     .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 2px 15px; width: 100%; }
-    .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
-    .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
-    .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
-    .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
-    .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
-    .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; height: 35px; padding: 0 10px; display: flex; align-items: center; gap: 10px; background: rgba(0, 0, 0, 0.5); z-index: 10; color: white; font-size: 11px; }
-    .prog-bg { flex-grow: 1; height: 6px; background: rgba(255, 255, 255, 0.5); border-radius: 4px; }
-    .prog-fill { width: 1.5%; height: 100%; background: #ff0000; border-radius: 4px; }
-    .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 900; }
+    .dual-ad-wrapper .ad-box { flex: 1; width: 50%; }
 
-    /* --- YouTube Embed Fix --- */
-    .yt-embed-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 15px; border-radius: 8px; overflow: hidden; background: #000; position: relative; }
-    .yt-embed-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+    /* --- ভিডিও প্লেয়ার সেকশন --- */
+     .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
+     .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
+     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
+     .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
+     .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
+     .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; height: 35px; padding: 0 10px; display: flex; align-items: center; gap: 10px; background: rgba(0, 0, 0, 0.5); z-index: 10; color: white; font-size: 11px; }
+     .time-text { font-weight: 600; white-space: nowrap; }
+     .prog-bg { flex-grow: 1; height: 6px; background: rgba(255, 255, 255, 0.5); border-radius: 4px; }
+     .prog-fill { width: 1.5%; height: 100%; background: #ff0000; border-radius: 4px; }
+     .video-controls i { font-size: 13px; }
+     .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 900; }
+     .video-container.is-loading img { filter: brightness(0.6); opacity: 0.7; }
+     .video-container.is-loading .video-controls { display: none !important; }
+     .video-container.is-loading .play-btn-center { display: none !important; }
 
-    /* --- পোস্ট অথর এরিয়া --- */  
+    /* --- পোস্ট ডিটেইলস --- */  
     .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
     .author-info { display: flex; align-items: center; gap: 10px; }  
     .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
     .pfp img { width: 100%; height: 100%; object-fit: cover; }  
     .author-text h3 { font-size: 18px; margin: 0; color: #0f1419; display: inline-flex; align-items: center; gap: 5px; }  
-    .verified-badge { color: #1da1f2 !important; font-size: 15px; }
     .author-text span { font-size: 12px; color: #1da1f2; display: block; margin-top: -1px; }  
     .post-time { font-size: 14px; color: #536471; font-weight: bold; }  
 
+    /* --- আর্টিকেল ও কন্টেন্ট --- */
     .content-body { padding: 5px 15px 10px 15px; }  
     .article-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: #0f1419; line-height: 1.3; }  
-    .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-top: 8px; margin-bottom: 8px; }
+    .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-top: 8px; margin-bottom: 8px; text-align: left; letter-spacing: -0.3px; }
+        
+    /* --- ইউটিউব এমবেড --- */
+    .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 5px; border-radius: 8px; overflow: hidden; background: #000; display: none; }
+    .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* --- স্ট্যাটস সেকশন (Views, Likes, Sharing) --- */
-    .stats-container { margin-top: 15px; }
-    .stats-top-border { width: 92%; height: 1px; background: #e1e8ed; margin: 0 auto; }
-    .stats-section { padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #cfd9de; } 
-    
-    .view-stat { display: flex; align-items: center; gap: 4px; font-weight: 600; font-size: 13px; color: #536471; flex: 1; }
-    .love-btn { display: flex; align-items: center; gap: 4px; font-weight: 600; font-size: 13px; color: #536471; cursor: pointer; user-select: none; flex: 1; justify-content: center; }
+    /* --- ডাউনলোড সেকশন (লাক্সারিয়াস ডিজাইন) --- */  
+    .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
+    .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; }  
+    .download-btn-v2 { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 12px 5px; border-radius: 6px; text-align: center; color: white; cursor: pointer; text-decoration: none; position: relative; overflow: hidden; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.15); }
+    .download-btn-v2:active { transform: scale(0.98); }
+    .btn-res { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; line-height: 1; display: block; margin-bottom: 3px; }
+    .btn-tag { font-size: 10px; font-weight: 600; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px; display: block; }
+    .btn-1080 { background: linear-gradient(180deg, #D32F2F 0%, #B71C1C 100%); border-bottom: 3px solid #7f0000; }
+    .btn-720 { background: linear-gradient(180deg, #1976D2 0%, #0D47A1 100%); border-bottom: 3px solid #002171; }
+    .btn-360 { background: linear-gradient(180deg, #388E3C 0%, #1B5E20 100%); border-bottom: 3px solid #003300; }
+
+    /* --- স্ট্যাটস ও শেয়ার --- */  
+    .stats-section { padding: 12px 0; margin-top: 15px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; font-size: 15px; color: #536471; font-weight: 500; }  
+    .stats-left { display: flex; align-items: center; gap: 20px; flex-grow: 1; overflow: hidden; }  
+    .view-stat { flex: 0 0 auto; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
+    .like-stat-container { flex: 1 1 auto; display: flex; justify-content: center; }  
+    .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; }  
     .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
+    .share-icons { flex: 0 0 auto; display: flex; gap: 8px; }  
+    .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: transform 0.2s; user-select: none; }  
+    .share-icon:active { transform: scale(0.9); }
+
+    /* --- রিলেটেড পোস্ট কার্ড --- */
+    .related-header { padding: 13px; font-weight: 900; color: #000000; border-top: 2px solid #cfd9de; border-bottom: 2px solid #e1e8ed; text-transform: uppercase; }  
+    .post-card { padding: 5px 15px 5px 15px; border-bottom: 1.5px solid #e1e8ed; display: flex; flex-direction: column; gap: 6px; }  
+    .post-title, .post-excerpt { cursor: pointer; user-select: none; transition: color 0.1s ease; }
+    .post-title:active, .post-excerpt:active { color: #1da1f2; } 
+    .media-container img { width: 100%; height: 100%; object-fit: cover; margin: 0 auto; max-height: none; transition: transform 0.1s ease; }
+    .media-container:active img { transform: scale(1.02); }
+    .post-header { display: flex; gap: 10px; align-items: center; }  
+    .post-pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
+    .post-pfp img { width: 100%; height: 100%; object-fit: cover; }  
+    .post-meta-text { display: flex; flex-direction: column; justify-content: center; }  
+    .name-row { display: flex; align-items: center; gap: 5px; flex-wrap: wrap; }   
+    .name-row h3 { font-size: 18px; font-weight: 800; color: #0f1419; margin: 0; display: inline-flex; align-items: center; gap: 5px; }  
+    .post-username { font-size: 14px; color: #1da1f2; margin-top: 0; }  
+    .verified-badge { color: #1da1f2; font-size: 15px; margin-left: -2px; margin-right: 0; display: inline-flex; align-items: center; }  
+    .time-ago { font-size: 15px; color: #536471; }  
+    .dot-separator { font-size: 15px; color: #536471; margin: 0 2px; }  
+    .post-title { font-size: 18px; font-weight: 700; color: #0f1419; margin-bottom: 4px; margin-top: -3px; line-height: 1.3; }  
+    .post-excerpt { font-size: 15px; color: #0f1419; line-height: 1.4; margin-bottom: 0px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }  
+    .read-more-text { color: #1da1f2; font-weight: 600; font-size: 14px; }  
+    .hashtags { color: #1d9bf0; font-size: 15px; margin-bottom: 1px; cursor: default; }  
+    .media-container { position: relative; width: 100%; border-radius: 12px; overflow: hidden; margin-top: 1px; margin-bottom: 1px; display: block; cursor: pointer; background: #000; aspect-ratio: 3 / 4; max-height: 720px; -webkit-tap-highlight-color: transparent; }  
+    .media-container.auto-fit { aspect-ratio: initial; height: auto; }  
+    .media-container.auto-fit img { height: auto; object-fit: contain; }  
+    .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; pointer-events: none; border: 2px solid rgba(255,255,255,0.8); }  
+    .play-icon::after { content: ''; display: block; width: 0; height: 0; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 4px; }  
+    .duration-badge { position: absolute; bottom: 8px; right: 8px; background-color: rgba(0, 0, 0, 0.8); color: white; padding: 2px 6px; border-radius: 4px; font-size: 12px; font-weight: bold; pointer-events: none; z-index: 5; }  
     
-    .share-icons { display: flex; gap: 5px; flex: 1; justify-content: flex-end; align-items: center; }  
-    .share-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 11px; transition: transform 0.1s ease; }  
-    .share-icon:active { transform: scale(0.85); box-shadow: inset 0 0 5px rgba(0,0,0,0.3); } /* ক্লিক ইফেক্ট */
-
-    /* --- ডাউনলোড বাটন সেকশন (বর্ডার আপডেট) --- */  
-    .download-section-wrapper { border-top: 1.5px solid #e1e8ed; margin-top: 20px; padding-top: 5px; } /* উপরের ফুল স্ক্রিন বর্ডার */
-    .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; }  
-    .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; gap: 10px; }  
-    .download-btn-v2 { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 12px 5px; border-radius: 6px; color: white; border-bottom: 3px solid rgba(0,0,0,0.3); transition: transform 0.1s; }
-    .download-btn-v2:active { transform: translateY(2px); border-bottom-width: 1px; }
-    .btn-res { font-size: 16px; font-weight: 800; line-height: 1; margin-bottom: 3px; }
-    .btn-tag { font-size: 10px; font-weight: 600; opacity: 0.85; }
-    .btn-1080 { background: linear-gradient(180deg, #D32F2F 0%, #B71C1C 100%); }
-    .btn-720 { background: linear-gradient(180deg, #1976D2 0%, #0D47A1 100%); }
-    .btn-360 { background: linear-gradient(180deg, #388E3C 0%, #1B5E20 100%); }
-
-    /* --- রিলেটেড পোস্ট কার্ড (বর্ডার ও গ্যাপ ফিক্স) --- */
-    .related-section { border-top: 1.5px solid #e1e8ed; margin-top: 20px; } /* উপরের ফুল স্ক্রিন বর্ডার */
-    .related-header-container { padding: 10px 15px; border-bottom: 1.5px solid #e1e8ed; } /* গ্যাপ কমানো হয়েছে */
-    .related-header { font-weight: 900; color: #000; text-transform: uppercase; font-size: 14px; }  
-    
-    #related-posts-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
-    .post-card-rel { background: white; border-bottom: 1.2px solid #e1e8ed; padding-bottom: 8px; display: flex; flex-direction: column; opacity: 0; animation: fadeIn 0.5s forwards; }
-    .post-card-rel:last-child, .post-card-rel:nth-last-child(2):nth-child(odd) { border-bottom: none !important; }
-
-    .media-container-rel { position: relative; width: 100%; border-radius: 8px; overflow: hidden; background: #f0f2f5; aspect-ratio: 16 / 9; cursor: pointer; }
-    .media-container-rel img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.1s; }
-    .media-container-rel:active img { transform: scale(1.03); }
-    .play-icon-rel { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 1.5px solid rgba(255,255,255,0.8); }
-    .play-icon-rel::after { content: ''; border-left: 12px solid white; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
-    .duration-badge-rel { position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 5px; border-radius: 4px; font-size: 10px; font-weight: bold; }
-    
-    .post-title-rel { font-size: 14px; font-weight: 700; color: #0f1419; margin: 8px 0 6px 0; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 34px; cursor: pointer; }
-    .card-footer-rel { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #536471; font-weight: 600; margin-top: 4px; }
-
-    /* --- ফুটার ও নোটিফিকেশন --- */
-    .site-footer { padding: 20px; text-align: center; border-top: 1.5px solid #e1e8ed; }  
-    .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 15px; }  
-    .footer-links a { color: #536471; font-size: 14px; font-weight: 500; }  
+    /* --- ফুটার ও শেয়ার --- */
+    .post-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 5px; color: #536471; font-size: 16px; font-weight: 500; }  
+    .footer-left { display: flex; align-items: center; gap: 6px; }  
+    .footer-right { display: flex; align-items: center; gap: 20px; }  
+    .count-text { font-weight: 500; font-size: 15px; } 
+    .label-text { font-weight: 500; font-size: 15px; }
+    .love-btn-rel { cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.2s; user-select: none; font-weight: 500; font-size: 15px; }  
+    .love-btn-rel i { font-size: 18px; } 
+    .love-btn-rel:hover { color: #e0245e; background-color: rgba(224, 36, 94, 0.1); padding: 4px 8px; border-radius: 15px; margin: -4px -8px; }  
+    .love-btn-rel.liked { color: #e0245e !important; } .love-btn-rel.liked i { font-weight: 900; }  
+    .post-date-display { font-size: 14px; color: #65676b; font-weight: 500; }
+    .footer-share-btn i { font-size: 16px; color: #536471; transition: color 0.1s ease; }
+    .footer-share-btn:active i { color: #1da1f2; }
+    .footer-share-btn { cursor: pointer; padding: 8px; border-radius: 50%; transition: all 0.2s ease; display: flex; align-items: center; justify-content: center; user-select: none; }  
+    .footer-share-btn:hover { background-color: rgba(0,0,0,0.05); }  
+    .site-footer { padding: 20px 20px; text-align: center; border-top: none; }  
+    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
+    .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; user-select: none; }  
+    .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
     .footer-copyright { color: #536471; font-size: 13px; }  
+    .footer-copyright a { color: #1da1f2; font-weight: bold; }
     
-    #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; grid-column: span 2; }  
-    .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 10px 20px; border-radius: 30px; z-index: 1002; opacity: 0; transition: 0.3s; font-size: 13px; }  
-    @keyframes spin { 100% { transform: rotate(360deg); } }  
-    @keyframes fadeIn { to { opacity: 1; } }
+    /* --- নোটিফিকেশন --- */
+    .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 8px 15px; border-radius: 20px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 500; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; width: auto; max-width: 90%; white-space: nowrap; }  
+    .notification.show { opacity: 1; }  
+    #sentinel { width: 100%; height: 50px; display: flex; align-items: center; justify-content: center; }  
+    .load-more-spinner { width: 24px; height: 24px; border: 3px solid #ccc; border-top: 3px solid #1da1f2; border-radius: 50%; animation: spin 1s linear infinite; display: none; }  
+    #sentinel.loading .load-more-spinner { display: block; }  
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }  
 </style>
 </head>  
 <body>  
 
-<template id="ad-src-top"><script>atOptions={'key':'caf6ea59dc8711a1d0bfb5ad9dd98638','format':'iframe','height':90,'width':728,'params':{}};</script><script src="https://prototypesorting.com/caf6ea59dc8711a1d0bfb5ad9dd98638/invoke.js"></script></template>
-<template id="ad-src-title"><script>atOptions={'key':'da9154b956691d2aa7c677010e7b6501','format':'iframe','height':60,'width':468,'params':{}};</script><script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script></template>
-<template id="ad-src-p1"><script>atOptions={'key':'dbae51ad68fb44f5c8a6b535812c9f54','format':'iframe','height':250,'width':300,'params':{}};</script><script src="https://prototypesorting.com/dbae51ad68fb44f5c8a6b535812c9f54/invoke.js"></script></template>
-<template id="ad-src-p2"><script>atOptions={'key':'54012419216a1778423343e5706cb92e','format':'iframe','height':300,'width':160,'params':{}};</script><script src="https://prototypesorting.com/54012419216a1778423343e5706cb92e/invoke.js"></script></template>
-<template id="ad-src-mid"><script async="async" data-cfasync="false" src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script><div id="container-1608cb6a976841a38e804d64801334bb"></div></template>
-<template id="ad-src-video"><script>atOptions={'key':'dbae51ad68fb44f5c8a6b535812c9f54','format':'iframe','height':250,'width':300,'params':{}};</script><script src="https://prototypesorting.com/dbae51ad68fb44f5c8a6b535812c9f54/invoke.js"></script></template>
+<!-- [AD 1: Thumbnail এর উপরে] -->
+<template id="ad-src-top">
+<script>atOptions = { 'key' : 'caf6ea59dc8711a1d0bfb5ad9dd98638', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };</script>
+<script src="https://prototypesorting.com/caf6ea59dc8711a1d0bfb5ad9dd98638/invoke.js"></script>
+</template>
+
+<!-- [AD 2: টাইটেলের নিচে] -->
+<template id="ad-src-title">
+<script> atOptions = { 'key' : 'da9154b956691d2aa7c677010e7b6501','format' : 'iframe','height' : 60,'width' : 468,'params' : {} }; </script>
+<script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script>
+</template>
+
+<!-- [AD 3: প্রথম প্যারাগ্রাফের নিচে] -->
+<template id="ad-src-p1">
+<script>atOptions = {'key' : 'dbae51ad68fb44f5c8a6b535812c9f54','format' : 'iframe','height' : 250,'width' : 300, 'params' : {} }; </script>
+<script src="https://prototypesorting.com/dbae51ad68fb44f5c8a6b535812c9f54/invoke.js"></script>
+</template>
+
+<!-- [AD 4: দ্বিতীয় প্যারাগ্রাফের নিচে] -->
+<template id="ad-src-p2">
+<script> atOptions = { 'key' : '54012419216a1778423343e5706cb92e','format' : 'iframe','height' : 300,'width' : 160,'params' : {} }; </script>
+<script src="https://prototypesorting.com/54012419216a1778423343e5706cb92e/invoke.js"></script>
+</template>
+
+<!-- [AD 5: Article এর নিচে] -->
+<template id="ad-src-mid">
+<script async="async" data-cfasync="false" src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js">
+</script><div id="container-1608cb6a976841a38e804d64801334bb">
+</div></template>
+
+<!-- [AD 6: এমবেড ভিডিওর নিচে] -->
+<template id="ad-src-video">
+<script>atOptions = {'key' : 'dbae51ad68fb44f5c8a6b535812c9f54','format' : 'iframe','height' : 250,'width' : 300, 'params' : {} }; </script>
+<script src="https://prototypesorting.com/dbae51ad68fb44f5c8a6b535812c9f54/invoke.js"></script>
+</script></template>
     
 <div class="main-wrapper">  
     <header>  
@@ -133,16 +194,21 @@
     <div id="post-details-container"></div>  
 
     <div class="related-section" id="related-section-id" style="display: none;">  
-        <div class="related-header-container"><div class="related-header">RELATED POSTS</div></div>  
+        <div class="related-header">RELATED POSTS</div>  
         <div id="related-posts-container"></div>  
-        <div id="sentinel"><div class="main-video-spinner" style="display:block; position:static;"></div></div>  
+        <div id="sentinel"><div class="load-more-spinner"></div></div>  
     </div>  
 
     <footer class="site-footer">  
         <div class="footer-links">  
-            <a href="#">About</a> <a href="#">Contact</a> <a href="#">Privacy Policy</a> <a href="#">Terms of Service</a>  
+            <a href="#" id="link-about">About</a>  
+            <a href="#" id="link-contact">Contact</a>  
+            <a href="#" id="link-privacy">Privacy Policy</a>  
+            <a href="#" id="link-terms">Terms of Service</a>  
         </div>  
-        <div class="footer-copyright">Copyright © 2026 <a href="index.html" style="color:#1da1f2; font-weight:bold;">filmixo.com</a>.</div>  
+        <div class="footer-copyright">  
+            Copyright © 2026 <a href="index.html">filmixo.com</a>. All rights reserved.  
+        </div>  
     </footer>  
     <div id="notification" class="notification"></div>
 </div>  
@@ -151,143 +217,126 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";  
     import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";  
   
-    const PROFILE_IMG = "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg";  
+    const PERMANENT_PROFILE_IMAGE_URL = "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg";  
     const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };  
     const app = initializeApp(firebaseConfig);  
     const db = getFirestore(app);  
-    let deviceId = localStorage.getItem('deviceId') || 'dev-' + Date.now(); localStorage.setItem('deviceId', deviceId);
+    
+    let deviceId = localStorage.getItem('deviceId');
+    if (!deviceId) { deviceId = 'deviceId-' + Date.now(); localStorage.setItem('deviceId', deviceId); }
     
     const urlParams = new URLSearchParams(window.location.search);  
     const postId = urlParams.get('id');  
 
-    const CONFIG = { VIDEO_URL: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea", TOTAL_REL: 12, BATCH: 6 };  
-    let availablePosts = []; let currentStartIndex = 0; let timeElementsToUpdate = [];
+    const CONFIG = { GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea", TOTAL_RELATED_POSTS: 6, BATCH_SIZE_SCROLL: 6, footer: { about: "#", contact: "#", privacy: "#", terms: "#" } };  
+    let availablePosts = []; let currentStartIndex = 0; let observer; let sentinelObserver; let timeElementsToUpdate = [];  
   
+    function getRandomColor() { const c=['#1da1f2','#e0245e','#17bf63']; return c[Math.floor(Math.random()*c.length)]; }   
     function formatCount(n) { if(!n) return 0; return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }  
-    function timeAgo(dateString) { const d = new Date(dateString); const seconds = Math.floor((new Date() - d) / 1000); if (seconds < 60) return "Just now"; const intervals = {y:31536000, d:86400, h:3600, m:60}; for(let k in intervals) { const v = Math.floor(seconds/intervals[k]); if(v >= 1) return v + k + " ago"; } return "Just now"; }  
-    function formatDate(d) { return new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-'); }
+    function timeAgo(dateString) { const d = new Date(dateString); const seconds = Math.floor((new Date() - d) / 1000); let interval = seconds / 31536000; if (interval > 1) return Math.floor(interval) + "y ago"; interval = seconds / 86400; if (interval > 1) return Math.floor(interval) + "d ago"; interval = seconds / 3600; if (interval > 1) return Math.floor(interval) + "h ago"; interval = seconds / 60; if (interval > 1) return Math.floor(interval) + "m ago"; return "Just now"; }  
+    function updateAllTimeElements() { timeElementsToUpdate.forEach(item => { if (item.element && item.element.parentNode) { item.element.innerText = timeAgo(item.dateString); } else { timeElementsToUpdate = timeElementsToUpdate.filter(i => i !== item); } }); }  
+    function formatDate(d) { return new Date(d).toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }); }  
     function showNotification(msg) { const n=document.getElementById('notification'); n.innerText=msg; n.classList.add('show'); setTimeout(()=>n.classList.remove('show'),4000); }  
+  
+    function adjustImageAspectRatio(imgElement) {  
+        const mediaContainer = imgElement.closest('.media-container');  
+        imgElement.onload = function() {  
+            const ratio = this.naturalWidth / this.naturalHeight;  
+            if (ratio >= (3 / 4)) { mediaContainer.classList.add('auto-fit'); } else { mediaContainer.classList.remove('auto-fit'); }  
+        };  
+        if (imgElement.complete) { imgElement.onload(); }  
+       }  
 
+    // --- অ্যাড ইনজেক্ট ফাংশন (Smart Auto-Resize) ---
     function injectAd(tid, cid) {
-        const t = document.getElementById(tid); const c = document.getElementById(cid); if (!t || !c) return;
-        const content = `<html><head><style>body{margin:0;padding:0;overflow:hidden;display:flex;justify-content:center;}</style></head><body>${t.innerHTML}<script>function resize(){const h=document.body.scrollHeight; if(h>10 && window.frameElement){window.frameElement.style.height=h+'px'; window.frameElement.parentElement.style.height=h+'px';}} window.onload=resize; setInterval(resize,600);<\/script></body></html>`;
-        const iframe = document.createElement('iframe'); iframe.style.width='100%'; iframe.style.height='1px'; iframe.style.border='none'; iframe.scrolling='no'; c.appendChild(iframe);
+    const t = document.getElementById(tid); const c = document.getElementById(cid);
+    if (!t || !c) return;
+    const adM = '4px';
+    const content = `<html><head><style>body{margin:0;padding:0;overflow:hidden;background:transparent;display:flex;justify-content:center;}img,iframe,div{max-width:100%;}</style></head><body>${t.innerHTML}<script>function resize(){const h=document.body.scrollHeight;if(h>10 && window.frameElement){window.frameElement.style.height=h+'px';window.frameElement.parentElement.style.height=h+'px';window.frameElement.parentElement.style.marginTop='${adM}';window.frameElement.parentElement.style.marginBottom='${adM}';}}window.onload=resize;setInterval(resize,600);<\/script></body></html>`;
+    
+    requestAnimationFrame(() => {
+        c.innerHTML = '';
+        const iframe = document.createElement('iframe');
+        iframe.style.width = '100%'; iframe.style.height = '1px'; iframe.style.border = 'none'; iframe.style.display = 'block'; iframe.scrolling = 'no';
+        c.appendChild(iframe);
         const doc = iframe.contentWindow.document; doc.open(); doc.write(content); doc.close();
-    }
+       });
+      }
       
+    // --- মেইন পোস্ট রেন্ডার ---  
     function renderMainPost(post) {  
-        let content = `<h1 class="article-title">${post.title}</h1><div id="ad-box-title" class="ad-box"></div>`;
-        if(post.paragraphs) { post.paragraphs.forEach((p, i) => { content += `<p class="article-para">${p}</p>`; if(i===0) content += `<div id="ad-box-p1" class="ad-box"></div>`; if(i===1) content += `<div class="dual-ad-wrapper"><div id="ad-box-p2-left" class="ad-box"></div><div id="ad-box-p2-right" class="ad-box"></div></div>`; }); }
-        
-        // YouTube Embed Fix wrapper
-        let youtube = post.youtubeEmbed ? `<div class="yt-embed-container">${post.youtubeEmbed}</div>` : '';
+        let content = `<h1 class="article-title">${post.title}</h1>`;  
+        content += `<div id="ad-box-title" class="ad-box"></div>`;
+        if(post.paragraphs) { post.paragraphs.forEach((p, index) => { content += `<p class="article-para">${p}</p>`; if(index === 0) content += `<div id="ad-box-p1" class="ad-box"></div>`; if(index === 1) content += `<div class="dual-ad-wrapper"><div id="ad-box-p2-left" class="ad-box"></div><div id="ad-box-p2-right" class="ad-box"></div></div>`; }); }
+        let youtubeHTML = post.youtubeEmbed ? `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div>` : '';
+        let videoAdHTML = `<div id="ad-box-video" class="ad-box"></div>`;
+        let downloadSectionHTML = `<div class="download-title-text">Download Full Movie</div><div class="download-buttons-container"><a href="LINK_FOR_1080_HERE" class="download-btn-v2 btn-1080"><span class="btn-res">1080p</span><span class="btn-tag">FULL HD</span></a><a href="LINK_FOR_720_HERE" class="download-btn-v2 btn-720"><span class="btn-res">720p</span><span class="btn-tag">HD READY</span></a><a href="LINK_FOR_360_HERE" class="download-btn-v2 btn-360"><span class="btn-res">360p</span><span class="btn-tag">MOBILE</span></a></div>`;  
+          
+        document.getElementById('post-details-container').innerHTML = `<div class="post-author-area"><div class="author-info"><div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div><div class="author-text"><h3>FILMIXO<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div></div><div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div></div><div id="ad-box-top" class="ad-box"></div><div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" loading="eager" decoding="sync" fetchpriority="high" alt="Movie Thumbnail"><div class="play-btn-center" id="main-play-btn"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><div class="time-text">${post.videoDuration}</div><div class="prog-bg"><div class="prog-fill"></div></div><div style="display:flex; align-items:center; gap:6px;"><i class="fa-solid fa-volume-high"></i><span class="hd-badge">HD</span></div></div></div><div class="content-body">${content}<div id="ad-box-mid" class="ad-box"></div>${youtubeHTML}${videoAdHTML}${downloadSectionHTML}<div class="stats-section"><div class="stats-left"><div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">0</span> Views</div><div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div></div></div><div class="share-icons"><div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div><div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div><div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div><div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div><div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div></div></div></div>`;  
+          
+        injectAd('ad-src-top', 'ad-box-top');
+        injectAd('ad-src-title', 'ad-box-title');
+        injectAd('ad-src-p1', 'ad-box-p1');
+        injectAd('ad-src-p2', 'ad-box-p2-left');
+        injectAd('ad-src-p2', 'ad-box-p2-right');
+        injectAd('ad-src-mid', 'ad-box-mid');
+        injectAd('ad-src-video', 'ad-box-video');
 
-        document.getElementById('post-details-container').innerHTML = `
-            <div class="post-author-area">
-                <div class="author-info"><div class="pfp"><img src="${PROFILE_IMG}"></div><div class="author-text"><h3>FILMIXO<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div></div>
-                <div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div>
-            </div>
-            <div id="ad-box-top" class="ad-box"></div>
-            <div class="video-container" onclick="handleVideoClick()">
-                <img src="${post.mediaImage}"><div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div>
-                <div class="video-controls"><div class="time-text">${post.videoDuration}</div><div class="prog-bg"><div class="prog-fill"></div></div><div style="display:flex;gap:6px;"><i class="fa-solid fa-volume-high"></i><span class="hd-badge">HD</span></div></div>
-            </div>
-            <div class="content-body">${content}<div id="ad-box-mid" class="ad-box"></div>${youtube}<div id="ad-box-video" class="ad-box"></div>
-                <div class="download-section-wrapper">
-                    <div class="download-title-text">Download Full Movie</div>
-                    <div class="download-buttons-container">
-                        <a href="https://www.google.com/search?q=1080p" class="download-btn-v2 btn-1080"><span class="btn-res">1080p</span><span class="btn-tag">FULL HD</span></a>
-                        <a href="https://www.google.com/search?q=720p" class="download-btn-v2 btn-720"><span class="btn-res">720p</span><span class="btn-tag">HD READY</span></a>
-                        <a href="https://www.google.com/search?q=360p" class="download-btn-v2 btn-360"><span class="btn-res">360p</span><span class="btn-tag">MOBILE</span></a>
-                    </div>
-                </div>
-                <div class="stats-container">
-                    <div class="stats-top-border"></div>
-                    <div class="stats-section">
-                        <div class="view-stat"><i class="fa-solid fa-chart-simple"></i><span id="view-cnt">0</span> Views</div>
-                        <div class="love-btn"><i class="fa-regular fa-heart"></i><span id="like-cnt">0</span> Likes</div>
-                        <div class="share-icons">
-                            <div class="share-icon" style="background:#1877f2" onclick="share('fb')"><i class="fa-brands fa-facebook-f"></i></div>
-                            <div class="share-icon" style="background:#0084ff" onclick="share('msg')"><i class="fa-brands fa-facebook-messenger"></i></div>
-                            <div class="share-icon" style="background:#25d366" onclick="share('wa')"><i class="fa-brands fa-whatsapp"></i></div>
-                            <div class="share-icon" style="background:#1da1f2" onclick="share('tw')"><i class="fa-brands fa-twitter"></i></div>
-                            <div class="share-icon" style="background:#0088cc" onclick="share('tg')"><i class="fa-brands fa-telegram"></i></div>
-                        </div>
-                    </div>
-                </div>
-            </div>`;  
-        ['top','title','p1','p2-left','p2-right','mid','video'].forEach(id => injectAd('ad-src-'+(id.includes('p2')?'p2':id), 'ad-box-'+id));
-        timeElementsToUpdate.push({ element: document.getElementById('main-post-time'), dateString: post.uploadTime });
-    }  
-
-    function renderBatch(posts) {  
-        const container = document.getElementById('related-posts-container');  
-        posts.forEach(post => {  
-            const card = document.createElement('div'); card.className = 'post-card-rel';  
-            card.innerHTML = `
-                <div class="media-container-rel" onclick="openPost('${post.id}')"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon-rel"></div><div class="duration-badge-rel">${post.videoDuration}</div></div>
-                <div class="post-title-rel" onclick="openPost('${post.id}')">${post.title}</div>
-                <div class="card-footer-rel">
-                    <div style="display:flex;gap:3px;align-items:center;"><i class="fa-solid fa-chart-simple"></i><span class="v-rel">0</span></div>
-                    <div class="l-btn-rel" style="display:flex;gap:3px;align-items:center;cursor:pointer;"><i class="fa-regular fa-heart"></i><span class="l-rel">0</span></div>
-                    <div>${formatDate(post.uploadTime)}</div>
-                    <div onclick="sharePost('${post.id}','${post.title.replace(/'/g,"\\'")}')"><i class="fa-solid fa-share-nodes"></i></div>
-                </div>`;  
-            container.appendChild(card); 
-            setupFirebaseForRel(card, post.id);  
-        });  
+        const mainTimeElement = document.getElementById('main-post-time');  
+        if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
     }  
   
     async function init() {  
+        const postContainer = document.getElementById('post-details-container'); const mainWrapper = document.querySelector('.main-wrapper');   
         try {  
-            const res = await fetch('posts.json'); const posts = await res.json(); 
-            const main = posts.find(p => p.id === postId) || posts[0]; 
-            renderMainPost(main); setupFirebaseMain(main.id); document.querySelector('.main-wrapper').classList.add('loaded'); 
-            const historical = posts.filter(p => p.id !== main.id && new Date(p.uploadTime) < new Date(main.uploadTime)).sort((a,b)=>new Date(b.uploadTime)-new Date(a.uploadTime));
-            availablePosts = historical.slice(0, CONFIG.TOTAL_REL);
-            if (availablePosts.length > 0) { document.getElementById('related-section-id').style.display = 'block'; setupSentinel(); }
-        } catch (e) { console.error(e); }  
-    }  
-
-    function setupSentinel() {
-        new IntersectionObserver((entries) => { if(entries[0].isIntersecting) loadNext(); }, {rootMargin:'400px'}).observe(document.getElementById('sentinel'));
-    }
-
-    function loadNext() {
-        if (currentStartIndex >= availablePosts.length) { document.getElementById('sentinel').style.display='none'; return; }
-        renderBatch(availablePosts.slice(currentStartIndex, currentStartIndex + CONFIG.BATCH));
-        currentStartIndex += CONFIG.BATCH;
-    }
-
-    function setupFirebaseMain(id) {  
-        setDoc(doc(db,"views",id),{count:increment(1)},{merge:true});
-        onSnapshot(doc(db,"views",id),s=>document.getElementById('view-cnt').innerText=formatCount(s.data()?.count));
-        const lRef=doc(db,"loves",id),uRef=doc(db,`loves/${id}/users`,deviceId),lBtn=document.querySelector('.love-btn');
-        onSnapshot(lRef,s=>document.getElementById('like-cnt').innerText=formatCount(s.data()?.count));
-        getDoc(uRef).then(s=>{if(s.exists()){lBtn.classList.add('liked');lBtn.querySelector('i').className='fa-solid fa-heart';}});
-        lBtn.onclick=async()=>{if(!(await getDoc(uRef)).exists()){lBtn.classList.add('liked');lBtn.querySelector('i').className='fa-solid fa-heart';await setDoc(lRef,{count:increment(1)},{merge:true});await setDoc(uRef,{t:new Date()});}};
+            const res = await fetch('posts.json'); if(!res.ok) throw new Error("Failed to load posts data.");  
+            const posts = await res.json(); const mainPost = posts.find(p => p.id === postId) || posts[0]; if (!mainPost) throw new Error("Post not found.");  
+            renderMainPost(mainPost); setupFirebaseForMainPost(mainPost.id); mainWrapper.classList.add('loaded'); setInterval(updateAllTimeElements, 60000);   
+            const anchorPostTime = new Date(mainPost.uploadTime).getTime(); const historicalPosts = posts.filter(p => p.id !== mainPost.id && new Date(p.uploadTime).getTime() < anchorPostTime).sort((a, b) => new Date(b.uploadTime).getTime() - new Date(a.uploadTime).getTime()); availablePosts = historicalPosts.slice(0, CONFIG.TOTAL_RELATED_POSTS);  
+            if (availablePosts.length > 0) { document.getElementById('related-section-id').style.display = 'block'; setupRelatedSectionObserver(); }
+        } catch (e) { postContainer.innerHTML = `<div style="padding:20px;text-align:center;color:red;">Error loading post: ${e.message}</div>`; mainWrapper.classList.add('loaded'); }  
     }  
   
-    function setupFirebaseForRel(card, id) {  
-        const vEl=card.querySelector('.v-rel'),lEl=card.querySelector('.l-rel'),lBtn=card.querySelector('.l-btn-rel');
-        onSnapshot(doc(db,"views",id),s=>vEl.innerText=formatCount(s.data()?.count));
-        const lRef=doc(db,"loves",id),uRef=doc(db,`loves/${id}/users`,deviceId);
-        onSnapshot(lRef,s=>lEl.innerText=formatCount(s.data()?.count));
-        getDoc(uRef).then(s=>{if(s.exists()){lBtn.classList.add('liked');lBtn.querySelector('i').className='fa-solid fa-heart';lBtn.style.color='#e0245e';}});
-        lBtn.onclick=(e)=>{e.stopPropagation(); if(!lBtn.classList.contains('liked')){lBtn.classList.add('liked');lBtn.style.color='#e0245e';lBtn.querySelector('i').className='fa-solid fa-heart';setDoc(lRef,{count:increment(1)},{merge:true});setDoc(uRef,{t:new Date()});}};
+    function setupRelatedSectionObserver() { const relatedSection = document.getElementById('related-section-id'); observer = new IntersectionObserver((entries, obs) => { if (entries[0].isIntersecting) { obs.unobserve(relatedSection); loadNextBatch(); setupSentinelObserver(); } }, { rootMargin: '100px 0px' }); observer.observe(relatedSection); }  
+    function setupSentinelObserver() { const sentinel = document.getElementById('sentinel'); if (availablePosts.length > CONFIG.BATCH_SIZE_SCROLL) { sentinelObserver = new IntersectionObserver((entries) => { if (entries[0].isIntersecting && !sentinel.classList.contains('loading')) { setTimeout(() => loadNextBatch(), 500); } }, { rootMargin: '100px' }); sentinelObserver.observe(sentinel); } else { sentinel.style.display = 'none'; } }  
+    function loadNextBatch() { const sentinel = document.getElementById('sentinel'); if (currentStartIndex >= availablePosts.length) { sentinel.style.display = 'none'; return; } sentinel.classList.add('loading'); const batchSize = CONFIG.BATCH_SIZE_SCROLL; const endIndex = Math.min(currentStartIndex + batchSize, availablePosts.length); const postsToLoad = availablePosts.slice(currentStartIndex, endIndex); renderBatch(postsToLoad); currentStartIndex = endIndex; sentinel.classList.remove('loading'); if (currentStartIndex >= availablePosts.length) { sentinel.style.display = 'none'; if(sentinelObserver) sentinelObserver.unobserve(sentinel); } }  
+  
+    function renderBatch(postsToLoad) {  
+        const container = document.getElementById('related-posts-container');  
+        postsToLoad.forEach(post => {  
+            let excerpt = post.paragraphs && post.paragraphs.length > 0 ? post.paragraphs[0].substring(0, 100) + "..." : "";  
+            const safeTitle = post.title.replace(/'/g, "\\'");  
+            const cardWrapper = document.createElement('div');  
+            cardWrapper.innerHTML = `<div class="post-card" data-id="${post.id}"><div class="post-header"><div class="post-pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}" loading="lazy"></div><div class="post-meta-text"><div class="name-row"><h3>FILMIXO<i class="verified-badge fa-solid fa-circle-check"></i></h3><span class="post-username">@filmixo</span> <span class="dot-separator">·</span><span class="time-ago" data-upload-time="${post.uploadTime}">${timeAgo(post.uploadTime)}</span></div></div></div><div class="post-title" onclick="openPost('${post.id}')">${post.title}</div><div class="post-excerpt" onclick="openPost('${post.id}')">${excerpt} <span class="read-more-text">See more</span></div><div class="hashtags">${post.hashtags}</div><div class="media-container" onclick="openPost('${post.id}')"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div><div class="post-footer"><div class="footer-left"><i class="fa-solid fa-chart-simple"></i> <span class="count-text view-count-rel">0</span> <span class="label-text">Views</span></div><div class="footer-right"><div class="love-btn-rel"><i class="fa-regular fa-heart"></i> <span class="count-text like-count-rel">0</span> <span class="label-text">Likes</span></div><div class="post-date-display">${formatDate(post.uploadTime)}</div><div class="footer-share-btn" onclick="sharePost('${post.id}', '${safeTitle}')"><i class="fa-solid fa-share-from-square"></i></div></div></div></div>`;  
+            const newCard = cardWrapper.firstElementChild; container.appendChild(newCard); adjustImageAspectRatio(newCard.querySelector('.media-container img'));  
+            const timeElement = newCard.querySelector('.time-ago'); if (timeElement) { timeElementsToUpdate.push({ element: timeElement, dateString: post.uploadTime }); } setupFirebaseForSingleCard(newCard, post.id);  
+        });  
+    }  
+  
+    function setupFirebaseForMainPost(id) {  
+        setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true }); onSnapshot(doc(db, "views", id), s => document.getElementById('view-cnt').innerText = formatCount(s.data()?.count || 0));  
+        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');  
+        onSnapshot(lRef, s => document.getElementById('like-cnt').innerText = formatCount(s.data()?.count || 0)); getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
+        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) { } else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); } });  
+    }  
+  
+    function setupFirebaseForSingleCard(card, id) {  
+        const vEl = card.querySelector('.view-count-rel'), lEl = card.querySelector('.like-count-rel'), lBtn = card.querySelector('.love-btn-rel');  
+        onSnapshot(doc(db, "views", id), s => vEl.innerText = formatCount(s.data()?.count || 0));  
+        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId); onSnapshot(lRef, s => lEl.innerText = formatCount(s.data()?.count || 0));  
+        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
+        lBtn.addEventListener('click', async () => { if((await getDoc(uRef)).exists()) { } else { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); } });  
     }  
     
-    window.handleVideoClick=()=> { document.getElementById('main-spinner').style.display='block'; setTimeout(()=>location.href=CONFIG.VIDEO_URL,500); };
-    window.openPost=(id)=> { sessionStorage.setItem(`finalScroll_${postId}`, window.scrollY); location.href=`post.html?id=${id}`; };  
-    window.sharePost=(id,t)=> { const url=window.location.origin+`/movie/post.html?id=${id}`; if(navigator.share) navigator.share({title:t,url:url}); else {navigator.clipboard.writeText(url); showNotification("Link copied! 📋");} };
-    window.share=(p)=> { const u=encodeURIComponent(location.href); if(p==='msg') { if(/iPhone|Android/i.test(navigator.userAgent)) location.href=`fb-messenger://share/?link=${u}`; else window.open(`https://www.facebook.com/dialog/send?link=${u}&app_id=123456789&redirect_uri=${u}`,'_blank'); } else { let link=''; if(p==='fb') link=`https://www.facebook.com/sharer/sharer.php?u=${u}`; else if(p==='wa') link=`https://wa.me/?text=${u}`; else if(p==='tw') link=`https://twitter.com/intent/tweet?url=${u}`; else if(p==='tg') link=`https://t.me/share/url?url=${u}`; window.open(link,'_blank'); } };
-
+    window.handleVideoClick = function() { const container = document.querySelector('.video-container'); const s = document.getElementById('main-spinner'); if(container) container.classList.add('is-loading'); if(s) s.style.display = 'block'; setTimeout(() => { window.location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100); };
+    window.addEventListener('pageshow', () => { const container = document.querySelector('.video-container'); const s = document.getElementById('main-spinner'); if(container) container.classList.remove('is-loading'); if(s) s.style.display = 'none'; });
+    window.openPost = (id) => window.location.href = `/movie/post.html?id=${id}`;  
+    window.sharePost = (id, title) => { const url = window.location.origin + `/movie/post.html?id=${id}`; if (navigator.share) { navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); } else { navigator.clipboard.writeText(url); showNotification("Link copied! 📋"); } };
+    window.share = (platform, title) => { const url = encodeURIComponent(window.location.href); const text = encodeURIComponent(title); if (platform === 'msg') { const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent); if (isMobile) window.location.href = `fb-messenger://share/?link=${url}`; else window.open(`https://www.facebook.com/dialog/send?link=${url}&app_id=123456789&redirect_uri=${url}`, '_blank'); } else { let link = ''; if(platform === 'fb') link = `https://www.facebook.com/sharer/sharer.php?u=${url}`; else if(platform === 'wa') link = `https://wa.me/?text=${text}%20${url}`; else if(platform === 'tw') link = `https://twitter.com/intent/tweet?text=${text}&url=${url}`; else if(platform === 'tg') link = `https://t.me/share/url?url=${url}&text=${text}`; window.open(link, '_blank'); } };
+    window.addEventListener('beforeunload', () => { if (postId) { sessionStorage.setItem(`finalScroll_${postId}`, window.scrollY); } });
     if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
-    async function restorePos() { 
-        const saved = sessionStorage.getItem(`finalScroll_${postId}`); 
-        if (saved) { const target = parseInt(saved); if (target > 500) loadNext(); setTimeout(() => { window.scrollTo({ top: target, behavior: 'instant' }); sessionStorage.removeItem(`finalScroll_${postId}`); }, 600); } 
-    }
-    init().then(restorePos);
+    async function restoreScrollPos() { const navigationType = window.performance.getEntriesByType("navigation")[0]?.type; const savedPos = sessionStorage.getItem(`finalScroll_${postId}`); if (navigationType === 'back_forward' && savedPos) { const scrollTarget = parseInt(savedPos); if (scrollTarget > 500) { loadNextBatch(); } setTimeout(() => { window.scrollTo({ top: scrollTarget, behavior: 'instant' }); sessionStorage.removeItem(`finalScroll_${postId}`); }, 800); } else { sessionStorage.removeItem(`finalScroll_${postId}`); } }
+    init().then(() => { restoreScrollPos(); });
 </script>  
 </body>  
 </html>
