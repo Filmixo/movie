@@ -24,7 +24,7 @@
     .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
     header > div { display: flex; align-items: center; gap: 2px; }
         
-    /* --- অ্যাড বক্স ও ভিডিও প্লেয়ার (অপরিবর্তিত) --- */
+    /* --- অ্যাড বক্স ও ভিডিও প্লেয়ার --- */
     .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
     .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
     .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 2px 15px; width: 100%; }
@@ -38,13 +38,17 @@
     .prog-fill { width: 1.5%; height: 100%; background: #ff0000; border-radius: 4px; }
     .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 900; }
 
-    /* --- পোস্ট অথর এরিয়া (নামের নিচে ইউজারনেম) --- */  
+    /* --- YouTube Embed Fix --- */
+    .yt-embed-container { width: 100%; aspect-ratio: 16/9; margin-bottom: 15px; border-radius: 8px; overflow: hidden; background: #000; position: relative; }
+    .yt-embed-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+    /* --- পোস্ট অথর এরিয়া --- */  
     .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
     .author-info { display: flex; align-items: center; gap: 10px; }  
     .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
     .pfp img { width: 100%; height: 100%; object-fit: cover; }  
     .author-text h3 { font-size: 18px; margin: 0; color: #0f1419; display: inline-flex; align-items: center; gap: 5px; }  
-    .verified-badge { color: #1da1f2 !important; font-size: 15px; } /* ব্লু কালার নিশ্চিত */
+    .verified-badge { color: #1da1f2 !important; font-size: 15px; }
     .author-text span { font-size: 12px; color: #1da1f2; display: block; margin-top: -1px; }  
     .post-time { font-size: 14px; color: #536471; font-weight: bold; }  
 
@@ -52,20 +56,22 @@
     .article-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-top: 8px; margin-bottom: 8px; }
 
-    /* --- স্ট্যাটস সেকশন (Views, Likes, Sharing - নিখুঁত বিন্যাস) --- */
+    /* --- স্ট্যাটস সেকশন (Views, Likes, Sharing) --- */
     .stats-container { margin-top: 15px; }
-    .stats-top-border { width: 92%; height: 1px; background: #e1e8ed; margin: 0 auto; } /* ছোট উপরের বর্ডার */
-    .stats-section { padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #cfd9de; } /* ফুল স্ক্রিন নিচের মেইন বর্ডার */
+    .stats-top-border { width: 92%; height: 1px; background: #e1e8ed; margin: 0 auto; }
+    .stats-section { padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #cfd9de; } 
     
     .view-stat { display: flex; align-items: center; gap: 4px; font-weight: 600; font-size: 13px; color: #536471; flex: 1; }
     .love-btn { display: flex; align-items: center; gap: 4px; font-weight: 600; font-size: 13px; color: #536471; cursor: pointer; user-select: none; flex: 1; justify-content: center; }
     .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
     
     .share-icons { display: flex; gap: 5px; flex: 1; justify-content: flex-end; align-items: center; }  
-    .share-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 11px; }  
+    .share-icon { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 11px; transition: transform 0.1s ease; }  
+    .share-icon:active { transform: scale(0.85); box-shadow: inset 0 0 5px rgba(0,0,0,0.3); } /* ক্লিক ইফেক্ট */
 
-    /* --- ডাউনলোড বাটন (Active state) --- */  
-    .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; padding-top: 15px; }  
+    /* --- ডাউনলোড বাটন সেকশন (বর্ডার আপডেট) --- */  
+    .download-section-wrapper { border-top: 1.5px solid #e1e8ed; margin-top: 20px; padding-top: 5px; } /* উপরের ফুল স্ক্রিন বর্ডার */
+    .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; }  
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; gap: 10px; }  
     .download-btn-v2 { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 12px 5px; border-radius: 6px; color: white; border-bottom: 3px solid rgba(0,0,0,0.3); transition: transform 0.1s; }
     .download-btn-v2:active { transform: translateY(2px); border-bottom-width: 1px; }
@@ -75,8 +81,9 @@
     .btn-720 { background: linear-gradient(180deg, #1976D2 0%, #0D47A1 100%); }
     .btn-360 { background: linear-gradient(180deg, #388E3C 0%, #1B5E20 100%); }
 
-    /* --- রিলেটেড পোস্ট কার্ড (Index.html ডিজাইন) --- */
-    .related-header-container { padding: 13px 15px; border-bottom: 1.5px solid #e1e8ed; } /* রিলেটেড পোস্টের নিচের হালকা বর্ডার */
+    /* --- রিলেটেড পোস্ট কার্ড (বর্ডার ও গ্যাপ ফিক্স) --- */
+    .related-section { border-top: 1.5px solid #e1e8ed; margin-top: 20px; } /* উপরের ফুল স্ক্রিন বর্ডার */
+    .related-header-container { padding: 10px 15px; border-bottom: 1.5px solid #e1e8ed; } /* গ্যাপ কমানো হয়েছে */
     .related-header { font-weight: 900; color: #000; text-transform: uppercase; font-size: 14px; }  
     
     #related-posts-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
@@ -171,7 +178,9 @@
     function renderMainPost(post) {  
         let content = `<h1 class="article-title">${post.title}</h1><div id="ad-box-title" class="ad-box"></div>`;
         if(post.paragraphs) { post.paragraphs.forEach((p, i) => { content += `<p class="article-para">${p}</p>`; if(i===0) content += `<div id="ad-box-p1" class="ad-box"></div>`; if(i===1) content += `<div class="dual-ad-wrapper"><div id="ad-box-p2-left" class="ad-box"></div><div id="ad-box-p2-right" class="ad-box"></div></div>`; }); }
-        let youtube = post.youtubeEmbed ? `<div style="width:100%; aspect-ratio:16/9; margin-bottom:10px; border-radius:8px; overflow:hidden; background:#000;">${post.youtubeEmbed}</div>` : '';
+        
+        // YouTube Embed Fix wrapper
+        let youtube = post.youtubeEmbed ? `<div class="yt-embed-container">${post.youtubeEmbed}</div>` : '';
 
         document.getElementById('post-details-container').innerHTML = `
             <div class="post-author-area">
@@ -184,11 +193,13 @@
                 <div class="video-controls"><div class="time-text">${post.videoDuration}</div><div class="prog-bg"><div class="prog-fill"></div></div><div style="display:flex;gap:6px;"><i class="fa-solid fa-volume-high"></i><span class="hd-badge">HD</span></div></div>
             </div>
             <div class="content-body">${content}<div id="ad-box-mid" class="ad-box"></div>${youtube}<div id="ad-box-video" class="ad-box"></div>
-                <div class="download-title-text">Download Full Movie</div>
-                <div class="download-buttons-container">
-                    <a href="https://www.google.com/search?q=1080p" class="download-btn-v2 btn-1080"><span class="btn-res">1080p</span><span class="btn-tag">FULL HD</span></a>
-                    <a href="https://www.google.com/search?q=720p" class="download-btn-v2 btn-720"><span class="btn-res">720p</span><span class="btn-tag">HD READY</span></a>
-                    <a href="https://www.google.com/search?q=360p" class="download-btn-v2 btn-360"><span class="btn-res">360p</span><span class="btn-tag">MOBILE</span></a>
+                <div class="download-section-wrapper">
+                    <div class="download-title-text">Download Full Movie</div>
+                    <div class="download-buttons-container">
+                        <a href="https://www.google.com/search?q=1080p" class="download-btn-v2 btn-1080"><span class="btn-res">1080p</span><span class="btn-tag">FULL HD</span></a>
+                        <a href="https://www.google.com/search?q=720p" class="download-btn-v2 btn-720"><span class="btn-res">720p</span><span class="btn-tag">HD READY</span></a>
+                        <a href="https://www.google.com/search?q=360p" class="download-btn-v2 btn-360"><span class="btn-res">360p</span><span class="btn-tag">MOBILE</span></a>
+                    </div>
                 </div>
                 <div class="stats-container">
                     <div class="stats-top-border"></div>
