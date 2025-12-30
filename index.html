@@ -6,20 +6,20 @@
     <title>FILMIXO Premium movie access</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- ইমেজ প্রি-লোড -->
+    <!-- ইমেজ প্রি-লোড এবং প্রায়োরিটি হাই -->
     <link rel="preload" as="image" href="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg" fetchpriority="high">
 
     <style>
-        /* --- বেসিক রিসেট ও স্ট্রাকচার --- */
+        /* --- বেসিক রিসেট ও স্ট্রাকচার (১০০% অরিজিনাল লজিক) --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }
         body { background-color: #ffffff; display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }
         .main-container { background-color: white; width: 100%; max-width: 600px; min-height: 10vh; border-left: 1px solid #ddd; border-right: 1px solid #ddd; position: relative; padding-bottom: 0; }
 
         /* --- প্রোফাইল ও স্লাইডার সেকশন --- */
-        .cover-photo { width: 100%; aspect-ratio: 18/9; position: relative; overflow: hidden; background: #000; contain: layout paint; transform: translateZ(0); }
-        .cover-photo::after { content: ""; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 5; }
+        .cover-photo { width: 100%; aspect-ratio: 18/9; position: relative; overflow: hidden; background: radial-gradient(circle at center,#111 0%,#000 70%); contain: layout paint; transform: translateZ(0); }
+        .cover-photo::after { content: ""; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"); pointer-events: none; }
         
-        .intro-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 6; font-size: 36px; font-weight: 900; letter-spacing: 18px; color: #fff; opacity: 0; text-shadow: 0 0 12px #fff, 0 0 28px #1da1f2; pointer-events: none; }
+        .intro-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 6; font-size: 36px; font-weight: 900; letter-spacing: 18px; color: #fff; opacity: 0; text-shadow: 0 0 12px #fff, 0 0 28px #1da1f2; pointer-events: none; white-space: nowrap; }
         @keyframes cinematicIntro { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.65); filter: blur(18px); } 45% { opacity: 1; filter: blur(0); transform: translate(-50%, -50%) scale(1); } 75% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4); filter: blur(12px); } }
 
         .profile-header-area { position: relative; padding: 0 15px; display: flex; justify-content: space-between; align-items: flex-start; }
@@ -31,12 +31,14 @@
         .btn-email { background-color: #1da1f2; }
         .btn-share { background-color: #000; }
 
+        /* --- ইনফো সেকশন (গ্যাপ আপডেট করা হয়েছে) --- */
         .info-section { padding: 5px 15px 15px 15px; display: flex; flex-direction: column; }
         .website-name { font-size: 22px; font-weight: 800; color: #1c1e21; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 3px; }
         .username { font-size: 15px; color: #1da1f2; margin-bottom: 12px; }
         .stats { display: flex; gap: 2px; font-size: 13.5px; color: #333333; margin-bottom: 8px; font-weight: 500; align-items: center; }
-        .stats b { color: #1c1e21; font-weight: 800; min-width: 15px; text-align: center; } 
+        .stats b { color: #1c1e21; font-weight: 800; margin-right: 2px; min-width: 15px; text-align: center; } 
         .meta-info { display: flex; flex-wrap: wrap; gap: 15px; font-size: 13.5px; color: #536471; margin-bottom: 10px; }
+        .meta-info span { display: flex; align-items: center; gap: 8px; } /* আইকন ও টেক্সটের গ্যাপ */
         .bio { font-size: 16px; color: #0f1419; line-height: 1.2; text-align: left; font-weight: 400; }
 
         /* --- নেভিগেশন বার --- */
@@ -45,7 +47,7 @@
         .nav-btn.active { background-color: #000 !important; color: white !important; border: 1px solid #000 !important; }
         .nav-btn.inactive { background-color: #f0f2f5; color: #000; }
 
-        /* --- ডাবল কলাম গ্রিড ও কার্ড --- */
+        /* --- ডাবল কলাম গ্রিড ও কার্ড ডিজাইন --- */
         #feed-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
         .post-card { background: white; border-bottom: 1.2px solid #e1e8ed; padding-bottom: 8px; display: flex; flex-direction: column; opacity: 0; animation: fadeIn 0.5s forwards; }
 
@@ -65,10 +67,15 @@
         .post-title { font-size: 14px; font-weight: 700; color: #0f1419; margin: 8px 0 6px 0; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 34px; cursor: pointer; transition: color 0.1s; }
         .post-title:active { color: #1da1f2; }
         
-        .card-footer-info { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #536471; font-weight: 600; margin-top: 4px; }
-        .view-group { display: flex; align-items: center; gap: 3px; }
+        /* কার্ড ফুটার আপডেট: বামে ভিউ, মাঝে ডেট, ডানে লাভ */
+        .card-footer-info { display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: #536471; font-weight: 600; margin-top: 4px; }
+        .view-group { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-start; }
+        .date-group { flex: 1; text-align: center; }
+        .love-group { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .love-group.liked { color: #e0245e; }
+        .love-group.liked i { font-weight: 900; }
 
-        /* --- লোডার --- */
+        /* --- লোডার ও অন্যান্য --- */
         .wave-loader { display: flex; justify-content: center; align-items: center; height: 100%; gap: 5px; }
         .wave-loader div { width: 10px; height: 10px; background-color: #1da1f2; border-radius: 50%; animation: bounce 1.2s infinite ease-in-out both; transform: scale(0); }
         @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
@@ -129,8 +136,8 @@
                 <span>Total Views <b id="total-views-count">0</b></span>
             </div>
             <div class="meta-info">
-                <span><i class="fa-solid fa-location-dot"></i>🇺🇲 United States</span>
-                <span><i class="fa-regular fa-calendar"></i>Joined 13/12/2025</span>
+                <span><i class="fa-solid fa-location-dot"></i> 🇺🇲 United States</span>
+                <span><i class="fa-regular fa-calendar"></i> Joined 13/12/2025</span>
             </div>
             <p class="bio">FILMIXO:🍿 Your ultimate HD movie hub. Download exclusive releases and trending blockbusters instantly. Stop scrolling, seize the cinema.</p>
         </div>
@@ -205,7 +212,7 @@
         function formatDate(d) { return new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-'); }
         function showNotification(msg) { const n = document.getElementById('notification'); n.textContent = msg; n.classList.add('show'); setTimeout(() => n.classList.remove('show'), 3000); }
         window.sendEmail = function() { window.location.href = `mailto:${CONFIG.CONTACT_EMAIL}`; }
-        window.shareProfile = function() { const url = window.location.href.split('?')[0]; const text = "Filmixo:🍿 - new popular, movie download website 🎥"; if (navigator.share) { navigator.share({ title: "Filmixo", text: text, url: url }); } else { navigator.clipboard.writeText(`${text} ${url}`); showNotification("Link copied! 📋"); } }
+        window.shareProfile = function() { const url = window.location.href.split('?')[0]; const text = "Filmixo:🍿 - movie download website 🎥"; if (navigator.share) { navigator.share({ title: "Filmixo", text: text, url: url }); } else { navigator.clipboard.writeText(`${text} ${url}`); showNotification("Link copied! 📋"); } }
         
         let sliderInterval; 
         const startCoverSlider = posts => {
@@ -255,7 +262,11 @@
                             <i class="fa-solid fa-chart-simple"></i>
                             <span class="view-count">0</span>
                         </div>
-                        <div class="upload-date-display">${formatDate(post.uploadTime)}</div>
+                        <div class="date-group">${formatDate(post.uploadTime)}</div>
+                        <div class="love-group" data-id="${post.id}">
+                            <i class="fa-regular fa-heart"></i>
+                            <span class="like-count">0</span>
+                        </div>
                     </div>
                 `;
                 container.appendChild(card);
@@ -265,17 +276,43 @@
             sentinel.classList.remove('loading');
         }
 
+        function initializeFirebaseForCard(card, id) {
+            const viewEl = card.querySelector('.view-count');
+            const likeEl = card.querySelector('.like-count');
+            const loveBtn = card.querySelector('.love-group');
+            
+            // অরিজিনাল ফায়ারবেস লজিক (Original Code থেকে সংগৃহীত)
+            onSnapshot(doc(db, "views", id), (s) => viewEl.innerText = formatCount(s.data()?.count || 0));
+            const loveRef = doc(db, "loves", id);
+            const userRef = doc(db, `loves/${id}/users`, deviceId);
+            
+            getDoc(userRef).then(s => { 
+                if(s.exists()) { 
+                    loveBtn.classList.add('liked'); 
+                    loveBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid'); 
+                } 
+            });
+
+            onSnapshot(loveRef, (s) => likeEl.innerText = formatCount(s.data()?.count || 0));
+            
+            loveBtn.addEventListener('click', async (e) => {
+                e.stopPropagation();
+                const s = await getDoc(userRef);
+                if(!s.exists()) { 
+                    loveBtn.classList.add('liked'); 
+                    loveBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid'); 
+                    await setDoc(loveRef, { count: increment(1) }, { merge: true }); 
+                    await setDoc(userRef, { time: new Date() }); 
+                }
+            });
+        }
+
         function setupObserver() {
             const sentinel = document.getElementById('sentinel');
             observer = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting) { loadNextBatch(CONFIG.BATCH_SIZE); }
             }, { rootMargin: '500px' });
             observer.observe(sentinel);
-        }
-        
-        function initializeFirebaseForCard(card, id) {
-            const viewEl = card.querySelector('.view-count');
-            onSnapshot(doc(db, "views", id), (s) => viewEl.innerText = formatCount(s.data()?.count || 0));
         }
 
         async function calculateTotalViews() {
@@ -297,7 +334,6 @@
             document.getElementById('main-footer').style.display='block';
             deactivateNavButtons();
             document.getElementById('nav-home').classList.add('active');
-            document.getElementById('nav-home').classList.remove('inactive');
         };
         window.goToSignUp = () => window.location.href="https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef";
         window.showLogin = () => {
@@ -307,7 +343,6 @@
             document.getElementById('main-footer').style.display='none';
             deactivateNavButtons();
             document.getElementById('nav-login').classList.add('active');
-            document.getElementById('nav-login').classList.remove('inactive');
         };
 
         const searchOverlay = document.getElementById('search-overlay');
@@ -319,7 +354,6 @@
             searchOverlay.style.display = 'flex';
             deactivateNavButtons();
             document.getElementById('nav-search').classList.add('active');
-            document.getElementById('nav-search').classList.remove('inactive');
             searchInput.focus(); renderSearchResults(''); 
             document.body.style.overflow = 'hidden'; 
             history.pushState({ action: 'search_open' }, '');
@@ -361,7 +395,6 @@
                 const savedPos = sessionStorage.getItem('index_scroll');
                 if (savedPos) {
                     const pos = parseInt(savedPos);
-                    // লোকেশন রিস্টোর লজিক: যতক্ষণ স্ক্রল লোকেশন না পৌঁছাবে ততক্ষণ ব্যাচ লোড হতে থাকবে
                     while (currentIndex < allPosts.length && document.documentElement.scrollHeight < pos + window.innerHeight + 1000) {
                         await loadNextBatch(CONFIG.BATCH_SIZE);
                     }
