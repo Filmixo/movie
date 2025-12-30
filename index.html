@@ -31,14 +31,13 @@
         .btn-email { background-color: #1da1f2; }
         .btn-share { background-color: #000; }
 
-        /* --- ইনফো সেকশন (গ্যাপ আপডেট করা হয়েছে) --- */
         .info-section { padding: 5px 15px 15px 15px; display: flex; flex-direction: column; }
         .website-name { font-size: 22px; font-weight: 800; color: #1c1e21; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 3px; }
         .username { font-size: 15px; color: #1da1f2; margin-bottom: 12px; }
         .stats { display: flex; gap: 2px; font-size: 13.5px; color: #333333; margin-bottom: 8px; font-weight: 500; align-items: center; }
         .stats b { color: #1c1e21; font-weight: 800; margin-right: 2px; min-width: 15px; text-align: center; } 
         .meta-info { display: flex; flex-wrap: wrap; gap: 15px; font-size: 13.5px; color: #536471; margin-bottom: 10px; }
-        .meta-info span { display: flex; align-items: center; gap: 8px; } /* আইকন ও টেক্সটের গ্যাপ */
+        .meta-info span { display: flex; align-items: center; gap: 8px; }
         .bio { font-size: 16px; color: #0f1419; line-height: 1.2; text-align: left; font-weight: 400; }
 
         /* --- নেভিগেশন বার --- */
@@ -47,11 +46,9 @@
         .nav-btn.active { background-color: #000 !important; color: white !important; border: 1px solid #000 !important; }
         .nav-btn.inactive { background-color: #f0f2f5; color: #000; }
 
-        /* --- ডাবল কলাম গ্রিড ও কার্ড ডিজাইন --- */
+        /* --- ডাবল কলাম গ্রিড ও কার্ড --- */
         #feed-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
         .post-card { background: white; border-bottom: 1.2px solid #e1e8ed; padding-bottom: 8px; display: flex; flex-direction: column; opacity: 0; animation: fadeIn 0.5s forwards; }
-
-        /* শেষ সারির বর্ডার রিমুভ লজিক */
         .post-card:last-child { border-bottom: none !important; }
         .post-card:nth-last-child(2):nth-child(odd) { border-bottom: none !important; }
 
@@ -67,15 +64,23 @@
         .post-title { font-size: 14px; font-weight: 700; color: #0f1419; margin: 8px 0 6px 0; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 34px; cursor: pointer; transition: color 0.1s; }
         .post-title:active { color: #1da1f2; }
         
-        /* কার্ড ফুটার আপডেট: বামে ভিউ, মাঝে ডেট, ডানে লাভ */
         .card-footer-info { display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: #536471; font-weight: 600; margin-top: 4px; }
         .view-group { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-start; }
+        .view-group i { font-size: 12px; }
         .date-group { flex: 1; text-align: center; }
+        
+        /* লাভ আইকন সামান্য বড় করা হয়েছে */
         .love-group { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .love-group i { font-size: 16px; } 
         .love-group.liked { color: #e0245e; }
         .love-group.liked i { font-weight: 900; }
 
-        /* --- লোডার ও অন্যান্য --- */
+        /* --- ফ্লোটিং স্ক্রল বাটন --- */
+        .scroll-btn { position: fixed; bottom: 20px; right: 15px; width: 42px; height: 42px; border-radius: 50%; background: rgba(255, 255, 255, 0.5); border: 2px solid #536471; color: #536471; display: flex; justify-content: center; align-items: center; z-index: 1001; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); -webkit-tap-highlight-color: transparent; }
+        .scroll-btn.active { background: #1da1f2; border-color: #1da1f2; color: #fff; box-shadow: 0 4px 12px rgba(29, 161, 242, 0.3); }
+        .scroll-btn i { font-size: 18px; transition: transform 0.4s ease; }
+
+        /* --- লোডার ও ফুটার --- */
         .wave-loader { display: flex; justify-content: center; align-items: center; height: 100%; gap: 5px; }
         .wave-loader div { width: 10px; height: 10px; background-color: #1da1f2; border-radius: 50%; animation: bounce 1.2s infinite ease-in-out both; transform: scale(0); }
         @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
@@ -108,6 +113,11 @@
 <body>
 
     <div class="main-container">
+        <!-- ফ্লোটিং বাটন -->
+        <div id="floating-scroll-btn" class="scroll-btn" onclick="handleFloatingClick()">
+            <i class="fa-solid fa-chevron-down"></i>
+        </div>
+
         <div id="cover-slider" class="cover-photo">
             <div class="intro-text">FILMIXO</div>
         </div>
@@ -142,7 +152,7 @@
             <p class="bio">FILMIXO:🍿 Your ultimate HD movie hub. Download exclusive releases and trending blockbusters instantly. Stop scrolling, seize the cinema.</p>
         </div>
 
-        <div class="nav-bar">
+        <div class="nav-bar" id="navigation-bar">
             <div class="nav-btn active" id="nav-home" onclick="showFeed()"><i class="fa-solid fa-house"></i> Home</div>
             <div class="nav-btn inactive" id="nav-signup" onclick="goToSignUp()"><i class="fa-solid fa-user-plus"></i> Sign Up</div>
             <div class="nav-btn inactive" id="nav-login" onclick="showLogin()"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</div>
@@ -180,7 +190,6 @@
                 </form>
             </div>
         </div>
-        
         <div id="notification" class="notification"></div>
     </div>
     
@@ -207,6 +216,29 @@
         const CONFIG = { INITIAL_LOAD: 10, BATCH_SIZE: 20, CONTACT_EMAIL: "contact@secretbinodon.com" };
 
         let allPosts = []; let currentIndex = 0; let observer;
+
+        // --- স্ক্রল বাটন লজিক ---
+        const scrollBtn = document.getElementById('floating-scroll-btn');
+        const navBar = document.getElementById('navigation-bar');
+
+        window.onscroll = function() {
+            let sticky = navBar.offsetTop;
+            if (window.pageYOffset > sticky) {
+                scrollBtn.classList.add('active');
+                scrollBtn.querySelector('i').className = "fa-solid fa-chevron-up";
+            } else {
+                scrollBtn.classList.remove('active');
+                scrollBtn.querySelector('i').className = "fa-solid fa-chevron-down";
+            }
+        };
+
+        window.handleFloatingClick = function() {
+            if (scrollBtn.classList.contains('active')) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }
+        };
 
         function formatCount(num) { if (!num) return 0; return num >= 1000000 ? (num/1000000).toFixed(1)+'M' : num >= 1000 ? (num/1000).toFixed(1)+'K' : num; }
         function formatDate(d) { return new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }).replace(/\//g, '-'); }
@@ -258,15 +290,9 @@
                     </div>
                     <div class="post-title" onclick="openPost('${post.id}')">${post.title}</div>
                     <div class="card-footer-info">
-                        <div class="view-group">
-                            <i class="fa-solid fa-chart-simple"></i>
-                            <span class="view-count">0</span>
-                        </div>
+                        <div class="view-group"><i class="fa-solid fa-chart-simple"></i><span class="view-count">0</span></div>
                         <div class="date-group">${formatDate(post.uploadTime)}</div>
-                        <div class="love-group" data-id="${post.id}">
-                            <i class="fa-regular fa-heart"></i>
-                            <span class="like-count">0</span>
-                        </div>
+                        <div class="love-group" data-id="${post.id}"><i class="fa-regular fa-heart"></i><span class="like-count">0</span></div>
                     </div>
                 `;
                 container.appendChild(card);
@@ -280,21 +306,11 @@
             const viewEl = card.querySelector('.view-count');
             const likeEl = card.querySelector('.like-count');
             const loveBtn = card.querySelector('.love-group');
-            
-            // অরিজিনাল ফায়ারবেস লজিক (Original Code থেকে সংগৃহীত)
             onSnapshot(doc(db, "views", id), (s) => viewEl.innerText = formatCount(s.data()?.count || 0));
             const loveRef = doc(db, "loves", id);
             const userRef = doc(db, `loves/${id}/users`, deviceId);
-            
-            getDoc(userRef).then(s => { 
-                if(s.exists()) { 
-                    loveBtn.classList.add('liked'); 
-                    loveBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid'); 
-                } 
-            });
-
+            getDoc(userRef).then(s => { if(s.exists()) { loveBtn.classList.add('liked'); loveBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid'); } });
             onSnapshot(loveRef, (s) => likeEl.innerText = formatCount(s.data()?.count || 0));
-            
             loveBtn.addEventListener('click', async (e) => {
                 e.stopPropagation();
                 const s = await getDoc(userRef);
@@ -324,7 +340,6 @@
         }
         
         window.openPost = (id) => { sessionStorage.setItem('index_scroll', window.scrollY); window.location.href = `/movie/post.html?id=${id}`; }; 
-        
         function deactivateNavButtons() { document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.classList.add('inactive'); }); }
 
         window.showFeed = () => {
@@ -398,14 +413,8 @@
                     while (currentIndex < allPosts.length && document.documentElement.scrollHeight < pos + window.innerHeight + 1000) {
                         await loadNextBatch(CONFIG.BATCH_SIZE);
                     }
-                    setTimeout(() => {
-                        window.scrollTo({ top: pos, behavior: 'instant' });
-                        sessionStorage.removeItem('index_scroll');
-                    }, 350);
-                } else {
-                    await loadNextBatch(CONFIG.INITIAL_LOAD);
-                }
-                
+                    setTimeout(() => { window.scrollTo({ top: pos, behavior: 'instant' }); sessionStorage.removeItem('index_scroll'); }, 350);
+                } else { await loadNextBatch(CONFIG.INITIAL_LOAD); }
                 setupObserver();
                 document.getElementById('main-footer').style.display = 'block';
             } catch (error) { console.error(error); }
