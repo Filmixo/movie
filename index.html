@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -47,7 +46,7 @@
         #feed-container { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
-            gap: 15px; 
+            gap: 20px 15px; /* Row gap increased for spacing */
             padding: 15px;
             background-color: #fff;
         }
@@ -58,6 +57,8 @@
             background: white; 
             opacity: 0; 
             animation: fadeIn 0.5s forwards; 
+            border-bottom: 1.5px solid #e1e8ed; /* কার্ডের নিচে আলাদা বর্ডার */
+            padding-bottom: 12px;
         }
 
         .media-container { 
@@ -70,7 +71,7 @@
             cursor: pointer;
         }
         
-        /* ইমেজ জুম ইফেক্ট (Requested) */
+        /* ইমেজ জুম ইফেক্ট */
         .media-container img { 
             width: 100%; height: 100%; object-fit: cover; 
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -96,9 +97,11 @@
 
         .post-title { 
             font-size: 14px; font-weight: 700; color: #0f1419; 
-            margin: 8px 0 3px 0; line-height: 1.3; cursor: pointer;
+            margin: 5px 0 8px 0; /* টাইটেল ইমেজের কাছে (5px) এবং নিচের সাথে গ্যাপ (8px) */
+            line-height: 1.3; cursor: pointer;
             display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
             overflow: hidden; text-overflow: ellipsis;
+            transition: color 0.1s;
         }
         .post-title:active { color: #1da1f2; }
 
@@ -110,12 +113,12 @@
             font-size: 11px; 
             color: #536471; 
             font-weight: 600;
-            pointer-events: none; /* ক্লিকযোগ্য নয় */
+            pointer-events: none;
         }
         .view-data { display: flex; align-items: center; gap: 4px; }
-        .view-data i { font-size: 10px; }
+        .view-data i { font-size: 11px; }
 
-        /* অপ্রয়োজনীয় এলিমেন্ট রিমুভ (UI Only) */
+        /* UI Only Removal */
         .post-header, .post-excerpt, .hashtags, .post-footer { display: none !important; }
 
         /* --- লোডার এবং অন্যান্য (Original) --- */
@@ -128,8 +131,6 @@
         #sentinel.loading .wave-loader { display: flex; } 
 
         .site-footer { background-color: #fff; padding: 20px; text-align: center; border-top: 1px solid #eee; }
-        .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background-color: rgba(0,0,0,0.8); color: white; padding: 10px 20px; border-radius: 30px; z-index: 1002; opacity: 0; transition: opacity 0.3s; }
-        .notification.show { opacity: 1; }
     </style>
 </head>
 <body>
@@ -181,14 +182,8 @@
         </div>
 
         <footer class="site-footer" id="main-footer" style="display:none;">
-            <div style="margin-bottom:10px; display:flex; justify-content:center; gap:15px;">
-                <a href="#" style="color:#536471; font-size:13px;">About</a>
-                <a href="#" style="color:#536471; font-size:13px;">Privacy Policy</a>
-            </div>
             <p style="color:#536471; font-size:12px;">Copyright © 2026 filmixo.com. All rights reserved.</p>
         </footer>
-        
-        <div id="notification" class="notification"></div>
     </div>
 
     <script type="module">
@@ -208,7 +203,7 @@
         // --- স্লাইডার লজিক (100% Original) ---
         let sliderInterval;const startCoverSlider=p=>{const c=document.getElementById("cover-slider"),i=c.querySelector(".intro-text"),s=p.slice(0,10);if(!s.length)return;const clear=()=>{clearInterval(sliderInterval);c.querySelectorAll(".cover-photo-inner").forEach(e=>e.remove())};const intro=()=>{i.style.animation="none";i.offsetHeight;i.style.animation="cinematicIntro 3s cubic-bezier(.22,1,.36,1) forwards"};const slide=()=>{const w=document.createElement("div");w.className="cover-photo-inner";w.style.cssText="position:absolute;inset:0;display:flex;will-change:transform,opacity;transition:opacity 2.2s ease-in-out,transform 1s cubic-bezier(.22,1,.36,1);opacity:0";w.innerHTML=s.map(x=>`<img src="${x.mediaImage}" loading="lazy" style="width:100%;height:100%;object-fit:cover;flex:0 0 100%">`).join("");c.appendChild(w);requestAnimationFrame(()=>w.style.opacity=1);let n=0;sliderInterval=setInterval(()=>{n++;n<s.length?w.style.transform=`translate3d(-${n*100}%,0,0)`:(clear(),setTimeout(run,100))},3400)};const run=()=>{clear();intro();setTimeout(slide,2200)};run();document.addEventListener("visibilitychange",()=>document.hidden?clear():run())}
 
-        // --- লোডিং এবং কার্ড রেন্ডারিং (Updated Layout + Original Logic) ---
+        // --- লোডিং এবং কার্ড রেন্ডারিং (Infinity Scroll 5 -> 20) ---
         async function loadNextBatch(size = CONFIG.BATCH_SIZE) {
             const container = document.getElementById('feed-container');
             const sentinel = document.getElementById('sentinel');
@@ -228,7 +223,7 @@
                         <div class="post-title" onclick="openPost('${post.id}')">${post.title}</div>
                         <div class="meta-data-row">
                             <div class="view-data">
-                                <i class="fa-solid fa-eye"></i>
+                                <i class="fa-solid fa-chart-simple"></i> <!-- Original Icon Restored -->
                                 <span class="view-count" id="view-${post.id}">0</span>
                             </div>
                             <div class="date-data">${formatDate(post.uploadTime)}</div>
@@ -236,7 +231,6 @@
                     </div>`;
                 
                 container.appendChild(cardWrapper.firstElementChild);
-                // ফায়ারবেস স্ন্যাপশট লজিক ফর ভিউজ
                 onSnapshot(doc(db, "views", post.id), (s) => {
                     const el = document.getElementById(`view-${post.id}`);
                     if(el) el.innerText = formatCount(s.data()?.count || 0);
@@ -252,7 +246,7 @@
                 allPosts = (await res.json()).sort((a, b) => new Date(b.uploadTime) - new Date(a.uploadTime));
                 document.getElementById('total-videos-count').innerText = formatCount(allPosts.length);
                 startCoverSlider(allPosts);
-                await loadNextBatch(CONFIG.INITIAL_LOAD); // Initial 5
+                await loadNextBatch(CONFIG.INITIAL_LOAD); 
                 setupObserver();
                 document.getElementById('main-footer').style.display = 'block';
                 calculateTotalViews();
@@ -261,7 +255,7 @@
 
         function setupObserver() {
             const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) loadNextBatch(CONFIG.BATCH_SIZE); // Batch 20
+                if (entries[0].isIntersecting) loadNextBatch(CONFIG.BATCH_SIZE);
             }, { rootMargin: '500px' });
             observer.observe(document.getElementById('sentinel'));
         }
@@ -274,11 +268,10 @@
 
         window.openPost = (id) => { window.location.href = `/movie/post.html?id=${id}`; };
         window.showFeed = () => { location.reload(); };
-        window.goToSignUp = () => window.location.href="https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef";
-        window.showLogin = () => { /* Logic */ };
-        window.showSearch = () => { /* Logic */ };
         window.sendEmail = () => window.location.href = "mailto:contact@filmixo.com";
         window.shareProfile = () => { if(navigator.share) navigator.share({title:'Filmixo', url:window.location.href}); };
+        window.goToSignUp = () => window.location.href="https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef";
+        window.showLogin = () => {}; window.showSearch = () => {};
 
         loadFeed();
     </script>
