@@ -6,77 +6,82 @@
     <title>FILMIXO Premium movie access</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preload" as="image" href="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg" fetchpriority="high">
+
     <style>
-        /* --- Basic Reset & Global Styles --- */
-        * { margin:0; padding:0; box-sizing:border-box; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; text-decoration:none; }
-        body { background-color:#ffffff; display:flex; justify-content:center; -webkit-tap-highlight-color:transparent; user-select:none; scroll-behavior: auto !important; }
-        .main-container { background-color:white; width:100%; max-width:600px; min-height:10vh; border-left:1px solid #ddd; border-right:1px solid #ddd; position:relative; }
+        /* --- Basic Reset & Structure (Original) --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; text-decoration: none; }
+        body { background-color: #ffffff; display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }
+        .main-container { background-color: white; width: 100%; max-width: 600px; min-height: 10vh; border-left: 1px solid #ddd; border-right: 1px solid #ddd; position: relative; }
 
-        /* --- Cinematic Slider (Original Section) --- */
-        .cover-photo { width:100%; aspect-ratio:18/9; position:relative; overflow:hidden; background:radial-gradient(circle at center,#111 0%,#000 70%); contain:layout paint; transform:translateZ(0); }
-        .cover-photo::after { content:""; position:absolute; inset:0; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"); pointer-events:none; }
-        .intro-text { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); z-index:6; font-size:36px; font-weight:900; letter-spacing:18px; color:#fff; opacity:0; text-shadow:0 0 12px #fff, 0 0 28px #1da1f2; white-space:nowrap; }
+        /* --- Cinematic Slider & Header (DO NOT TOUCH) --- */
+        .cover-photo { width: 100%; aspect-ratio: 18/9; position: relative; overflow: hidden; background: radial-gradient(circle at center,#111 0%,#000 70%); contain: layout paint; transform: translateZ(0); }
+        .intro-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 6; font-size: 36px; font-weight: 900; letter-spacing: 18px; color: #fff; opacity: 0; text-shadow: 0 0 12px #fff, 0 0 28px #1da1f2; white-space: nowrap; }
         @keyframes cinematicIntro { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.65); filter: blur(18px); } 45% { opacity: 1; filter: blur(0); transform: translate(-50%, -50%) scale(1); } 75% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4); filter: blur(12px); } }
+        .profile-header-area { position: relative; padding: 0 15px; display: flex; justify-content: space-between; align-items: flex-start; }
+        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; background-color: #000; overflow: hidden; margin-top: -75px; z-index: 2; }
+        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
+        .btn { border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s; }
+        .info-section { padding: 5px 15px 15px 15px; }
+        .website-name { font-size: 22px; font-weight: 800; color: #1c1e21; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; }
+        .stats { display: flex; gap: 2px; font-size: 13.5px; color: #333333; margin: 5px 0 8px 0; font-weight: 500; }
+        .stats b { color: #1c1e21; font-weight: 800; min-width: 15px; text-align: center; }
+        .meta-info { display: flex; flex-wrap: wrap; gap: 15px; font-size: 13.5px; color: #536471; margin-bottom: 10px; }
+        .bio { font-size: 16px; color: #0f1419; line-height: 1.2; text-align: left; }
 
-        /* --- Profile Header (Original Meta Restored) --- */
-        .profile-header-area { position:relative; padding:0 15px; display:flex; justify-content:space-between; align-items:flex-start; }
-        .profile-pic { width:140px; height:140px; border-radius:50%; border:4px solid white; background-color:#000; overflow:hidden; margin-top:-75px; z-index:2; }
-        .profile-pic img { width:100%; height:100%; object-fit:cover; }
-        .action-buttons { display:flex; gap:8px; margin-top:10px; }
-        .btn { border:none; padding:8px 16px; border-radius:20px; font-size:14px; font-weight:bold; color:white; cursor:pointer; display:flex; align-items:center; gap:5px; transition:transform 0.1s; }
-        .btn:active { transform:scale(0.95); }
-        .info-section { padding:5px 15px 15px 15px; }
-        .website-name { font-size:22px; font-weight:800; color:#1c1e21; text-transform:uppercase; display:inline-flex; align-items:center; gap:8px; }
-        .username { font-size:15px; color:#1da1f2; margin-bottom:12px; display:block; }
-        .stats { display:flex; gap:2px; font-size:13.5px; color:#333333; margin-bottom:8px; font-weight:500; }
-        .stats b { color:#1c1e21; font-weight:800; min-width:15px; text-align:center; }
-        .meta-info { display:flex; flex-wrap:wrap; gap:15px; font-size:13.5px; color:#536471; margin-bottom:10px; }
-        .meta-info span { display:flex; align-items:center; gap:5px; }
-        .bio { font-size:16px; color:#0f1419; line-height:1.2; text-align:left; }
+        /* --- Navigation Bar (Sticky Logic Restored) --- */
+        .nav-bar { display: flex; justify-content: space-between; padding: 10px 15px; border-top: 2px solid #e1e8ed; border-bottom: 2px solid #e1e8ed; background: #fff; position: sticky; top: 0; z-index: 100; }
+        .nav-btn { flex: 1; text-align: center; padding: 8px 5px; margin: 0 4px; border-radius: 20px; font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: center; gap: 4px; }
+        .nav-btn.active { background-color: #000 !important; color: white !important; }
 
-        /* --- Sticky Navigation --- */
-        .nav-bar { display:flex; justify-content:space-between; padding:10px 15px; border-top:2px solid #e1e8ed; border-bottom:2px solid #e1e8ed; background:#fff; position:sticky; top:0; z-index:100; }
-        .nav-btn { flex:1; text-align:center; padding:8px 5px; margin:0 4px; border-radius:20px; font-size:14px; font-weight:bold; cursor:pointer; border:1px solid #e1e8ed; display:flex; align-items:center; justify-content:center; gap:4px; }
-        .nav-btn.active { background-color:#000 !important; color:white !important; }
+        /* --- Dual Column Grid Feed (Updated) --- */
+        #feed-container { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 15px; padding: 5px 15px 15px 15px; background: #fff; }
+        .post-card { display: flex; flex-direction: column; opacity: 0; animation: fadeIn 0.5s forwards; border-bottom: 1px solid #e1e8ed; padding-bottom: 10px; margin-top: 5px; }
+        @keyframes fadeIn { to { opacity: 1; } }
 
-        /* --- Feed Grid & Cards (Optimized Spacing) --- */
-        #feed-container { display:grid; grid-template-columns:1fr 1fr; gap:12px 15px; padding:2px 15px 15px 15px; background:#fff; }
-        .post-card { display:flex; flex-direction:column; opacity:0; animation:fadeIn 0.5s forwards; border-bottom:1.2px solid #e1e8ed; padding-bottom:10px; margin-top:5px; }
-        @keyframes fadeIn { to { opacity:1; } }
-        .media-container { position:relative; width:100%; aspect-ratio:16/9; border-radius:12px; overflow:hidden; background:#000; cursor:pointer; }
-        .media-container img { width:100%; height:100%; object-fit:cover; transition:transform 0.3s cubic-bezier(0.175,0.885,0.32,1.275); }
-        .media-container:active img { transform:scale(1.08); }
-        .play-icon { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:32px; height:32px; background:rgba(0,0,0,0.6); border-radius:50%; display:flex; justify-content:center; align-items:center; border:1.5px solid rgba(255,255,255,0.8); z-index:5; }
+        /* --- Media & Interactivity --- */
+        .media-container { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; overflow: hidden; background: #000; cursor: pointer; }
+        .media-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+        .media-container:active img { transform: scale(1.08); }
+        .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 32px; height: 32px; background: rgba(0,0,0,0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 1.5px solid rgba(255,255,255,0.8); z-index: 5; }
         .play-icon::after { content:''; border-left:10px solid white; border-top:6px solid transparent; border-bottom:6px solid transparent; margin-left:2px; }
-        .duration-badge { position:absolute; bottom:8px; right:8px; background:rgba(0,0,0,0.8); color:white; padding:2px 5px; border-radius:4px; font-size:10px; font-weight:bold; }
-        .post-title { font-size:14px; font-weight:700; color:#0f1419; margin:4px 0 6px 0; line-height:1.3; cursor:pointer; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-        .post-title:active { color:#1da1f2; }
-        .meta-data-row { display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#536471; font-weight:500; }
-        .view-data { display:flex; align-items:center; gap:4px; }
-        .post-header, .post-excerpt, .hashtags, .post-footer { display:none !important; }
+        .duration-badge { position: absolute; bottom: 8px; right: 8px; background: rgba(0,0,0,0.8); color: white; padding: 2px 5px; border-radius: 4px; font-size: 10px; font-weight: bold; }
 
-        /* --- Boxed Pagination System --- */
-        .pagination-area { display:flex; justify-content:center; padding:15px 0; background:#fff; }
-        .pagination-box { display:flex; border:1px solid #ddd; border-radius:8px; overflow:hidden; }
-        .page-btn { padding:8px 16px; border:none; border-right:1px solid #ddd; background:#fff; color:#536471; font-weight:bold; cursor:pointer; font-size:14px; transition:0.2s; }
-        .page-btn:last-child { border-right:none; }
-        .page-btn.active { background:#000; color:#fff; }
-        .page-btn:hover:not(.active) { background:#f0f2f5; }
+        /* --- Typography & Metadata --- */
+        .post-title { font-size: 14px; font-weight: 700; color: #0f1419; margin: 4px 0 6px 0; line-height: 1.3; cursor: pointer; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
+        .post-title:active { color: #1da1f2; }
+        .meta-data-row { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #536471; font-weight: 500; }
+        .view-data { display: flex; align-items: center; gap: 4px; }
+        .post-header, .post-excerpt, .hashtags, .post-footer { display: none !important; }
 
-        /* --- Footer (Original Structure Restored) --- */
-        .site-footer { background-color:#fff; padding:25px 20px; text-align:center; border-top:2px solid #e1e8ed; }
-        .footer-links { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom:15px; }
-        .footer-links a { color:#536471; font-size:14px; font-weight:500; }
-        .footer-copyright { color:#536471; font-size:13px; }
-        .footer-copyright a { color:#1da1f2; font-weight:bold; }
+        /* --- Loading Sentinel & Wave Loader (Original) --- */
+        .wave-loader { display: flex; justify-content: center; align-items: center; height: 100%; gap: 5px; }
+        .wave-loader div { width: 10px; height: 10px; background-color: #1da1f2; border-radius: 50%; animation: bounce 1.2s infinite ease-in-out both; transform: scale(0); }
+        .wave-loader div:nth-child(1) { animation-delay: -0.32s; }
+        .wave-loader div:nth-child(2) { animation-delay: -0.16s; }
+        .wave-loader div:nth-child(3) { animation-delay: 0s; }
+        @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
+        #sentinel { width: 100%; height: 60px; display: flex; align-items: center; justify-content: center; }
+        #sentinel .wave-loader { display: none; } 
+        #sentinel.loading .wave-loader { display: flex; } 
+
+        /* --- Footer (Original) --- */
+        .site-footer { background-color: #fff; padding: 25px 20px; text-align: center; border-top: 2px solid #e1e8ed; }
+        .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
+        .footer-links a { color: #536471; font-size: 14px; font-weight: 500; }
+        .footer-copyright { color: #536471; font-size: 13px; }
+        .footer-copyright a { color: #1da1f2; font-weight: bold; }
+
+        /* --- Search Overlay --- */
+        #search-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: white; z-index: 1001; display: none; flex-direction: column; }
+        .search-header { display: flex; align-items: center; padding: 10px; border-bottom: 1px solid #e1e8ed; position: sticky; top: 0; background-color: white; z-index: 10; }
+        #search-input { width: 100%; padding: 10px 15px; border: 1px solid #ddd; border-radius: 25px; font-size: 16px; outline: none; background-color: #f0f2f5; margin: 0 10px; }
     </style>
 </head>
 <body>
+
     <div class="main-container">
-        <!-- Slider Section -->
         <div id="cover-slider" class="cover-photo"><div class="intro-text">FILMIXO</div></div>
-        
-        <!-- Header Info Area -->
+
         <div class="profile-header-area">
             <div class="profile-pic"><img src="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg"></div>
             <div class="action-buttons">
@@ -84,32 +89,34 @@
                 <button class="btn" style="background:#000" onclick="shareProfile()"><i class="fa-solid fa-share-nodes"></i> Share</button>
             </div>
         </div>
+
         <div class="info-section">
             <h1 class="website-name">FILMIXO-HUB <i class="fa-solid fa-circle-check" style="color:#1da1f2; font-size:16px;"></i></h1>
-            <span class="username">@filmixo</span>
+            <span style="color:#1da1f2; font-size:15px; margin-bottom:12px; display:block;">@filmixo</span>
             <div class="stats"><span>Total Videos <b id="total-videos-count">0</b></span> • <span>Total Views <b id="total-views-count">0</b></span></div>
             <div class="meta-info">
                 <span><i class="fa-solid fa-location-dot"></i> United States</span>
                 <span><i class="fa-regular fa-calendar"></i> Joined 13/12/2025</span>
             </div>
-            <p class="bio">FILMIXO:🍿 Your ultimate HD movie hub. Download exclusive releases and trending blockbusters instantly. Stop scrolling, seize the cinema.</p>
+            <p class="bio">FILMIXO:🍿 Your ultimate HD movie hub. Download exclusive releases and trending blockbusters instantly.</p>
         </div>
 
-        <!-- Sticky Nav -->
-        <div class="nav-bar" id="nav-anchor">
+        <div class="nav-bar">
             <div class="nav-btn active" id="nav-home" onclick="showFeed()"><i class="fa-solid fa-house"></i> Home</div>
             <div class="nav-btn" onclick="goToSignUp()"><i class="fa-solid fa-user-plus"></i> Sign Up</div>
             <div class="nav-btn" onclick="showLogin()"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</div>
             <div class="nav-btn" onclick="showSearch()"><i class="fa-solid fa-magnifying-glass"></i> Search</div>
         </div>
-
-        <!-- Feed Container -->
+        
         <div id="feed-container"></div>
-        <div id="pagination-container" class="pagination-area"></div>
+        
+        <!-- Infinity Scroll Sentinel -->
+        <div id="sentinel">
+            <div class="wave-loader"><div></div><div></div><div></div></div>
+        </div>
 
-        <!-- Footer -->
         <footer class="site-footer" id="main-footer" style="display:none;">
-            <div class="footer-links"><a href="#">About</a><a href="#">Contact</a><a href="#">Privacy Policy</a><a href="#">Terms</a></div>
+            <div class="footer-links"><a>About</a><a>Contact</a><a>Privacy Policy</a><a>Terms</a></div>
             <div class="footer-copyright">Copyright © 2026 <a href="#">filmixo.com</a>. All rights reserved.</div>
         </footer>
     </div>
@@ -117,42 +124,57 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
         import { getFirestore, doc, onSnapshot, collection, getDocs } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
-        
+
+        if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+
         const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f" };
         const app = initializeApp(firebaseConfig); const db = getFirestore(app);
-        
-        const CONFIG = { PER_PAGE: 20 }; let allPosts = []; let currentPage = 1;
+
+        const CONFIG = { INITIAL_LOAD: 5, BATCH_SIZE: 20 };
+        let allPosts = []; let currentIndex = 0; let observer;
+
         const formatCount = n => n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : n;
         const formatDate = d => new Date(d).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
 
         // --- Slider Logic (100% Original) ---
-        let sliderInterval; const startCoverSlider=p=>{const c=document.getElementById("cover-slider"),i=c.querySelector(".intro-text"),s=p.slice(0,10);if(!s.length)return;const clear=()=>{clearInterval(sliderInterval);c.querySelectorAll(".cover-photo-inner").forEach(e=>e.remove())};const intro=()=>{i.style.animation="none";i.offsetHeight;i.style.animation="cinematicIntro 3s cubic-bezier(.22,1,.36,1) forwards"};const slide=()=>{const w=document.createElement("div");w.className="cover-photo-inner";w.style.cssText="position:absolute;inset:0;display:flex;will-change:transform,opacity;transition:opacity 2.2s ease-in-out,transform 1s cubic-bezier(.22,1,.36,1);opacity:0";w.innerHTML=s.map(x=>`<img src="${x.mediaImage}" loading="lazy" style="width:100%;height:100%;object-fit:cover;flex:0 0 100%">`).join("");c.appendChild(w);requestAnimationFrame(()=>w.style.opacity=1);let n=0;sliderInterval=setInterval(()=>{n++;n<s.length?w.style.transform=`translate3d(-${n*100}%,0,0)`:(clear(),setTimeout(run,100))},3400)};const run=()=>{clear();intro();setTimeout(slide,2200)};run();document.addEventListener("visibilitychange",()=>document.hidden?clear():run())}
+        let sliderInterval; const startCoverSlider=p=>{const c=document.getElementById("cover-slider"),i=c.querySelector(".intro-text"),s=p.slice(0,10);if(!s.length)return;const clear=()=>{clearInterval(sliderInterval);c.querySelectorAll(".cover-photo-inner").forEach(e=>e.remove())};const intro=()=>{i.style.animation="none";i.offsetHeight;i.style.animation="cinematicIntro 3s cubic-bezier(.22,1,.36,1) forwards"};const slide=()=>{const w=document.createElement("div");w.className="cover-photo-inner";w.style.cssText="position:absolute;inset:0;display:flex;will-change:transform,opacity;transition:opacity 2.2s ease-in-out,transform 1s cubic-bezier(.22,1,.36,1);opacity:0";w.innerHTML=s.map(x=>`<img src="${x.mediaImage}" style="width:100%;height:100%;object-fit:cover;flex:0 0 100%">`).join("");c.appendChild(w);requestAnimationFrame(()=>w.style.opacity=1);let n=0;sliderInterval=setInterval(()=>{n++;n<s.length?w.style.transform=`translate3d(-${n*100}%,0,0)`:(clear(),setTimeout(run,100))},3400)};const run=()=>{clear();intro();setTimeout(slide,2200)};run();document.addEventListener("visibilitychange",()=>document.hidden?clear():run())}
 
-        // --- Page & Scroll Persistence Logic ---
-        function renderPage(page, scroll = false) {
-            const container = document.getElementById('feed-container'); container.innerHTML = ''; 
-            currentPage = page; sessionStorage.setItem('current_page', page); 
-            const start = (page - 1) * CONFIG.PER_PAGE; const pagePosts = allPosts.slice(start, start + CONFIG.PER_PAGE);
-            
-            pagePosts.forEach(post => {
+        // --- Batch Loading (Initial 5 -> Batch 20) ---
+        async function loadNextBatch(size = CONFIG.BATCH_SIZE) {
+            const container = document.getElementById('feed-container');
+            const sentinel = document.getElementById('sentinel');
+            if (currentIndex >= allPosts.length) { sentinel.style.display = 'none'; return; }
+            if (size === CONFIG.BATCH_SIZE) sentinel.classList.add('loading');
+
+            const batch = allPosts.slice(currentIndex, currentIndex + size);
+            batch.forEach(post => {
                 const card = document.createElement('div'); card.className = 'post-card';
-                card.innerHTML = `<div class="media-container" onclick="openPost('${post.id}')"><img src="${post.mediaImage}" loading="lazy"><div class="play-icon"></div><div class="duration-badge">${post.videoDuration}</div></div><div class="post-title" onclick="openPost('${post.id}')">${post.title}</div><div class="meta-data-row"><div class="view-data"><i class="fa-solid fa-chart-simple"></i><span id="view-${post.id}">0</span></div><div>${formatDate(post.uploadTime)}</div></div>`;
+                card.innerHTML = `
+                    <div class="media-container" onclick="openPost('${post.id}')">
+                        <img src="${post.mediaImage}" loading="lazy">
+                        <div class="play-icon"></div>
+                        <div class="duration-badge">${post.videoDuration}</div>
+                    </div>
+                    <div class="post-title" onclick="openPost('${post.id}')">${post.title}</div>
+                    <div class="meta-data-row">
+                        <div class="view-data"><i class="fa-solid fa-chart-simple"></i><span id="v-${post.id}">0</span></div>
+                        <div>${formatDate(post.uploadTime)}</div>
+                    </div>
+                    <!-- Hidden logic for FB Snapshots -->
+                    <div class="love-btn" style="display:none"><span class="like-count">0</span></div>`;
                 container.appendChild(card);
-                onSnapshot(doc(db, "views", post.id), s => { const el = document.getElementById(`view-${post.id}`); if(el) el.innerText = formatCount(s.data()?.count || 0); });
+                onSnapshot(doc(db, "views", post.id), s => { const el = document.getElementById(`v-${post.id}`); if(el) el.innerText = formatCount(s.data()?.count || 0); });
             });
-            renderPaginationButtons();
-            if(scroll) document.getElementById('nav-anchor').scrollIntoView({ behavior: 'smooth' });
+            currentIndex += size;
+            sentinel.classList.remove('loading');
         }
 
-        function renderPaginationButtons() {
-            const container = document.getElementById('pagination-container'); container.innerHTML = '';
-            const totalPages = Math.ceil(allPosts.length / CONFIG.PER_PAGE); if (totalPages <= 1) return;
-            const box = document.createElement('div'); box.className = 'pagination-box';
-            for (let i = 1; i <= totalPages; i++) {
-                const btn = document.createElement('button'); btn.className = `page-btn ${i === currentPage ? 'active' : ''}`;
-                btn.innerText = i; btn.onclick = () => renderPage(i, true); box.appendChild(btn);
-            }
-            container.appendChild(box);
+        // --- Original Sentinel Observer ---
+        function setupObserver() {
+            observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) loadNextBatch(CONFIG.BATCH_SIZE);
+            }, { rootMargin: '500px' });
+            observer.observe(document.getElementById('sentinel'));
         }
 
         async function loadFeed() {
@@ -161,37 +183,33 @@
                 document.getElementById('total-videos-count').innerText = formatCount(allPosts.length);
                 startCoverSlider(allPosts);
                 
-                // Smart Retention: Check if coming back from a post
-                const isBackNav = document.referrer.includes('post.html');
-                const savedPage = sessionStorage.getItem('current_page');
+                const savedPos = sessionStorage.getItem('index_scroll');
+                let startSize = (savedPos && parseInt(savedPos) > 1000) ? 15 : CONFIG.INITIAL_LOAD;
                 
-                // If it's a fresh visit (no referrer or new tab), go to page 1
-                if (!isBackNav && !performance.navigation.type === 1) {
-                    currentPage = 1; sessionStorage.removeItem('current_page');
-                } else {
-                    currentPage = savedPage ? parseInt(savedPage) : 1;
-                }
-
-                renderPage(currentPage, false);
+                await loadNextBatch(startSize);
+                setupObserver();
                 document.getElementById('main-footer').style.display = 'block';
-                const s = await getDocs(collection(db, "views")); let t = 0; s.forEach(d => t += d.data().count || 0);
-                document.getElementById('total-views-count').innerText = formatCount(t);
-                
-                // Original Scroll Restoration (Only on Back Nav)
-                const savedScroll = sessionStorage.getItem('index_scroll');
-                if(isBackNav && savedScroll) {
-                    setTimeout(() => { window.scrollTo({ top: parseInt(savedScroll), behavior: 'smooth' }); sessionStorage.removeItem('index_scroll'); }, 400);
+
+                // Real-time Total Views
+                const snap = await getDocs(collection(db, "views")); let total = 0; snap.forEach(d => total += d.data().count || 0);
+                document.getElementById('total-views-count').innerText = formatCount(total);
+
+                if (savedPos) {
+                    setTimeout(() => { 
+                        window.scrollTo({ top: parseInt(savedPos), behavior: 'instant' });
+                        sessionStorage.removeItem('index_scroll');
+                    }, 400);
                 }
             } catch (e) { console.error(e); }
         }
 
         window.openPost = id => { sessionStorage.setItem('index_scroll', window.scrollY); window.location.href = `/movie/post.html?id=${id}`; };
-        window.showFeed = () => { sessionStorage.clear(); location.reload(); };
+        window.showFeed = () => location.reload();
         window.sendEmail = () => window.location.href = "mailto:contact@filmixo.com";
         window.shareProfile = () => navigator.share && navigator.share({title:'Filmixo', url:window.location.href});
         window.goToSignUp = () => window.location.href="https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef";
         window.showLogin = () => {}; window.showSearch = () => {};
-        
+
         loadFeed();
     </script>
 </body>
