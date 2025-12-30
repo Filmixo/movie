@@ -31,14 +31,13 @@
         .btn-email { background-color: #1da1f2; }
         .btn-share { background-color: #000; }
 
-        /* --- ইনফো সেকশন (গ্যাপ আপডেট করা হয়েছে) --- */
         .info-section { padding: 5px 15px 15px 15px; display: flex; flex-direction: column; }
         .website-name { font-size: 22px; font-weight: 800; color: #1c1e21; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 3px; }
         .username { font-size: 15px; color: #1da1f2; margin-bottom: 12px; }
         .stats { display: flex; gap: 2px; font-size: 13.5px; color: #333333; margin-bottom: 8px; font-weight: 500; align-items: center; }
         .stats b { color: #1c1e21; font-weight: 800; margin-right: 2px; min-width: 15px; text-align: center; } 
         .meta-info { display: flex; flex-wrap: wrap; gap: 15px; font-size: 13.5px; color: #536471; margin-bottom: 10px; }
-        .meta-info span { display: flex; align-items: center; gap: 8px; } /* আইকন ও টেক্সটের গ্যাপ */
+        .meta-info span { display: flex; align-items: center; gap: 8px; } 
         .bio { font-size: 16px; color: #0f1419; line-height: 1.2; text-align: left; font-weight: 400; }
 
         /* --- নেভিগেশন বার --- */
@@ -67,14 +66,15 @@
         .post-title { font-size: 14px; font-weight: 700; color: #0f1419; margin: 8px 0 6px 0; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 34px; cursor: pointer; transition: color 0.1s; }
         .post-title:active { color: #1da1f2; }
         
-        /* কার্ড ফুটার আপডেট: বামে ভিউ, মাঝে ডেট, ডানে লাভ */
-        .card-footer-info { display: flex; justify-content: space-between; align-items: center; font-size: 11.5px; color: #536471; font-weight: 600; margin-top: 4px; }
-        .view-group { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-start; }
-        .date-group { flex: 1; text-align: center; }
-        .love-group { display: flex; align-items: center; gap: 4px; flex: 1; justify-content: flex-end; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        /* কার্ড ফুটার আপডেট: গুছালো লেআউট */
+        .card-footer-info { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #536471; font-weight: 600; margin-top: 4px; gap: 4px; }
+        .view-group { display: flex; align-items: center; gap: 3px; }
+        .love-group { display: flex; align-items: center; gap: 3px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
         .love-group.liked { color: #e0245e; }
         .love-group.liked i { font-weight: 900; }
-        .love-group i { font-size: 14px; }
+        .date-group { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .share-group { cursor: pointer; padding: 2px; transition: color 0.1s; }
+        .share-group:active { color: #1da1f2; }
 
         /* --- লোডার ও অন্যান্য --- */
         .wave-loader { display: flex; justify-content: center; align-items: center; height: 100%; gap: 5px; }
@@ -215,6 +215,17 @@
         window.sendEmail = function() { window.location.href = `mailto:${CONFIG.CONTACT_EMAIL}`; }
         window.shareProfile = function() { const url = window.location.href.split('?')[0]; const text = "Filmixo:🍿 - movie download website 🎥"; if (navigator.share) { navigator.share({ title: "Filmixo", text: text, url: url }); } else { navigator.clipboard.writeText(`${text} ${url}`); showNotification("Link copied! 📋"); } }
         
+        // শেয়ার ফাংশন (অরিজিনাল লজিক)
+        window.sharePost = function(id, title) { 
+            const url = window.location.origin + `/movie/post.html?id=${id}`; 
+            if (navigator.share) { 
+                navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); 
+            } else { 
+                navigator.clipboard.writeText(url); 
+                showNotification("Link copied! 📋"); 
+            } 
+        }
+
         let sliderInterval; 
         const startCoverSlider = posts => {
             const container = document.getElementById("cover-slider");
@@ -249,6 +260,7 @@
 
             const batch = allPosts.slice(currentIndex, currentIndex + size);
             batch.forEach(post => {
+                const safeTitle = post.title.replace(/'/g, "\\'");
                 const card = document.createElement('div');
                 card.className = 'post-card';
                 card.innerHTML = `
@@ -263,10 +275,13 @@
                             <i class="fa-solid fa-chart-simple"></i>
                             <span class="view-count">0</span>
                         </div>
-                        <div class="date-group">${formatDate(post.uploadTime)}</div>
                         <div class="love-group" data-id="${post.id}">
                             <i class="fa-regular fa-heart"></i>
                             <span class="like-count">0</span>
+                        </div>
+                        <div class="date-group">${formatDate(post.uploadTime)}</div>
+                        <div class="share-group" onclick="sharePost('${post.id}', '${safeTitle}')">
+                            <i class="fa-solid fa-share-nodes"></i>
                         </div>
                     </div>
                 `;
@@ -282,7 +297,6 @@
             const likeEl = card.querySelector('.like-count');
             const loveBtn = card.querySelector('.love-group');
             
-            // অরিজিনাল ফায়ারবেস লজিক (Original Code থেকে সংগৃহীত)
             onSnapshot(doc(db, "views", id), (s) => viewEl.innerText = formatCount(s.data()?.count || 0));
             const loveRef = doc(db, "loves", id);
             const userRef = doc(db, `loves/${id}/users`, deviceId);
