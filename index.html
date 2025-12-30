@@ -6,7 +6,7 @@
     <title>FILMIXO Premium movie access</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- ইমেজ প্রি-লোড এবং প্রায়োরিটি হাই -->
+    <!-- ইমেজ প্রি-লোড -->
     <link rel="preload" as="image" href="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/FILMIXO-HUB.jpg" fetchpriority="high">
 
     <style>
@@ -15,64 +15,66 @@
         body { background-color: #ffffff; display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }
         .main-container { background-color: white; width: 100%; max-width: 600px; min-height: 10vh; border-left: 1px solid #ddd; border-right: 1px solid #ddd; position: relative; padding-bottom: 0; }
 
-        /* --- প্রোফাইল হেডার --- */
+        /* --- প্রোফাইল ও কভার সেকশন --- */
+        .cover-photo { width: 100%; aspect-ratio: 18/9; position: relative; overflow: hidden; background: #000; contain: layout paint; transform: translateZ(0); }
+        .cover-photo::after { content: ""; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 5; }
+        
+        /* স্লাইডার টাইটেল ডিজাইন (Netflix Style) */
+        .slider-title-container { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px 15px 10px 15px; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%); color: white; z-index: 8; transition: opacity 0.5s ease; }
+        .slider-title-text { font-size: 16px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.5); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+
+        .intro-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9; font-size: 36px; font-weight: 900; letter-spacing: 18px; color: #fff; opacity: 0; text-shadow: 0 0 12px #fff, 0 0 28px #1da1f2; pointer-events: none; }
+        @keyframes cinematicIntro { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.65); filter: blur(18px); } 45% { opacity: 1; filter: blur(0); transform: translate(-50%, -50%) scale(1); } 75% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4); filter: blur(12px); } }
+
         .profile-header-area { position: relative; padding: 0 15px; display: flex; justify-content: space-between; align-items: flex-start; }
         .profile-pic-container { margin-top: -75px; z-index: 2; }
         .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; background-color: #000; overflow: hidden; display: flex; justify-content: center; align-items: center; }
         .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
-        .cover-photo::after{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");pointer-events:none} 
-        .cover-photo{width:100%;aspect-ratio:18/9;position:relative;overflow:hidden;background:radial-gradient(circle at center,#111 0%,#000 70%);contain:layout paint;transform:translateZ(0)} 
-        .intro-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 6; font-size: 36px; font-weight: 900; letter-spacing: 18px; color: #fff; opacity: 0; text-shadow: 0 0 12px #fff, 0 0 28px #1da1f2; will-change: opacity, transform, filter; pointer-events: none; white-space: nowrap; }
-        @keyframes cinematicIntro { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.65); filter: blur(18px); } 45% { opacity: 1; filter: blur(0); transform: translate(-50%, -50%) scale(1); } 75% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4); filter: blur(12px); } } 
         .action-buttons { display: flex; gap: 8px; margin-top: 10px; }
-        .btn { border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s; -webkit-tap-highlight-color: transparent; user-select: none; }
-        .btn:active { transform: scale(0.95); }
+        .btn { border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s; }
         .btn-email { background-color: #1da1f2; }
         .btn-share { background-color: #000; }
 
+        /* --- ইনফো সেকশন --- */
         .info-section { padding: 5px 15px 15px 15px; display: flex; flex-direction: column; }
         .website-name { font-size: 22px; font-weight: 800; color: #1c1e21; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 3px; }
-        .username { font-size: 15px; color: #1da1f2; margin-bottom: 12px; cursor: default; -webkit-tap-highlight-color: transparent; }
+        .username { font-size: 15px; color: #1da1f2; margin-bottom: 12px; }
         .stats { display: flex; gap: 2px; font-size: 13.5px; color: #333333; margin-bottom: 8px; font-weight: 500; align-items: center; }
-        .stats b { color: #1c1e21; font-weight: 800; margin-right: 2px; display: inline-block; min-width: 15px; text-align: center; } 
+        .stats b { color: #1c1e21; font-weight: 800; min-width: 15px; text-align: center; } 
         .meta-info { display: flex; flex-wrap: wrap; gap: 15px; font-size: 13.5px; color: #536471; margin-bottom: 10px; }
         .meta-info span { display: flex; align-items: center; gap: 5px; }
-        .meta-info i { font-size: 14px; color: #536471; }
-        .bio { font-size: 16px; color: #0f1419; line-height: 1.2; word-spacing: normal; text-align: left; margin-bottom: 0; font-weight: 400; }
+        .bio { font-size: 16px; color: #0f1419; line-height: 1.2; text-align: left; font-weight: 400; }
 
         /* --- নেভিগেশন বার --- */
-        .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; border-top: 2px solid #e1e8ed; border-bottom: 2px solid #e1e8ed; margin-bottom: 0px; background: #fff; position: sticky; top: 0; z-index: 100; }
-        .nav-btn { flex: 1; min-width: 0; text-align: center; justify-content: center; padding: 8px 5px; margin: 0 4px; border-radius: 20px; font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #e1e8ed; display: flex; align-items: center; gap: 4px; transition: background-color 0.1s ease; white-space: nowrap; -webkit-tap-highlight-color: transparent; user-select: none; }
-        #nav-search { background-color: #f0f2f5; color: #000; border: 1px solid #e1e8ed; }
+        .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 15px; border-top: 2px solid #e1e8ed; border-bottom: 2px solid #e1e8ed; background: #fff; position: sticky; top: 0; z-index: 100; }
+        .nav-btn { flex: 1; text-align: center; padding: 8px 5px; margin: 0 4px; border-radius: 20px; font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: center; gap: 4px; transition: background-color 0.1s; }
         .nav-btn.active { background-color: #000 !important; color: white !important; border: 1px solid #000 !important; }
         .nav-btn.inactive { background-color: #f0f2f5; color: #000; }
 
-        /* --- ডাবল কলাম পোস্ট কার্ড লেআউট --- */
+        /* --- ডাবল কলাম গ্রিড ও বর্ডার লজিক --- */
         #feed-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
         .post-card { background: white; border-bottom: 1.2px solid #e1e8ed; padding-bottom: 8px; display: flex; flex-direction: column; opacity: 0; animation: fadeIn 0.5s forwards; }
-        
-        /* শেষের ২ টি কার্ডের বর্ডার রিমুভ করার লজিক */
-        .post-card:last-child, .post-card:nth-last-child(2) { border-bottom: none; }
-        
+
+        /* সুক্ষ্ম বর্ডার রিমুভ লজিক (শুধুমাত্র শেষ সারির জন্য) */
+        .post-card:last-child { border-bottom: none !important; }
+        .post-card:nth-last-child(2):nth-child(odd) { border-bottom: none !important; }
+
         @keyframes fadeIn { to { opacity: 1; } }
         
-        /* ইমেজ সাইজ ১৬/৯ করা হয়েছে */
-        .media-container { position: relative; width: 100%; border-radius: 8px; overflow: hidden; background: #f0f2f5; aspect-ratio: 16 / 9; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .media-container { position: relative; width: 100%; border-radius: 8px; overflow: hidden; background: #f0f2f5; aspect-ratio: 16 / 9; cursor: pointer; }
         .media-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.1s ease; }
         .media-container:active img { transform: scale(1.03); }
         .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 1.5px solid rgba(255,255,255,0.8); }
         .play-icon::after { content: ''; border-left: 12px solid white; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
         .duration-badge { position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 5px; border-radius: 4px; font-size: 10px; font-weight: bold; }
 
-        /* টাইটেল ডিজাইন এবং ক্লিক ইফেক্ট */
         .post-title { font-size: 14px; font-weight: 700; color: #0f1419; margin: 8px 0 6px 0; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 34px; cursor: pointer; transition: color 0.1s; }
         .post-title:active { color: #1da1f2; }
         
         .card-footer-info { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #536471; font-weight: 600; margin-top: 4px; }
         .view-group { display: flex; align-items: center; gap: 3px; }
-        .upload-date-display { color: #536471; }
 
-        /* --- লোডার এবং অন্যান্য --- */
+        /* --- লোডার --- */
         .wave-loader { display: flex; justify-content: center; align-items: center; height: 100%; gap: 5px; }
         .wave-loader div { width: 10px; height: 10px; background-color: #1da1f2; border-radius: 50%; animation: bounce 1.2s infinite ease-in-out both; transform: scale(0); }
         @keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1.0); } }
@@ -80,11 +82,11 @@
         #sentinel .wave-loader { display: none; } 
         #sentinel.loading .wave-loader { display: flex; } 
 
-        .site-footer { background-color: #fff; padding: 20px; text-align: center; border-top: 1px solid #e1e8ed; }
+        /* --- ফুটার --- */
+        .site-footer { background-color: #fff; padding: 20px; text-align: center; border-top: 1.5px solid #e1e8ed; }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
         .footer-links a { color: #536471; font-size: 14px; font-weight: 500; }
         .footer-copyright { color: #536471; font-size: 13px; }
-        .footer-copyright a { color: #1da1f2; font-weight: bold; }
 
         #login-view { display: none; padding: 40px 20px; text-align: center; }
         .login-box { background: white; padding: 30px; border: 1px solid #ddd; border-radius: 8px; max-width: 400px; margin: 0 auto; }
@@ -108,6 +110,9 @@
     <div class="main-container">
         <div id="cover-slider" class="cover-photo">
             <div class="intro-text">FILMIXO</div>
+            <div class="slider-title-container" id="slider-title-container" style="opacity: 0;">
+                <div class="slider-title-text" id="slider-title-text"></div>
+            </div>
         </div>
 
         <div class="profile-header-area">
@@ -157,16 +162,17 @@
 
         <footer class="site-footer" id="main-footer" style="display:none;">
             <div class="footer-links">
-                <a href="#" id="link-about">About</a>
-                <a href="#" id="link-contact">Contact</a>
-                <a href="#" id="link-privacy">Privacy Policy</a>
-                <a href="#" id="link-terms">Terms of Service</a>
+                <a href="#">About</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
             </div>
             <div class="footer-copyright">
-                Copyright © 2026 <a href="index.html">filmixo.com</a>. All rights reserved.
+                Copyright © 2026 <a href="#" style="color:#1da1f2; font-weight:bold;">filmixo.com</a>. All rights reserved.
             </div>
         </footer>
 
+        <!-- Login View -->
         <div id="login-view">
             <div class="login-box">
                 <h2 class="login-title">Sign up to Login FILMIXO for Premium access</h2>
@@ -182,10 +188,11 @@
         <div id="notification" class="notification"></div>
     </div>
     
+    <!-- Search Overlay -->
     <div id="search-overlay">
         <div class="search-header">
             <button class="search-back-btn" onclick="hideSearch()"><i class="fa-solid fa-arrow-left"></i></button>
-            <div class="search-input-container"><input type="text" id="search-input" placeholder="Search movie name..." autofocus></div>
+            <div class="search-input-container" style="flex-grow:1; margin:0 10px;"><input type="text" id="search-input" placeholder="Search movie name..." autofocus></div>
         </div>
         <div id="search-results"><div id="not-found">Post Not Found</div></div>
     </div>
@@ -202,12 +209,7 @@
         const deviceId = localStorage.getItem('deviceId') || 'device-' + Date.now();
         localStorage.setItem('deviceId', deviceId);
 
-        const CONFIG = { INITIAL_LOAD: 10, BATCH_SIZE: 20, CONTACT_EMAIL: "contact@secretbinodon.com", footer: { about: "#", contact: "#", privacy: "#", terms: "#" } };
-
-        document.getElementById('link-about').href = CONFIG.footer.about;
-        document.getElementById('link-contact').href = CONFIG.footer.contact;
-        document.getElementById('link-privacy').href = CONFIG.footer.privacy;
-        document.getElementById('link-terms').href = CONFIG.footer.terms;
+        const CONFIG = { INITIAL_LOAD: 10, BATCH_SIZE: 20, CONTACT_EMAIL: "contact@secretbinodon.com" };
 
         let allPosts = []; let currentIndex = 0; let observer;
 
@@ -217,7 +219,49 @@
         window.sendEmail = function() { window.location.href = `mailto:${CONFIG.CONTACT_EMAIL}`; }
         window.shareProfile = function() { const url = window.location.href.split('?')[0]; const text = "Filmixo:🍿 - new popular, movie download website 🎥"; if (navigator.share) { navigator.share({ title: "Filmixo", text: text, url: url }); } else { navigator.clipboard.writeText(`${text} ${url}`); showNotification("Link copied! 📋"); } }
         
-        let sliderInterval; const startCoverSlider=p=>{const c=document.getElementById("cover-slider"),i=c.querySelector(".intro-text"),s=p.slice(0,10);if(!s.length)return;const clear=()=>{clearInterval(sliderInterval);c.querySelectorAll(".cover-photo-inner").forEach(e=>e.remove())};const intro=()=>{i.style.animation="none";i.offsetHeight;i.style.animation="cinematicIntro 3s cubic-bezier(.22,1,.36,1) forwards"};const slide=()=>{const w=document.createElement("div");w.className="cover-photo-inner";w.style.cssText="position:absolute;inset:0;display:flex;opacity:0;transition:opacity 2.2s ease-in-out,transform 1s cubic-bezier(.22,1,.36,1);";w.innerHTML=s.map(x=>`<img src="${x.mediaImage}" loading="lazy" style="width:100%;height:100%;object-fit:cover;flex:0 0 100%">`).join("");c.appendChild(w);requestAnimationFrame(()=>w.style.opacity=1);let n=0;sliderInterval=setInterval(()=>{n++;n<s.length?w.style.transform=`translate3d(-${n*100}%,0,0)`:(clear(),setTimeout(run,100))},3400)};const run=()=>{clear();intro();setTimeout(slide,2200)};run();};
+        let sliderInterval; 
+        const startCoverSlider = posts => {
+            const container = document.getElementById("cover-slider");
+            const intro = container.querySelector(".intro-text");
+            const titleContainer = document.getElementById("slider-title-container");
+            const titleText = document.getElementById("slider-title-text");
+            const sliderItems = posts.slice(0, 10);
+            if (!sliderItems.length) return;
+
+            const clear = () => { clearInterval(sliderInterval); container.querySelectorAll(".cover-photo-inner").forEach(e => e.remove()); };
+            
+            const runIntro = () => { intro.style.animation = "none"; intro.offsetHeight; intro.style.animation = "cinematicIntro 3s cubic-bezier(.22,1,.36,1) forwards"; };
+
+            const startSlide = () => {
+                const wrapper = document.createElement("div");
+                wrapper.className = "cover-photo-inner";
+                wrapper.style.cssText = "position:absolute;inset:0;display:flex;opacity:0;transition:opacity 2.2s ease-in-out,transform 1s cubic-bezier(.22,1,.36,1);";
+                wrapper.innerHTML = sliderItems.map(x => `<img src="${x.mediaImage}" loading="lazy" style="width:100%;height:100%;object-fit:cover;flex:0 0 100%">`).join("");
+                container.appendChild(wrapper);
+                
+                requestAnimationFrame(() => { 
+                    wrapper.style.opacity = 1; 
+                    titleContainer.style.opacity = 1;
+                    titleText.innerText = sliderItems[0].title;
+                });
+
+                let n = 0;
+                sliderInterval = setInterval(() => {
+                    n++;
+                    if (n < sliderItems.length) {
+                        wrapper.style.transform = `translate3d(-${n * 100}%,0,0)`;
+                        titleText.innerText = sliderItems[n].title;
+                    } else {
+                        clear();
+                        titleContainer.style.opacity = 0;
+                        setTimeout(init, 100);
+                    }
+                }, 3400);
+            };
+
+            const init = () => { clear(); runIntro(); setTimeout(startSlide, 2200); };
+            init();
+        };
 
         async function loadNextBatch(size = CONFIG.BATCH_SIZE) {
             const container = document.getElementById('feed-container');
@@ -319,29 +363,20 @@
 
         window.addEventListener('popstate', () => { if (searchOverlay.style.display === 'flex') hideSearch(); });
         
-        let searchIdx = 0; let searchFiltered = [];
         function renderSearchResults(q) {
-            searchResults.innerHTML = ''; searchIdx = 0; const query = q.toLowerCase().trim();
+            searchResults.innerHTML = ''; let searchIdx = 0; const query = q.toLowerCase().trim();
             if (!query) { searchResults.innerHTML = `<div style="text-align:center; color:#536471; margin-top:50px;">Start typing to search...</div>`; notFound.style.display = 'none'; return; }
-            searchFiltered = allPosts.filter(p => p.title.toLowerCase().includes(query)).sort((a,b) => a.title.toLowerCase().indexOf(query) - b.title.toLowerCase().indexOf(query));
-            if (searchFiltered.length === 0) { notFound.style.display = 'block'; searchResults.appendChild(notFound); return; }
+            const filtered = allPosts.filter(p => p.title.toLowerCase().includes(query));
+            if (filtered.length === 0) { notFound.style.display = 'block'; searchResults.appendChild(notFound); return; }
             notFound.style.display = 'none'; 
-            loadMoreSearch();
-        }
-
-        function loadMoreSearch() {
-            const batch = searchFiltered.slice(searchIdx, searchIdx + 10);
-            batch.forEach(post => {
+            filtered.forEach(post => {
                 const item = document.createElement('div');
                 item.className = 'search-result-item';
                 item.onclick = () => { openPost(post.id); hideSearch(); };
-                item.innerHTML = `<img src="${post.mediaImage}" class="result-img"><div><div class="result-title" style="font-weight:600;">${post.title}</div><div style="font-size:12px; color:#536471;">Video • ${formatDate(post.uploadTime)}</div></div>`;
+                item.innerHTML = `<img src="${post.mediaImage}" class="result-img"><div><div class="result-title" style="font-weight:600;">${post.title}</div><div style="font-size:12px; color:#536471;">${formatDate(post.uploadTime)}</div></div>`;
                 searchResults.appendChild(item);
             });
-            searchIdx += 10;
         }
-
-        searchResults.addEventListener('scroll', () => { if (searchResults.scrollTop + searchResults.clientHeight >= searchResults.scrollHeight - 50) if (searchIdx < searchFiltered.length) loadMoreSearch(); });
         searchInput.addEventListener('input', () => renderSearchResults(searchInput.value.trim()));
 
         async function loadFeed() {
@@ -359,10 +394,7 @@
                 document.getElementById('main-footer').style.display = 'block';
 
                 if (savedPos) {
-                    setTimeout(() => {
-                        window.scrollTo({ top: parseInt(savedPos), behavior: 'instant' });
-                        sessionStorage.removeItem('index_scroll');
-                    }, 400); 
+                    setTimeout(() => { window.scrollTo({ top: parseInt(savedPos), behavior: 'instant' }); sessionStorage.removeItem('index_scroll'); }, 400); 
                 }
             } catch (error) { console.error(error); }
         }
