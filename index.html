@@ -15,15 +15,11 @@
         body { background-color: #ffffff; display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }
         .main-container { background-color: white; width: 100%; max-width: 600px; min-height: 10vh; border-left: 1px solid #ddd; border-right: 1px solid #ddd; position: relative; padding-bottom: 0; }
 
-        /* --- প্রোফাইল ও কভার সেকশন --- */
+        /* --- প্রোফাইল ও স্লাইডার সেকশন --- */
         .cover-photo { width: 100%; aspect-ratio: 18/9; position: relative; overflow: hidden; background: #000; contain: layout paint; transform: translateZ(0); }
         .cover-photo::after { content: ""; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E"); pointer-events: none; z-index: 5; }
         
-        /* স্লাইডার টাইটেল ডিজাইন (Netflix Style) */
-        .slider-title-container { position: absolute; bottom: 0; left: 0; width: 100%; padding: 40px 15px 10px 15px; background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.4) 60%, transparent 100%); color: white; z-index: 8; transition: opacity 0.5s ease; }
-        .slider-title-text { font-size: 16px; font-weight: 800; text-shadow: 0 2px 4px rgba(0,0,0,0.5); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-
-        .intro-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 9; font-size: 36px; font-weight: 900; letter-spacing: 18px; color: #fff; opacity: 0; text-shadow: 0 0 12px #fff, 0 0 28px #1da1f2; pointer-events: none; }
+        .intro-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 6; font-size: 36px; font-weight: 900; letter-spacing: 18px; color: #fff; opacity: 0; text-shadow: 0 0 12px #fff, 0 0 28px #1da1f2; pointer-events: none; }
         @keyframes cinematicIntro { 0% { opacity: 0; transform: translate(-50%, -50%) scale(.65); filter: blur(18px); } 45% { opacity: 1; filter: blur(0); transform: translate(-50%, -50%) scale(1); } 75% { opacity: 1; transform: translate(-50%, -50%) scale(1.05); } 100% { opacity: 0; transform: translate(-50%, -50%) scale(1.4); filter: blur(12px); } }
 
         .profile-header-area { position: relative; padding: 0 15px; display: flex; justify-content: space-between; align-items: flex-start; }
@@ -35,14 +31,12 @@
         .btn-email { background-color: #1da1f2; }
         .btn-share { background-color: #000; }
 
-        /* --- ইনফো সেকশন --- */
         .info-section { padding: 5px 15px 15px 15px; display: flex; flex-direction: column; }
         .website-name { font-size: 22px; font-weight: 800; color: #1c1e21; text-transform: uppercase; display: inline-flex; align-items: center; gap: 8px; margin-bottom: 3px; }
         .username { font-size: 15px; color: #1da1f2; margin-bottom: 12px; }
         .stats { display: flex; gap: 2px; font-size: 13.5px; color: #333333; margin-bottom: 8px; font-weight: 500; align-items: center; }
         .stats b { color: #1c1e21; font-weight: 800; min-width: 15px; text-align: center; } 
         .meta-info { display: flex; flex-wrap: wrap; gap: 15px; font-size: 13.5px; color: #536471; margin-bottom: 10px; }
-        .meta-info span { display: flex; align-items: center; gap: 5px; }
         .bio { font-size: 16px; color: #0f1419; line-height: 1.2; text-align: left; font-weight: 400; }
 
         /* --- নেভিগেশন বার --- */
@@ -51,11 +45,11 @@
         .nav-btn.active { background-color: #000 !important; color: white !important; border: 1px solid #000 !important; }
         .nav-btn.inactive { background-color: #f0f2f5; color: #000; }
 
-        /* --- ডাবল কলাম গ্রিড ও বর্ডার লজিক --- */
+        /* --- ডাবল কলাম গ্রিড ও কার্ড --- */
         #feed-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px; }
         .post-card { background: white; border-bottom: 1.2px solid #e1e8ed; padding-bottom: 8px; display: flex; flex-direction: column; opacity: 0; animation: fadeIn 0.5s forwards; }
 
-        /* সুক্ষ্ম বর্ডার রিমুভ লজিক (শুধুমাত্র শেষ সারির জন্য) */
+        /* শেষ সারির বর্ডার রিমুভ লজিক */
         .post-card:last-child { border-bottom: none !important; }
         .post-card:nth-last-child(2):nth-child(odd) { border-bottom: none !important; }
 
@@ -82,7 +76,6 @@
         #sentinel .wave-loader { display: none; } 
         #sentinel.loading .wave-loader { display: flex; } 
 
-        /* --- ফুটার --- */
         .site-footer { background-color: #fff; padding: 20px; text-align: center; border-top: 1.5px solid #e1e8ed; }
         .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }
         .footer-links a { color: #536471; font-size: 14px; font-weight: 500; }
@@ -110,9 +103,6 @@
     <div class="main-container">
         <div id="cover-slider" class="cover-photo">
             <div class="intro-text">FILMIXO</div>
-            <div class="slider-title-container" id="slider-title-container" style="opacity: 0;">
-                <div class="slider-title-text" id="slider-title-text"></div>
-            </div>
         </div>
 
         <div class="profile-header-area">
@@ -172,7 +162,6 @@
             </div>
         </footer>
 
-        <!-- Login View -->
         <div id="login-view">
             <div class="login-box">
                 <h2 class="login-title">Sign up to Login FILMIXO for Premium access</h2>
@@ -188,7 +177,6 @@
         <div id="notification" class="notification"></div>
     </div>
     
-    <!-- Search Overlay -->
     <div id="search-overlay">
         <div class="search-header">
             <button class="search-back-btn" onclick="hideSearch()"><i class="fa-solid fa-arrow-left"></i></button>
@@ -223,42 +211,24 @@
         const startCoverSlider = posts => {
             const container = document.getElementById("cover-slider");
             const intro = container.querySelector(".intro-text");
-            const titleContainer = document.getElementById("slider-title-container");
-            const titleText = document.getElementById("slider-title-text");
             const sliderItems = posts.slice(0, 10);
             if (!sliderItems.length) return;
-
             const clear = () => { clearInterval(sliderInterval); container.querySelectorAll(".cover-photo-inner").forEach(e => e.remove()); };
-            
             const runIntro = () => { intro.style.animation = "none"; intro.offsetHeight; intro.style.animation = "cinematicIntro 3s cubic-bezier(.22,1,.36,1) forwards"; };
-
             const startSlide = () => {
                 const wrapper = document.createElement("div");
                 wrapper.className = "cover-photo-inner";
                 wrapper.style.cssText = "position:absolute;inset:0;display:flex;opacity:0;transition:opacity 2.2s ease-in-out,transform 1s cubic-bezier(.22,1,.36,1);";
                 wrapper.innerHTML = sliderItems.map(x => `<img src="${x.mediaImage}" loading="lazy" style="width:100%;height:100%;object-fit:cover;flex:0 0 100%">`).join("");
                 container.appendChild(wrapper);
-                
-                requestAnimationFrame(() => { 
-                    wrapper.style.opacity = 1; 
-                    titleContainer.style.opacity = 1;
-                    titleText.innerText = sliderItems[0].title;
-                });
-
+                requestAnimationFrame(() => wrapper.style.opacity = 1);
                 let n = 0;
                 sliderInterval = setInterval(() => {
                     n++;
-                    if (n < sliderItems.length) {
-                        wrapper.style.transform = `translate3d(-${n * 100}%,0,0)`;
-                        titleText.innerText = sliderItems[n].title;
-                    } else {
-                        clear();
-                        titleContainer.style.opacity = 0;
-                        setTimeout(init, 100);
-                    }
+                    if (n < sliderItems.length) { wrapper.style.transform = `translate3d(-${n * 100}%,0,0)`; } 
+                    else { clear(); setTimeout(init, 100); }
                 }, 3400);
             };
-
             const init = () => { clear(); runIntro(); setTimeout(startSlide, 2200); };
             init();
         };
@@ -267,7 +237,7 @@
             const container = document.getElementById('feed-container');
             const sentinel = document.getElementById('sentinel');
             if (currentIndex >= allPosts.length) { sentinel.style.display = 'none'; return; }
-            if (size === CONFIG.BATCH_SIZE) { sentinel.classList.add('loading'); }
+            sentinel.classList.add('loading');
 
             const batch = allPosts.slice(currentIndex, currentIndex + size);
             batch.forEach(post => {
@@ -292,7 +262,7 @@
                 initializeFirebaseForCard(card, post.id);
             });
             currentIndex += size;
-            if (size === CONFIG.BATCH_SIZE) { sentinel.classList.remove('loading'); }
+            sentinel.classList.remove('loading');
         }
 
         function setupObserver() {
@@ -364,7 +334,7 @@
         window.addEventListener('popstate', () => { if (searchOverlay.style.display === 'flex') hideSearch(); });
         
         function renderSearchResults(q) {
-            searchResults.innerHTML = ''; let searchIdx = 0; const query = q.toLowerCase().trim();
+            searchResults.innerHTML = ''; const query = q.toLowerCase().trim();
             if (!query) { searchResults.innerHTML = `<div style="text-align:center; color:#536471; margin-top:50px;">Start typing to search...</div>`; notFound.style.display = 'none'; return; }
             const filtered = allPosts.filter(p => p.title.toLowerCase().includes(query));
             if (filtered.length === 0) { notFound.style.display = 'block'; searchResults.appendChild(notFound); return; }
@@ -389,13 +359,22 @@
                 calculateTotalViews(); 
 
                 const savedPos = sessionStorage.getItem('index_scroll');
-                await loadNextBatch((savedPos && parseInt(savedPos) > 1000) ? 20 : CONFIG.INITIAL_LOAD); 
+                if (savedPos) {
+                    const pos = parseInt(savedPos);
+                    // লোকেশন রিস্টোর লজিক: যতক্ষণ স্ক্রল লোকেশন না পৌঁছাবে ততক্ষণ ব্যাচ লোড হতে থাকবে
+                    while (currentIndex < allPosts.length && document.documentElement.scrollHeight < pos + window.innerHeight + 1000) {
+                        await loadNextBatch(CONFIG.BATCH_SIZE);
+                    }
+                    setTimeout(() => {
+                        window.scrollTo({ top: pos, behavior: 'instant' });
+                        sessionStorage.removeItem('index_scroll');
+                    }, 350);
+                } else {
+                    await loadNextBatch(CONFIG.INITIAL_LOAD);
+                }
+                
                 setupObserver();
                 document.getElementById('main-footer').style.display = 'block';
-
-                if (savedPos) {
-                    setTimeout(() => { window.scrollTo({ top: parseInt(savedPos), behavior: 'instant' }); sessionStorage.removeItem('index_scroll'); }, 400); 
-                }
             } catch (error) { console.error(error); }
         }
 
