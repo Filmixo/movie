@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Admin - Bulletproof JSON Engine</title>
+    <title>Filmixo Admin - Pro JSON Engine</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -19,114 +18,81 @@
             --success: #00ba7c;
         }
 
-        /* --- ফুল বডি লাক্সারিয়াস লেআউট --- */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         
         body { 
-            background: var(--bg); 
-            color: var(--text); 
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
+            background: var(--bg); color: var(--text); padding: 30px 20px;
+            display: flex; flex-direction: column; align-items: center; min-height: 100vh;
         }
 
-        .wrapper { width: 100%; max-width: 850px; }
+        .wrapper { width: 100%; max-width: 800px; }
 
-        header { text-align: center; margin-bottom: 40px; }
-        header h1 { font-size: 32px; font-weight: 800; letter-spacing: -1px; display: flex; align-items: center; justify-content: center; gap: 12px; color: white; }
-        header p { color: var(--text-muted); margin-top: 8px; font-size: 14px; }
+        header { text-align: center; margin-bottom: 30px; }
+        header h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: white; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        header p { color: var(--text-muted); font-size: 13px; margin-top: 5px; }
 
         .section-label {
-            display: block;
-            font-size: 11px;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: var(--accent);
-            margin-bottom: 20px;
-            letter-spacing: 1.5px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 8px;
-            margin-top: 20px;
+            display: block; font-size: 11px; font-weight: 800; text-transform: uppercase;
+            color: var(--accent); margin: 25px 0 15px 0; letter-spacing: 1px;
+            border-bottom: 1px solid var(--border); padding-bottom: 5px;
         }
 
-        .input-group { margin-bottom: 25px; }
+        .input-group { margin-bottom: 20px; }
 
-        label {
-            display: flex;
-            align-items: center; gap: 10px;
-            font-size: 14px; font-weight: 600;
-            margin-bottom: 12px; color: var(--text);
-        }
-
-        label i { font-size: 18px; width: 22px; text-align: center; color: var(--accent); }
+        label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+        label i { font-size: 16px; width: 20px; color: var(--accent); }
 
         input, textarea {
-            width: 100%; background: var(--field-bg);
-            border: 1px solid var(--border); border-radius: 12px;
-            padding: 16px 20px; color: white; font-size: 14px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%; background: var(--field-bg); border: 1px solid var(--border);
+            border-radius: 8px; padding: 12px 15px; color: white; font-size: 14px;
+            transition: all 0.2s ease;
         }
 
-        input:focus, textarea:focus {
-            outline: none; border-color: var(--accent);
-            background: #1d242c; box-shadow: 0 0 0 4px rgba(29, 161, 242, 0.1);
-        }
+        input:focus, textarea:focus { outline: none; border-color: var(--accent); background: #1d242c; }
 
-        textarea#paragraphs { height: 400px; resize: vertical; line-height: 1.8; font-size: 15px; }
+        /* ইউটিউব এবং আর্টিকেল বক্সের সাইজ */
+        textarea#youtubeEmbed { height: 80px; font-family: monospace; font-size: 12px; color: #f8d7da; }
+        textarea#paragraphs { height: 350px; line-height: 1.6; }
 
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-        .yt-label { color: var(--yt-red) !important; font-weight: 800; }
+        .yt-label { color: var(--yt-red) !important; }
         .yt-label i { color: var(--yt-red) !important; }
 
         .link-panel {
-            background: rgba(255,255,255,0.015); padding: 30px;
-            border-radius: 20px; border: 1px dashed var(--border);
-            margin-top: 10px;
+            background: rgba(255,255,255,0.01); padding: 20px;
+            border-radius: 12px; border: 1px dashed var(--border);
         }
 
+        /* বাটন সাইজ ছোট এবং মানানসই করা হয়েছে */
         .generate-btn {
-            width: 100%; padding: 20px;
-            background: var(--accent); color: white;
-            border: none; border-radius: 60px;
-            font-size: 17px; font-weight: 800;
+            width: auto; min-width: 220px; padding: 12px 30px;
+            background: var(--accent); color: white; border: none;
+            border-radius: 30px; font-size: 14px; font-weight: 800;
             cursor: pointer; transition: all 0.3s ease;
-            margin-top: 30px; text-transform: uppercase;
-            letter-spacing: 2px; box-shadow: 0 4px 15px rgba(29, 161, 242, 0.3);
+            margin: 20px auto; display: block; text-transform: uppercase;
         }
-
-        .generate-btn:hover { background: #1a91da; transform: translateY(-3px); box-shadow: 0 15px 30px rgba(29, 161, 242, 0.2); }
+        .generate-btn:hover { background: #1a91da; transform: translateY(-2px); }
         .generate-btn:active { transform: scale(0.97); }
 
-        .output-container {
-            margin-top: 60px; width: 100%;
-            display: none; animation: slideUp 0.5s ease;
-        }
+        .output-container { margin-top: 40px; width: 100%; display: none; }
 
-        @keyframes slideUp { from { opacity:0; transform: translateY(20px); } to { opacity:1; transform: translateY(0); } }
-
-        .output-header {
-            display: flex; justify-content: space-between; align-items: center;
-            margin-bottom: 15px; padding: 0 5px;
-        }
+        .output-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 
         .copy-btn {
-            background: #ffffff; color: #000; border: none;
-            padding: 12px 28px; border-radius: 50px;
-            font-size: 13px; font-weight: 800;
-            cursor: pointer; transition: 0.2s;
+            background: white; color: black; border: none;
+            padding: 8px 18px; border-radius: 20px; font-size: 11px;
+            font-weight: 800; cursor: pointer; transition: 0.2s;
+            width: 100px; /* ফিক্সড উইথ যাতে টেক্সট চেঞ্জে বড় না হয় */
+            text-align: center;
         }
-
-        .copy-btn:hover { background: var(--accent); color: white; transform: scale(1.05); }
+        .copy-btn.copied { background: var(--success); color: white; }
 
         pre {
-            background: #000; padding: 35px;
-            border-radius: 20px; border: 1px solid var(--border);
-            color: #a5d6ff; font-family: 'Consolas', monospace;
-            font-size: 13px; line-height: 1.7; overflow-x: auto;
-            white-space: pre-wrap; box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: #000; padding: 25px; border-radius: 12px;
+            border: 1px solid var(--border); color: #a5d6ff;
+            font-family: 'Consolas', monospace; font-size: 13px;
+            line-height: 1.6; overflow-x: auto; white-space: pre-wrap;
         }
 
         @media (max-width: 768px) { .form-grid { grid-template-columns: 1fr; } }
@@ -137,60 +103,60 @@
 <div class="wrapper">
     <header>
         <h1><i class="fa-solid fa-clapperboard"></i> FILMIXO ADMIN</h1>
-        <p>Dynamic Lifetime-Unique JSON Generator</p>
+        <p>Premium High-Speed JSON Data Engine</p>
     </header>
 
-    <div class="section-label">1. Basic Movie Identity</div>
+    <div class="section-label">1. Basic Metadata</div>
     <div class="input-group">
         <label><i class="fa-solid fa-file-signature"></i> Movie Title</label>
-        <input type="text" id="title" placeholder="e.g. Avatar 3 (2026)">
+        <input type="text" id="title" placeholder="e.g. Baahubali 3 (2026) 1080p">
     </div>
 
     <div class="form-grid">
         <div class="input-group">
-            <label><i class="fa-solid fa-image"></i> Poster Link (Direct URL)</label>
-            <input type="text" id="media" placeholder="https://raw.githubusercontent.com/...">
+            <label><i class="fa-solid fa-image"></i> Poster URL</label>
+            <input type="text" id="media" placeholder="Paste image link here">
         </div>
         <div class="input-group">
-            <label><i class="fa-solid fa-clock"></i> Exact Duration</label>
+            <label><i class="fa-solid fa-clock"></i> Duration</label>
             <input type="text" id="duration" placeholder="00:00:00 (Auto-random if empty)">
         </div>
     </div>
 
-    <div class="section-label">2. Media & Storyline</div>
+    <div class="section-label">2. Media & Description</div>
     <div class="input-group">
-        <label class="yt-label"><i class="fa-brands fa-youtube"></i> YouTube Embed Iframe</label>
-        <input type="text" id="youtubeEmbed" placeholder='Paste iframe code here...'>
+        <label class="yt-label"><i class="fa-brands fa-youtube"></i> YouTube Embed Code (Iframe)</label>
+        <textarea id="youtubeEmbed" placeholder='Paste <iframe ...></iframe> here'></textarea>
     </div>
 
     <div class="input-group">
-        <label><i class="fa-solid fa-align-left"></i> Full Article Content</label>
-        <textarea id="paragraphs" placeholder="Write or paste your article description here..."></textarea>
+        <label><i class="fa-solid fa-align-left"></i> Movie Description</label>
+        <textarea id="paragraphs" placeholder="Write the full movie article here. Line break = New paragraph."></textarea>
     </div>
 
-    <div class="section-label">3. Destination Links (Smart Fallback)</div>
+    <div class="section-label">3. Destination Links</div>
     <div class="link-panel">
         <div class="input-group">
-            <label><i class="fa-solid fa-money-bill-trend-up"></i> Adsterra Link (Ad 1)</label>
-            <input type="text" id="linkAd1" placeholder="Leave empty for default link">
+            <label><i class="fa-solid fa-link"></i> Adsterra Link (Ad 1)</label>
+            <input type="text" id="linkAd1" placeholder="Leave empty for system default">
         </div>
         <div class="input-group">
-            <label><i class="fa-solid fa-chart-line"></i> Monetag Link (Ad 2)</label>
-            <input type="text" id="linkAd2" placeholder="Leave empty for default link">
+            <label><i class="fa-solid fa-link"></i> Monetag Link (Ad 2)</label>
+            <input type="text" id="linkAd2" placeholder="Leave empty for system default">
         </div>
         <div class="input-group">
-            <label><i class="fa-solid fa-download"></i> Final Movie Download Link</label>
-            <input type="text" id="linkMovie" placeholder="Mega/Drive link for download.html">
+            <label><i class="fa-solid fa-circle-down"></i> Final Movie Link</label>
+            <input type="text" id="linkMovie" placeholder="The actual download link">
         </div>
     </div>
     
     <button class="generate-btn" onclick="generateJSON()">
-        <i class="fa-solid fa-bolt-lightning"></i> Generate Unique Data
+        <i class="fa-solid fa-bolt"></i> Generate Data
     </button>
 
     <div class="output-container" id="outputArea">
         <div class="output-header">
-            <span style="font-weight: 800; font-size: 13px; letter-spacing: 1px; color: var(--success);">JSON READY (LIFETIME UNIQUE):</span>
+            <span style="font-weight: 800; font-size: 12px; color: var(--accent);">READY JSON CODE:</span>
             <button class="copy-btn" onclick="copyJSON()" id="copyBtn">COPY CODE</button>
         </div>
         <pre id="jsonOutput"></pre>
@@ -198,8 +164,8 @@
 </div>
 
 <script>
-    // --- পার্মানেন্ট ডিফল্ট লিঙ্কসমূহ (আপনার প্রয়োজন অনুযায়ী পরিবর্তন করুন) ---
-    const SYSTEM_DEFAULTS = {
+    // --- পার্মানেন্ট ডিফল্ট সেটিংস ---
+    const DEFAULTS = {
         ADSTERRA: "https://your-permanent-adsterra.com",
         MONETAG: "https://your-permanent-monetag.com",
         MOVIE: "https://your-default-movie-link.com"
@@ -218,17 +184,14 @@
         document.getElementById('duration').value = `${fmt(h)}:${fmt(m)}:${fmt(s)}`;
     }
 
-    // --- শক্তিশালী ইউনিক আইডি জেনারেশন লজিক (৫ ক্যারেক্টার) ---
-    function generateLifetimeUniqueId() {
-        // ১. বর্তমান সময়ের একদম সূক্ষ্ম টাইমিং নেওয়া হলো
-        const timestamp = Date.now(); 
-        // ২. টাইমকে বেস-৩৬ এ রূপান্তর করে শেষের ৪টি অক্ষর নেওয়া হলো (এটি প্রতি মিলি-সেকেন্ডে বদলে যায়)
-        const timePart = timestamp.toString(36).slice(-4);
-        // ৩. একটি র্যান্ডম লেটার যোগ করা হলো অতিরিক্ত সুরক্ষার জন্য
-        const randomPart = Math.random().toString(36).substring(2, 3);
-        
-        // p + ৪ টি অনন্য ক্যারেক্টার = ৫ টি ইউনিক আইডি (কখনো মিলবে না)
-        return 'p' + timePart + randomPart; 
+    // --- চূড়ান্ত ইউনিক আইডি লজিক (৫ ক্যারেক্টার - প্রতিবার সম্পূর্ণ আলাদা) ---
+    function generateNewId() {
+        const pool = 'abcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+        for (let i = 0; i < 5; i++) {
+            result += pool.charAt(Math.floor(Math.random() * pool.length));
+        }
+        return result; // উদাহরণ: x9p2q, 5m1zk (কখনো এক হবে না)
     }
 
     function generateJSON() {
@@ -238,20 +201,19 @@
         const youtube = document.getElementById('youtubeEmbed').value.trim();
         const paraRaw = document.getElementById('paragraphs').value.trim();
 
-        // স্মার্ট লিঙ্ক সিস্টেম
-        const ad1 = document.getElementById('linkAd1').value.trim() || SYSTEM_DEFAULTS.ADSTERRA;
-        const ad2 = document.getElementById('linkAd2').value.trim() || SYSTEM_DEFAULTS.MONETAG;
-        const movie = document.getElementById('linkMovie').value.trim() || SYSTEM_DEFAULTS.MOVIE;
+        const ad1 = document.getElementById('linkAd1').value.trim() || DEFAULTS.ADSTERRA;
+        const ad2 = document.getElementById('linkAd2').value.trim() || DEFAULTS.MONETAG;
+        const movie = document.getElementById('linkMovie').value.trim() || DEFAULTS.MOVIE;
 
         const paragraphs = paraRaw ? paraRaw.split('\n').filter(l => l.trim() !== '') : [];
 
-        // প্রতি ক্লিকের সাথে নতুন শক্তিশালী আইডি জেনারেট হচ্ছে
-        const bulletproofId = generateLifetimeUniqueId();
+        // প্রতিবার নতুন আইডি তৈরি
+        const finalId = generateNewId();
 
         const postData = {
-            id: bulletproofId,
+            id: finalId,
             uploadTime: new Date().toISOString(),
-            title: title || "Untitled Blockbuster",
+            title: title || "Untitled Movie",
             mediaImage: media || "https://placeholder.com/img.jpg",
             videoDuration: duration,
             youtubeEmbed: youtube,
@@ -261,10 +223,8 @@
             paragraphs: paragraphs
         };
 
-        const result = JSON.stringify(postData, null, 4);
-        document.getElementById('jsonOutput').innerText = result + ",";
+        document.getElementById('jsonOutput').innerText = JSON.stringify(postData, null, 4) + ",";
         document.getElementById('outputArea').style.display = 'block';
-        
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
@@ -272,8 +232,12 @@
         const text = document.getElementById('jsonOutput').innerText;
         navigator.clipboard.writeText(text);
         const btn = document.getElementById('copyBtn');
-        btn.innerText = "COPIED SUCCESSFULLY!";
-        setTimeout(() => btn.innerText = "COPY CODE", 2000);
+        btn.innerText = "DONE!";
+        btn.classList.add('copied');
+        setTimeout(() => {
+            btn.innerText = "COPY CODE";
+            btn.classList.remove('copied');
+        }, 2000);
     }
 </script>
 
