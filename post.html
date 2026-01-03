@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
@@ -54,21 +53,17 @@
     .article-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-top: 8px; margin-bottom: 8px; text-align: left; letter-spacing: -0.3px; }
         
-    /* ইউটিউব এমবেড - কোণা একদম শার্প বা চার কণা করা হয়েছে */
     .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 5px; border-radius: 0; overflow: hidden; background: #000; display: none; }
     .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
+    /* --- ডাউনলোড সেকশন (সংশোধিত লাক্সারিয়াস বাটন) --- */  
     .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
-    .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; }  
-    .download-btn-v2 { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 12px 5px; border-radius: 6px; text-align: center; color: white; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.15); }
+    .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 8px; }  
+    .download-btn-v2 { display: flex; flex-direction: row; align-items: center; justify-content: center; flex: 1; padding: 10px 2px; border-radius: 5px; text-align: center; color: white; cursor: pointer; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: 0 3px 6px rgba(0,0,0,0.15); }
     .download-btn-v2:active { transform: scale(0.95); }
-    .btn-res { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; line-height: 1; display: block; margin-bottom: 3px; }
-    .btn-tag { font-size: 10px; font-weight: 600; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px; display: block; }
-    .btn-1080 { background: linear-gradient(180deg, #D32F2F 0%, #B71C1C 100%); border-bottom: 3px solid #7f0000; }
-    .btn-720 { background: linear-gradient(180deg, #1976D2 0%, #0D47A1 100%); border-bottom: 3px solid #002171; }
-    .btn-360 { background: linear-gradient(180deg, #388E3C 0%, #1B5E20 100%); border-bottom: 3px solid #003300; }
+    .btn-text-main { font-size: 10.2px; font-weight: 800; letter-spacing: 0.3px; white-space: nowrap; text-shadow: 1px 1px 2px rgba(0,0,0,0.4); }
 
-    /* স্ট্যাটস ও শেয়ার (সংশোধিত সমান গ্যাপ লেআউট) */  
+    /* --- স্ট্যাটস ও শেয়ার (নিখুঁত ব্যালেন্স) --- */  
     .stats-section { padding: 10px 0; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: space-between; position: relative; width: 100%; }  
     .view-stat { flex: 1; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
     .like-stat-container { position: absolute; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; z-index: 2; }  
@@ -79,16 +74,15 @@
     .share-icon { width: 23px; height: 23px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 11px; transition: transform 0.1s; }  
     .share-icon:active { transform: scale(0.85); }
 
-    /* ফুটার (৫টি লিঙ্ক এক লাইনে সমান দূরত্বে) */
+    /* --- ফুটার (৫টি লিঙ্ক এক লাইনে) --- */
     .site-footer { padding: 20px 15px; text-align: center; border-top: 2px solid #e1e8ed; }  
     .footer-links { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; width: 100%; gap: 5px; }  
-    .footer-links a { color: #536471; font-size: 11.5px; font-weight: 600; transition: color 0.2s; white-space: nowrap; }  
+    .footer-links a { color: #536471; font-size: 11.1px; font-weight: 600; transition: color 0.2s; white-space: nowrap; }  
     .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
     .footer-copyright { color: #536471; font-size: 13px; }  
     .footer-copyright a { color: #1da1f2; font-weight: bold; }
     
     .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 8px 15px; border-radius: 20px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; }  
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }  
 </style>
 </head>  
 <body>  
@@ -111,11 +105,7 @@
     <div id="post-details-container"></div>  
     <footer class="site-footer">  
         <div class="footer-links"> 
-            <a href="#">About</a> 
-            <a href="#">Contact Us</a> 
-            <a href="#">Disclaimer</a>
-            <a href="#">Privacy Policy</a> 
-            <a href="#">Terms & Conditions</a> 
+            <a href="#">About Us</a> <a href="#">Contact Us</a> <a href="#">Disclaimer</a> <a href="#">Privacy Policy</a> <a href="#">Terms & Conditions</a> 
         </div>  
         <div class="footer-copyright">Copyright © 2026 <a href="index.html">filmixo.com</a>. All rights reserved.</div>  
     </footer>  
@@ -154,6 +144,7 @@
         });
     }
 
+    // --- বাটন ক্লিক লজিক ---
     window.handleDownloadClick = function(btnId, pId, ad1, ad2) {
         const key = `map_${pId}`;
         let map = JSON.parse(localStorage.getItem(key)) || {};
@@ -203,20 +194,36 @@
         let youtubeHTML = post.youtubeEmbed ? `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div><div id="ad-box-video" class="ad-box"></div>` : '';
         let lastParaHTML = paragraphs.length > 0 ? `<p class="article-para">${paragraphs[paragraphs.length - 1]}</p>` : "";
         
+        // --- লাক্সারিয়াস ডায়নামিক গ্র্যাডিয়েন্ট লজিক ---
+        const gradients = [
+            "linear-gradient(180deg, #ff416c 0%, #ff4b2b 100%)", // Red Flame
+            "linear-gradient(180deg, #1e3c72 0%, #2a5298 100%)", // Royal Blue
+            "linear-gradient(180deg, #00b09b 0%, #96c93d 100%)", // Emerald
+            "linear-gradient(180deg, #8E2DE2 0%, #4A00E0 100%)", // Luxury Purple
+            "linear-gradient(180deg, #f12711 0%, #f5af19 100%)", // Amber
+            "linear-gradient(180deg, #373B44 0%, #4286f4 100%)", // Steel
+            "linear-gradient(180deg, #434343 0%, #000000 100%)"  // Carbon Black
+        ];
+        const selectedColor = gradients[Math.floor(Math.random() * gradients.length)];
+
         let downloadSectionHTML = `
             <div class="download-title-text">Download Full Movie</div>
             <div class="download-buttons-container">
-                <div onclick="handleDownloadClick('b1', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2 btn-1080"><span class="btn-res">1080p</span><span class="btn-tag">FULL HD</span></div>
-                <div onclick="handleDownloadClick('b2', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2 btn-720"><span class="btn-res">720p</span><span class="btn-tag">HD READY</span></div>
-                <div onclick="handleDownloadClick('b3', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2 btn-360"><span class="btn-res">360p</span><span class="btn-tag">MOBILE</span></div>
+                <div onclick="handleDownloadClick('b1', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2" style="background: ${selectedColor}">
+                    <span class="btn-text-main">1080p Full HD</span>
+                </div>
+                <div onclick="handleDownloadClick('b2', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2" style="background: ${selectedColor}">
+                    <span class="btn-text-main">720p HD.</span>
+                </div>
+                <div onclick="handleDownloadClick('b3', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2" style="background: ${selectedColor}">
+                    <span class="btn-text-main">360p SD.</span>
+                </div>
             </div>`;  
           
         let statsHTML = `
             <div class="stats-section">
                 <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">0</span> Views</div>
-                <div class="like-stat-container">
-                    <div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div>
-                </div>
+                <div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div></div>
                 <div class="share-icons">
                     <div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div>
                     <div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div>
