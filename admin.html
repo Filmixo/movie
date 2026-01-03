@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Admin - Pro JSON Engine</title>
+    <title>Filmixo Admin - Final JSON Pro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -50,7 +50,6 @@
 
         input:focus, textarea:focus { outline: none; border-color: var(--accent); background: #1d242c; }
 
-        /* ইউটিউব এবং আর্টিকেল বক্সের সাইজ */
         textarea#youtubeEmbed { height: 80px; font-family: monospace; font-size: 12px; color: #f8d7da; }
         textarea#paragraphs { height: 350px; line-height: 1.6; }
 
@@ -64,7 +63,6 @@
             border-radius: 12px; border: 1px dashed var(--border);
         }
 
-        /* বাটন সাইজ ছোট এবং মানানসই করা হয়েছে */
         .generate-btn {
             width: auto; min-width: 220px; padding: 12px 30px;
             background: var(--accent); color: white; border: none;
@@ -79,11 +77,13 @@
 
         .output-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 
+        /* কপি বাটন ফিক্সড (এক লাইনে থাকবে) */
         .copy-btn {
             background: white; color: black; border: none;
             padding: 8px 18px; border-radius: 20px; font-size: 11px;
             font-weight: 800; cursor: pointer; transition: 0.2s;
-            width: 100px; /* ফিক্সড উইথ যাতে টেক্সট চেঞ্জে বড় না হয় */
+            white-space: nowrap; /* লেখা এক লাইনে রাখার জন্য */
+            min-width: 110px;
             text-align: center;
         }
         .copy-btn.copied { background: var(--success); color: white; }
@@ -109,44 +109,44 @@
     <div class="section-label">1. Basic Metadata</div>
     <div class="input-group">
         <label><i class="fa-solid fa-file-signature"></i> Movie Title</label>
-        <input type="text" id="title" placeholder="e.g. Baahubali 3 (2026) 1080p">
+        <input type="text" id="title" placeholder="Enter full movie title and release year here...">
     </div>
 
     <div class="form-grid">
         <div class="input-group">
             <label><i class="fa-solid fa-image"></i> Poster URL</label>
-            <input type="text" id="media" placeholder="Paste image link here">
+            <input type="text" id="media" placeholder="Paste your GitHub raw link or poster image URL here...">
         </div>
         <div class="input-group">
             <label><i class="fa-solid fa-clock"></i> Duration</label>
-            <input type="text" id="duration" placeholder="00:00:00 (Auto-random if empty)">
+            <input type="text" id="duration" placeholder="Enter movie duration (HH:MM:SS) or leave empty for auto...">
         </div>
     </div>
 
     <div class="section-label">2. Media & Description</div>
     <div class="input-group">
         <label class="yt-label"><i class="fa-brands fa-youtube"></i> YouTube Embed Code (Iframe)</label>
-        <textarea id="youtubeEmbed" placeholder='Paste <iframe ...></iframe> here'></textarea>
+        <textarea id="youtubeEmbed" placeholder='Paste your YouTube iframe embed code here (iframe width="560"...) '></textarea>
     </div>
 
     <div class="input-group">
         <label><i class="fa-solid fa-align-left"></i> Movie Description</label>
-        <textarea id="paragraphs" placeholder="Write the full movie article here. Line break = New paragraph."></textarea>
+        <textarea id="paragraphs" placeholder="Write or paste your full movie article description here. Press Enter for each new paragraph..."></textarea>
     </div>
 
     <div class="section-label">3. Destination Links</div>
     <div class="link-panel">
         <div class="input-group">
             <label><i class="fa-solid fa-link"></i> Adsterra Link (Ad 1)</label>
-            <input type="text" id="linkAd1" placeholder="Leave empty for system default">
+            <input type="text" id="linkAd1" placeholder="Enter Adsterra Direct Link or leave empty for system default...">
         </div>
         <div class="input-group">
             <label><i class="fa-solid fa-link"></i> Monetag Link (Ad 2)</label>
-            <input type="text" id="linkAd2" placeholder="Leave empty for system default">
+            <input type="text" id="linkAd2" placeholder="Enter Monetag Direct Link or leave empty for system default...">
         </div>
         <div class="input-group">
             <label><i class="fa-solid fa-circle-down"></i> Final Movie Link</label>
-            <input type="text" id="linkMovie" placeholder="The actual download link">
+            <input type="text" id="linkMovie" placeholder="Enter the final Mega, Google Drive, or direct movie download link here...">
         </div>
     </div>
     
@@ -164,7 +164,7 @@
 </div>
 
 <script>
-    // --- পার্মানেন্ট ডিফল্ট সেটিংস ---
+    // --- পার্মানেন্ট ডিফল্ট লিঙ্কসমূহ (এখানে আপনার লিঙ্কগুলো বসিয়ে দিন) ---
     const DEFAULTS = {
         ADSTERRA: "https://your-permanent-adsterra.com",
         MONETAG: "https://your-permanent-monetag.com",
@@ -184,14 +184,14 @@
         document.getElementById('duration').value = `${fmt(h)}:${fmt(m)}:${fmt(s)}`;
     }
 
-    // --- চূড়ান্ত ইউনিক আইডি লজিক (৫ ক্যারেক্টার - প্রতিবার সম্পূর্ণ আলাদা) ---
+    // --- প্রতি ক্লিকে ৫ অক্ষরের ইউনিক আইডি জেনারেশন ---
     function generateNewId() {
         const pool = 'abcdefghijklmnopqrstuvwxyz0123456789';
         let result = '';
         for (let i = 0; i < 5; i++) {
             result += pool.charAt(Math.floor(Math.random() * pool.length));
         }
-        return result; // উদাহরণ: x9p2q, 5m1zk (কখনো এক হবে না)
+        return result; 
     }
 
     function generateJSON() {
@@ -207,7 +207,7 @@
 
         const paragraphs = paraRaw ? paraRaw.split('\n').filter(l => l.trim() !== '') : [];
 
-        // প্রতিবার নতুন আইডি তৈরি
+        // প্রতিবার নতুন আইডি তৈরি হচ্ছে
         const finalId = generateNewId();
 
         const postData = {
