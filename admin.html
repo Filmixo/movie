@@ -51,13 +51,12 @@
 
         input:focus, textarea:focus { outline: none; border-color: var(--accent); background: #1d242c; }
 
-        /* বড় ইউটিউব এবং আর্টিকেল বক্স */
-        textarea#youtubeEmbed { height: 100px; font-family: 'Consolas', monospace; font-size: 12px; color: #ffcccb; }
+        textarea#youtubeEmbed { height: 80px; font-family: monospace; font-size: 12px; color: #f8d7da; }
         textarea#paragraphs { height: 350px; line-height: 1.6; }
 
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-        .yt-label { color: var(--yt-red) !important; font-weight: 800; }
+        .yt-label { color: var(--yt-red) !important; }
         .yt-label i { color: var(--yt-red) !important; }
 
         .link-panel {
@@ -79,13 +78,13 @@
 
         .output-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
 
-        /* কপি বাটন ফিক্স (এক লাইনে থাকবে) */
+        /* কপি বাটন ফিক্সড (এক লাইনে থাকবে) */
         .copy-btn {
             background: white; color: black; border: none;
-            padding: 8px 0; border-radius: 20px; font-size: 11px;
+            padding: 8px 18px; border-radius: 20px; font-size: 11px;
             font-weight: 800; cursor: pointer; transition: 0.2s;
-            white-space: nowrap; 
-            width: 120px;
+            white-space: nowrap; /* লেখা এক লাইনে রাখার জন্য */
+            min-width: 110px;
             text-align: center;
         }
         .copy-btn.copied { background: var(--success); color: white; }
@@ -111,44 +110,44 @@
     <div class="section-label">1. Basic Metadata</div>
     <div class="input-group">
         <label><i class="fa-solid fa-file-signature"></i> Movie Title</label>
-        <input type="text" id="title" placeholder="Enter full movie title with quality (e.g. Avatar 2026 1080p)...">
+        <input type="text" id="title" placeholder="Enter full movie title and release year here...">
     </div>
 
     <div class="form-grid">
         <div class="input-group">
             <label><i class="fa-solid fa-image"></i> Poster URL</label>
-            <input type="text" id="media" placeholder="Paste GitHub raw or image URL (best image link here)...">
+            <input type="text" id="media" placeholder="Paste your GitHub raw link or poster image URL here...">
         </div>
         <div class="input-group">
             <label><i class="fa-solid fa-clock"></i> Duration</label>
-            <input type="text" id="duration" placeholder="Enter duration (02:15:40) or leave blank for auto-random...">
+            <input type="text" id="duration" placeholder="Enter movie duration (HH:MM:SS) or leave empty for auto...">
         </div>
     </div>
 
     <div class="section-label">2. Media & Description</div>
     <div class="input-group">
         <label class="yt-label"><i class="fa-brands fa-youtube"></i> YouTube Embed Code (Iframe)</label>
-        <textarea id="youtubeEmbed" placeholder='Paste your YouTube iframe embed code here (e.g. <iframe width="560"...) '></textarea>
+        <textarea id="youtubeEmbed" placeholder='Paste your YouTube iframe embed code here (iframe width="560"...) '></textarea>
     </div>
 
     <div class="input-group">
         <label><i class="fa-solid fa-align-left"></i> Movie Description</label>
-        <textarea id="paragraphs" placeholder="Write or paste your full movie article. Press Enter to create a new paragraph..."></textarea>
+        <textarea id="paragraphs" placeholder="Write or paste your full movie article description here. Press Enter for each new paragraph..."></textarea>
     </div>
 
     <div class="section-label">3. Destination Links</div>
     <div class="link-panel">
         <div class="input-group">
             <label><i class="fa-solid fa-link"></i> Adsterra Link (Ad 1)</label>
-            <input type="text" id="linkAd1" placeholder="Enter custom Adsterra link or leave blank for system default...">
+            <input type="text" id="linkAd1" placeholder="Enter Adsterra Direct Link or leave empty for system default...">
         </div>
         <div class="input-group">
             <label><i class="fa-solid fa-link"></i> Monetag Link (Ad 2)</label>
-            <input type="text" id="linkAd2" placeholder="Enter custom Monetag link or leave blank for system default...">
+            <input type="text" id="linkAd2" placeholder="Enter Monetag Direct Link or leave empty for system default...">
         </div>
         <div class="input-group">
             <label><i class="fa-solid fa-circle-down"></i> Final Movie Link</label>
-            <input type="text" id="linkMovie" placeholder="Enter the final Mega, Drive, or direct download link for the movie...">
+            <input type="text" id="linkMovie" placeholder="Enter the final Mega, Google Drive, or direct movie download link here...">
         </div>
     </div>
     
@@ -166,10 +165,10 @@
 </div>
 
 <script>
-    // --- পার্মানেন্ট ডিফল্ট লিঙ্কসমূহ ---
+    // --- পার্মানেন্ট ডিফল্ট লিঙ্কসমূহ (এখানে আপনার লিঙ্কগুলো বসিয়ে দিন) ---
     const DEFAULTS = {
-        ADSTERRA: "https://your-permanent-adsterra-link.com",
-        MONETAG: "https://your-permanent-monetag-link.com",
+        ADSTERRA: "https://your-permanent-adsterra.com",
+        MONETAG: "https://your-permanent-monetag.com",
         MOVIE: "https://your-default-movie-link.com"
     };
 
@@ -186,7 +185,7 @@
         document.getElementById('duration').value = `${fmt(h)}:${fmt(m)}:${fmt(s)}`;
     }
 
-    // --- ৫ অক্ষরের গাণিতিক ইউনিক আইডি জেনারেশন (প্রতি ক্লিকে সম্পূর্ণ আলাদা) ---
+    // --- প্রতি ক্লিকে ৫ অক্ষরের ইউনিক আইডি জেনারেশন ---
     function generateNewId() {
         const pool = 'abcdefghijklmnopqrstuvwxyz0123456789';
         let result = '';
@@ -209,7 +208,7 @@
 
         const paragraphs = paraRaw ? paraRaw.split('\n').filter(l => l.trim() !== '') : [];
 
-        // নতুন ইউনিক আইডি
+        // প্রতিবার নতুন আইডি তৈরি হচ্ছে
         const finalId = generateNewId();
 
         const postData = {
@@ -218,14 +217,13 @@
             title: title || "Untitled Movie",
             mediaImage: media || "https://placeholder.com/img.jpg",
             videoDuration: duration,
-            youtubeEmbed: youtube, // ক্লিন ইউটিউব কোড
+            youtubeEmbed: youtube,
             adLink1: ad1,
             adLink2: ad2,
             downloadLink1: movie,
             paragraphs: paragraphs
         };
 
-        // ক্লিন JSON জেনারেশন (অতিরিক্ত ব্যাকস্ল্যাশ ছাড়া)
         document.getElementById('jsonOutput').innerText = JSON.stringify(postData, null, 4) + ",";
         document.getElementById('outputArea').style.display = 'block';
         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
