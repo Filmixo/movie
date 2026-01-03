@@ -172,12 +172,19 @@
                 bodyContent += `<p class="article-para">${p}</p>`;
                 if(index === 0) bodyContent += `<div id="ad-box-p1" class="ad-box"></div>`;
                 if(index === 1) bodyContent += `<div class="dual-ad-wrapper"><div id="ad-box-p2-left" class="ad-box"></div><div id="ad-box-p2-right" class="ad-box"></div></div>`;
-                if(index === 2) bodyContent += `<div id="ad-box-video" class="ad-box"></div>`;
+                // এমবেড ভিডিওর উপরের অ্যাডটি এখন ৩ নম্বর প্যারাগ্রাফের নিচে
+                if(index === 2) bodyContent += `<div id="ad-box-moved-from-video" class="ad-box"></div>`;
             }
         });
 
         let midAdHTML = `<div id="ad-box-mid" class="ad-box"></div>`;
-        let youtubeHTML = post.youtubeEmbed ? `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div>` : '';
+        let youtubeHTML = "";
+        if(post.youtubeEmbed) {
+            youtubeHTML = `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div>`;
+            // ভিডিওর নিজের অ্যাডটি নিচেই বহাল রাখা হলো
+            youtubeHTML += `<div id="ad-box-video-bottom" class="ad-box"></div>`;
+        }
+        
         let lastParaHTML = paragraphs.length > 0 ? `<p class="article-para">${paragraphs[paragraphs.length - 1]}</p>` : "";
         let downloadSectionHTML = `<div class="download-title-text">Download Full Movie</div><div class="download-buttons-container"><a href="#" class="download-btn-v2 btn-1080"><span class="btn-res">1080p</span><span class="btn-tag">FULL HD</span></a><a href="#" class="download-btn-v2 btn-720"><span class="btn-res">720p</span><span class="btn-tag">HD READY</span></a><a href="#" class="download-btn-v2 btn-360"><span class="btn-res">360p</span><span class="btn-tag">MOBILE</span></a></div>`;  
           
@@ -188,8 +195,9 @@
         injectAd('ad-src-p1', 'ad-box-p1');
         injectAd('ad-src-p2', 'ad-box-p2-left');
         injectAd('ad-src-p2', 'ad-box-p2-right');
+        injectAd('ad-src-video', 'ad-box-moved-from-video'); // ৩য় প্যারাগ্রাফের নিচে গেল
         injectAd('ad-src-mid', 'ad-box-mid');
-        injectAd('ad-src-video', 'ad-box-video');
+        injectAd('ad-src-video', 'ad-box-video-bottom'); // ভিডিওর নিচেই রইল
 
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
