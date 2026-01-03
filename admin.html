@@ -1,163 +1,309 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Admin - Universal Link Controller</title>
+    <title>Filmixo Admin - Premium JSON Generator</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root{--primary:#1da1f2;--primary-hover:#0c85d0;--dark:#1f2937;--light-bg:#f3f4f6;--border:#e5e7eb}
-        body{font-family:'Inter',sans-serif;background:var(--light-bg);padding:30px 15px;color:var(--dark);min-height:100vh}
-        .container{max-width:900px;margin:0 auto;background:white;padding:35px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.05);border:1px solid white}
-        h2{text-align:center;color:var(--dark);margin-bottom:25px;font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px}
-        h2 i{color:var(--primary)}
-        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}
-        .form-group{margin-bottom:15px}
-        label{display:block;margin-bottom:6px;font-weight:600;font-size:13px;color:#4b5563;text-transform:uppercase;letter-spacing:0.5px}
-        input,textarea{width:100%;padding:12px 15px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:#fff;color:#111;transition:all .2s ease;box-sizing:border-box}
-        input:focus,textarea:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px rgba(29,161,242,.15)}
-        textarea{height:100px;resize:vertical;line-height:1.5}
-        .link-section{background:#f9fafb;padding:20px;border-radius:8px;border:1px solid #edf2f7;margin:20px 0}
-        .link-section h3{font-size:14px;margin-bottom:15px;color:var(--primary);text-transform:uppercase}
-        .generate-btn{width:100%;padding:14px;background:var(--primary);color:white;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;margin-top:25px;transition:all .2s ease;display:flex;justify-content:center;align-items:center;gap:8px}
-        .generate-btn:hover{background:var(--primary-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(29,161,242,.25)}
-        .output-box{margin-top:25px;display:none;position:relative;background:#1e1e1e;border-radius:8px;overflow:hidden;border:1px solid #333}
-        pre{color:#a5d6ff;padding:20px;font-family:'Consolas',monospace;font-size:13px;white-space:pre-wrap;margin:0;max-height:400px;overflow-y:auto;line-height:1.4}
-        .copy-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.15);color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:.2s;display:flex;align-items:center;gap:5px}
-        @media (max-width:768px){.form-row{grid-template-columns:1fr}}
+        :root {
+            --accent: #1da1f2;
+            --bg: #0f1419;
+            --field-bg: #1a1f26;
+            --text: #e7e9ea;
+            --text-muted: #71767b;
+            --border: #333639;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* মেইন র‍্যাপার (কার্ড নয়, সরাসরি বডিতে বসানো) */
+        .wrapper {
+            width: 100%;
+            max-width: 850px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .section-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 5px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .input-group { margin-bottom: 20px; }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        input, textarea {
+            width: 100%;
+            background: var(--field-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px 16px;
+            color: white;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(29, 161, 242, 0.1);
+        }
+
+        .link-panel {
+            background: #15191e;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px dashed var(--border);
+            margin-bottom: 25px;
+        }
+
+        .generate-btn {
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .generate-btn:hover { background: #1a91da; transform: translateY(-2px); }
+        .generate-btn:active { transform: scale(0.98); }
+
+        /* আউটপুট এরিয়া (সরাসরি বডিতে) */
+        .output-container {
+            margin-top: 40px;
+            width: 100%;
+            display: none;
+        }
+
+        .output-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .copy-btn {
+            background: #ffffff;
+            color: #000;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .copy-btn:hover { background: var(--accent); color: white; }
+
+        pre {
+            background: #000;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            color: #a5d6ff;
+            font-family: 'Consolas', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2><i class="fa-solid fa-screwdriver-wrench"></i> Filmixo Universal Admin</h2>
-    
-    <div class="form-group">
+<div class="wrapper">
+    <header>
+        <h1><i class="fa-solid fa-clapperboard"></i> FILMIXO GENERATOR</h1>
+        <p>Professional JSON Builder for Movie Posts</p>
+    </header>
+
+    <div class="section-label">1. Post Identity</div>
+    <div class="input-group">
         <label>Movie Title</label>
-        <input type="text" id="title" placeholder="Enter full movie name...">
+        <input type="text" id="title" placeholder="e.g. Avatar: The Way of Water (2026)">
     </div>
 
-    <div class="form-row">
-        <div class="form-group">
-            <label>Thumbnail URL</label>
-            <input type="text" id="media" placeholder="https://raw.githubusercontent.com/.../img.jpg">
+    <div class="form-grid">
+        <div>
+            <label>Thumbnail Image URL</label>
+            <input type="text" id="media" placeholder="https://raw.githubusercontent.com/...">
         </div>
-        <div class="form-group">
-            <label>Video Duration</label>
-            <input type="text" id="duration" placeholder="02:15:40">
-        </div>
-    </div>
-
-    <div class="form-group">
-        <label><i class="fa-brands fa-youtube" style="color:red"></i> YouTube Embed Code (Optional)</label>
-        <textarea id="youtubeEmbed" style="height: 60px;" placeholder='<iframe width="560" height="315" ... ></iframe>'></textarea>
-    </div>
-
-    <!-- লিঙ্ক সেকশন (ফলব্যাক লজিকসহ) -->
-    <div class="link-section">
-        <h3><i class="fa-solid fa-link"></i> Smart Link Settings (Leave empty to use code defaults)</h3>
-        <div class="form-group">
-            <label>Manual Adsterra Link (Ad 1)</label>
-            <input type="text" id="manualAdsterra" placeholder="Custom Adsterra link or leave blank">
-        </div>
-        <div class="form-group">
-            <label>Manual Monetag Link (Ad 2)</label>
-            <input type="text" id="manualMonetag" placeholder="Custom Monetag link or leave blank">
-        </div>
-        <div class="form-group">
-            <label>Manual Movie Download Link</label>
-            <input type="text" id="manualDownload" placeholder="Custom Mega/Drive link or leave blank">
+        <div>
+            <label>Duration</label>
+            <input type="text" id="duration" placeholder="Auto-generated if empty">
         </div>
     </div>
 
-    <div class="form-group">
-        <label>Article Paragraphs (New line = New Paragraph)</label>
-        <textarea id="paragraphs" placeholder="Paste movie description or review here..."></textarea>
+    <div class="section-label">2. Media & Description</div>
+    <div class="input-group">
+        <label>YouTube Embed Code (Optional)</label>
+        <input type="text" id="youtubeEmbed" placeholder='<iframe src="..."></iframe>'>
     </div>
-    
-    <input type="hidden" id="generatedId">
+
+    <div class="input-group">
+        <label>Article Content (Line break for new paragraph)</label>
+        <textarea id="paragraphs" placeholder="Write or paste your movie description here..."></textarea>
+    </div>
+
+    <div class="section-label">3. Destination Links (Smart Fallback)</div>
+    <div class="link-panel">
+        <div class="input-group">
+            <label>Custom Adsterra (Ad 1)</label>
+            <input type="text" id="linkAd1" placeholder="Leave empty to use code default">
+        </div>
+        <div class="input-group">
+            <label>Custom Monetag (Ad 2)</label>
+            <input type="text" id="linkAd2" placeholder="Leave empty to use code default">
+        </div>
+        <div class="input-group">
+            <label>Final Movie Link</label>
+            <input type="text" id="linkMovie" placeholder="Link for download.html">
+        </div>
+    </div>
+
+    <input type="hidden" id="postId">
     
     <button class="generate-btn" onclick="generateJSON()">
-        <i class="fa-solid fa-bolt"></i> Generate Post JSON
+        <i class="fa-solid fa-bolt-lightning"></i> GENERATE JSON DATA
     </button>
 
-    <div class="output-box" id="output-area">
-        <button class="copy-btn" onclick="copyCode()" id="copyBtn"><i class="fa-regular fa-copy"></i> Copy JSON</button>
-        <pre id="json-output"></pre>
+    <div class="output-container" id="outputArea">
+        <div class="output-header">
+            <span style="font-weight: 800; font-size: 13px;">READY CODE:</span>
+            <button class="copy-btn" onclick="copyJSON()" id="copyBtn">COPY CODE</button>
+        </div>
+        <pre id="jsonOutput"></pre>
     </div>
 </div>
 
 <script>
-    // --- পার্মানেন্ট লিঙ্ক সেটিংস (এগুলো কোডের ভেতরেই সেট থাকবে) ---
-    const PERMANENT_LINKS = {
-        ADSTERRA: "https://your-permanent-adsterra-link.com",
-        MONETAG: "https://your-permanent-monetag-link.com",
+    // --- পার্মানেন্ট ডিফল্ট লিঙ্ক (কোডের ভেতরেই সংরক্ষিত) ---
+    const DEFAULTS = {
+        ADSTERRA: "https://your-default-adsterra.com",
+        MONETAG: "https://your-default-monetag.com",
         MOVIE: "https://your-default-movie-link.com"
     };
 
-    document.addEventListener('DOMContentLoaded', () => {
-        setupDefaults();
-    });
+    document.addEventListener('DOMContentLoaded', setupID);
 
-    function setupDefaults() {
-        const id = 'post-' + Math.random().toString(36).substr(2, 6);
-        document.getElementById('generatedId').value = id;
+    function setupID() {
+        const id = 'post-' + Math.random().toString(36).substr(2, 7);
+        document.getElementById('postId').value = id;
         
-        // র্যান্ডম ডিউরেশন লজিক
-        const totalSec = Math.floor(Math.random() * (9000 - 6600 + 1)) + 6600;
+        // র্যান্ডম ডিউরেশন (যদি ইউজারের দিতে ইচ্ছা না করে)
+        const totalSec = Math.floor(Math.random() * (9500 - 6800 + 1)) + 6800;
         const h = Math.floor(totalSec / 3600);
         const m = Math.floor((totalSec % 3600) / 60);
         const s = totalSec % 60;
-        const format = (u) => u.toString().padStart(2, '0');
-        document.getElementById('duration').value = `${format(h)}:${format(m)}:${format(s)}`;
+        const fmt = (u) => u.toString().padStart(2, '0');
+        document.getElementById('duration').value = `${fmt(h)}:${fmt(m)}:${fmt(s)}`;
     }
 
     function generateJSON() {
-        const id = document.getElementById('generatedId').value;
         const title = document.getElementById('title').value.trim();
         const media = document.getElementById('media').value.trim();
         const duration = document.getElementById('duration').value.trim();
         const youtube = document.getElementById('youtubeEmbed').value.trim();
         const paraRaw = document.getElementById('paragraphs').value.trim();
 
-        // স্মার্ট লিঙ্ক লজিক: ফর্ম ফাঁকা থাকলে পার্মানেন্ট লিঙ্ক নিবে
-        const finalAd1 = document.getElementById('manualAdsterra').value.trim() || PERMANENT_LINKS.ADSTERRA;
-        const finalAd2 = document.getElementById('manualMonetag').value.trim() || PERMANENT_LINKS.MONETAG;
-        const finalDL = document.getElementById('manualDownload').value.trim() || PERMANENT_LINKS.MOVIE;
-        
-        const paragraphs = paraRaw ? paraRaw.split('\n').filter(line => line.trim() !== '') : [];
+        // স্মার্ট লিঙ্ক সিলেকশন
+        const ad1 = document.getElementById('linkAd1').value.trim() || DEFAULTS.ADSTERRA;
+        const ad2 = document.getElementById('linkAd2').value.trim() || DEFAULTS.MONETAG;
+        const movie = document.getElementById('linkMovie').value.trim() || DEFAULTS.MOVIE;
 
-        const postData = {
-            id: id,
+        const paragraphs = paraRaw ? paraRaw.split('\n').filter(l => l.trim() !== '') : [];
+
+        const finalData = {
+            id: document.getElementById('postId').value,
             uploadTime: new Date().toISOString(),
             title: title || "Untitled Movie",
-            mediaImage: media || "https://placeholder.com/image.jpg",
+            mediaImage: media || "https://placeholder.com/img.jpg",
             videoDuration: duration,
             youtubeEmbed: youtube,
-            adLink1: finalAd1, // post.html এর জন্য
-            adLink2: finalAd2, // post.html এর জন্য
-            downloadLink1: finalDL, // download.html এর জন্য
-            paragraphs: paragraphs,
-            hashtags: "#filmixo #viralfilm #trendingmovie #blockbuster #popular"
+            adLink1: ad1,
+            adLink2: ad2,
+            downloadLink1: movie,
+            paragraphs: paragraphs
+            // হ্যাশট্যাগ লজিক চিরতরে বাদ দেওয়া হয়েছে
         };
 
-        const jsonString = JSON.stringify(postData, null, 4);
-        document.getElementById('json-output').innerText = jsonString.trim() + ",";
-        document.getElementById('output-area').style.display = 'block';
+        document.getElementById('jsonOutput').innerText = JSON.stringify(finalData, null, 4) + ",";
+        document.getElementById('outputArea').style.display = 'block';
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
         
-        // অটো-রিসেট শুধুমাত্র আইডি এর জন্য
-        const newId = 'post-' + Math.random().toString(36).substr(2, 6);
-        document.getElementById('generatedId').value = newId;
+        // আইডি রিসেট
+        setupID();
     }
 
-    function copyCode() {
-        const code = document.getElementById('json-output').innerText;
-        navigator.clipboard.writeText(code);
+    function copyJSON() {
+        const text = document.getElementById('jsonOutput').innerText;
+        navigator.clipboard.writeText(text);
         const btn = document.getElementById('copyBtn');
-        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
-        setTimeout(() => btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy JSON', 2000);
+        btn.innerText = "COPIED!";
+        setTimeout(() => btn.innerText = "COPY CODE", 2000);
     }
 </script>
 
