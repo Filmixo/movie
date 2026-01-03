@@ -11,11 +11,11 @@
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js"></script>
 
     <style>  
-    /* --- বেসিক সেটআপ --- */
+    /* --- বেসিক সেটআপ (পারফরম্যান্স ও ইউজার এক্সপেরিয়েন্স) --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }  
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
-    .main-wrapper.loaded { opacity: 1 !important; }  
+    .main-wrapper.loaded { opacity: 1 !important; transition: opacity 0.3s ease-in; }  
 
     /* --- হেডার সেকশন --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
@@ -24,13 +24,13 @@
     .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
     header > div { display: flex; align-items: center; gap: 2px; }
         
-    /* --- স্মার্ট অ্যাড বক্স --- */
+    /* --- স্মার্ট অ্যাড বক্স লজিক --- */
     .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
     .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
     .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 2px 15px; width: 100%; }
     .dual-ad-wrapper .ad-box { flex: 1; width: 50%; }
 
-    /* --- ভিডিও প্লেয়ার --- */
+    /* --- ভিডিও প্লেয়ার লজিক (সুপার ফাস্ট রেন্ডারিং) --- */
      .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
      .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
      .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
@@ -87,8 +87,8 @@
     .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: transform 0.2s; user-select: none; }  
     .share-icon:active { transform: scale(0.9); }
 
-    /* --- ফুটার --- */
-    .site-footer { padding: 20px 20px; text-align: center; border-top: 1.5px solid #e1e8ed; }  
+    /* --- ফুটার (বর্ডার ২ পিক্সেল) --- */
+    .site-footer { padding: 20px 20px; text-align: center; border-top: 2px solid #e1e8ed; }  
     .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
     .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; user-select: none; }  
     .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
@@ -98,11 +98,11 @@
     /* --- নোটিফিকেশন --- */
     .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 8px 15px; border-radius: 20px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; font-weight: 500; font-size: 13px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); text-align: center; width: auto; max-width: 90%; white-space: nowrap; }  
     .notification.show { opacity: 1; }  
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }  
 </style>
 </head>  
 <body>  
 
-<!-- অরিজিনাল ৬টি অ্যাড টেমপ্লেট (কোনো ডুপ্লিকেট নেই) -->
 <template id="ad-src-top"><script>atOptions = { 'key' : 'caf6ea59dc8711a1d0bfb5ad9dd98638', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };</script><script src="https://prototypesorting.com/caf6ea59dc8711a1d0bfb5ad9dd98638/invoke.js"></script></template>
 <template id="ad-src-title"><script>atOptions = { 'key' : 'da9154b956691d2aa7c677010e7b6501','format' : 'iframe','height' : 60,'width' : 468,'params' : {} };</script><script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script></template>
 <template id="ad-src-p1"><script>atOptions = {'key' : 'dbae51ad68fb44f5c8a6b535812c9f54','format' : 'iframe','height' : 250,'width' : 300, 'params' : {} };</script><script src="https://prototypesorting.com/dbae51ad68fb44f5c8a6b535812c9f54/invoke.js"></script></template>
@@ -151,6 +151,7 @@
     function timeAgo(dateString) { const d = new Date(dateString); const seconds = Math.floor((new Date() - d) / 1000); let interval = seconds / 31536000; if (interval > 1) return Math.floor(interval) + "y ago"; interval = seconds / 86400; if (interval > 1) return Math.floor(interval) + "d ago"; interval = seconds / 3600; if (interval > 1) return Math.floor(interval) + "h ago"; interval = seconds / 60; if (interval > 1) return Math.floor(interval) + "m ago"; return "Just now"; }  
     function updateAllTimeElements() { timeElementsToUpdate.forEach(item => { if (item.element && item.element.parentNode) { item.element.innerText = timeAgo(item.dateString); } }); }  
 
+    // অ্যাড ইনজেকশন লজিক (১০০% অক্ষুণ্ণ - রেন্ডারিং ব্লক করে না)
     function injectAd(tid, cid) {
         const t = document.getElementById(tid); const c = document.getElementById(cid);
         if (!t || !c) return;
@@ -173,25 +174,24 @@
                 bodyContent += `<p class="article-para">${p}</p>`;
                 if(index === 0) bodyContent += `<div id="ad-box-p1" class="ad-box"></div>`;
                 if(index === 1) bodyContent += `<div class="dual-ad-wrapper"><div id="ad-box-p2-left" class="ad-box"></div><div id="ad-box-p2-right" class="ad-box"></div></div>`;
-                // নেটিভ ব্যানার/বটম অ্যাডটি এখন ৩ নম্বর প্যারাগ্রাফের নিচে
                 if(index === 2) bodyContent += `<div id="ad-box-mid" class="ad-box"></div>`;
             }
         });
 
         let youtubeHTML = post.youtubeEmbed ? `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div><div id="ad-box-video" class="ad-box"></div>` : '';
-        
         let lastParaHTML = paragraphs.length > 0 ? `<p class="article-para">${paragraphs[paragraphs.length - 1]}</p>` : "";
         let downloadSectionHTML = `<div class="download-title-text">Download Full Movie</div><div class="download-buttons-container"><a href="#" class="download-btn-v2 btn-1080"><span class="btn-res">1080p</span><span class="btn-tag">FULL HD</span></a><a href="#" class="download-btn-v2 btn-720"><span class="btn-res">720p</span><span class="btn-tag">HD READY</span></a><a href="#" class="download-btn-v2 btn-360"><span class="btn-res">360p</span><span class="btn-tag">MOBILE</span></a></div>`;  
           
-        document.getElementById('post-details-container').innerHTML = `<div class="post-author-area"><div class="author-info"><div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}"></div><div class="author-text"><h3>FILMIXO<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div></div><div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div></div><div id="ad-box-top" class="ad-box"></div><div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}"><div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><div class="time-text">${post.videoDuration}</div><div class="prog-bg"><div class="prog-fill"></div></div><div style="display:flex; align-items:center; gap:6px;"><i class="fa-solid fa-volume-high"></i><span class="hd-badge">HD</span></div></div></div><div class="content-body">${titleHTML}${bodyContent}${youtubeHTML}${lastParaHTML}${downloadSectionHTML}<div class="stats-section"><div class="stats-left"><div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">0</span> Views</div><div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div></div></div><div class="share-icons"><div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div><div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div><div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div><div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div><div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div></div></div></div>`;  
+        // কন্টেন্ট রেন্ডার (Fast load optimizations: decoding="sync" & fetchpriority="high")
+        document.getElementById('post-details-container').innerHTML = `<div class="post-author-area"><div class="author-info"><div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}"></div><div class="author-text"><h3>FILMIXO<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div></div><div class="post-time" id="main-post-time">${timeAgo(post.uploadTime)}</div></div><div id="ad-box-top" class="ad-box"></div><div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" decoding="sync" fetchpriority="high"><div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><div class="time-text">${post.videoDuration}</div><div class="prog-bg"><div class="prog-fill"></div></div><div style="display:flex; align-items:center; gap:6px;"><i class="fa-solid fa-volume-high"></i><span class="hd-badge">HD</span></div></div></div><div class="content-body">${titleHTML}${bodyContent}${youtubeHTML}${lastParaHTML}${downloadSectionHTML}<div class="stats-section"><div class="stats-left"><div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">0</span> Views</div><div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div></div></div><div class="share-icons"><div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div><div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div><div class="share-icon" style="background:#25d366" onclick="share('wa', '${post.title}')"><i class="fa-brands fa-whatsapp"></i></div><div class="share-icon" style="background:#1da1f2" onclick="share('tw', '${post.title}')"><i class="fa-brands fa-twitter"></i></div><div class="share-icon" style="background:#0088cc" onclick="share('tg', '${post.title}')"><i class="fa-brands fa-telegram"></i></div></div></div></div>`;  
           
         injectAd('ad-src-top', 'ad-box-top');
         injectAd('ad-src-title', 'ad-box-title');
         injectAd('ad-src-p1', 'ad-box-p1');
         injectAd('ad-src-p2', 'ad-box-p2-left');
         injectAd('ad-src-p2', 'ad-box-p2-right');
-        injectAd('ad-src-mid', 'ad-box-mid'); // ৩য় প্যারাগ্রাফের নিচে ইনজেক্ট
-        injectAd('ad-src-video', 'ad-box-video'); // ইউটিউবের নিচে ইনজেক্ট
+        injectAd('ad-src-mid', 'ad-box-mid'); 
+        injectAd('ad-src-video', 'ad-box-video'); 
 
         const mainTimeElement = document.getElementById('main-post-time');  
         if (mainTimeElement) { timeElementsToUpdate.push({ element: mainTimeElement, dateString: post.uploadTime }); }  
@@ -206,6 +206,7 @@
         } catch (e) { postContainer.innerHTML = "Error loading."; mainWrapper.classList.add('loaded'); }  
     }  
   
+    // ফায়ারবেস ইন্টিগ্রেশন (১০০% অক্ষুণ্ণ)
     function setupFirebaseForMainPost(id) {  
         setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true }); onSnapshot(doc(db, "views", id), s => document.getElementById('view-cnt').innerText = formatCount(s.data()?.count || 0));  
         const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');  
@@ -213,9 +214,13 @@
         lBtn.addEventListener('click', async () => { if(!(await getDoc(uRef)).exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); } });  
     }  
     
+    // ভিডিও ক্লিক ইভেন্ট ও লোডিং লজিক (১০০% অক্ষুণ্ণ)
     window.handleVideoClick = function() { const container = document.querySelector('.video-container'); const s = document.getElementById('main-spinner'); if(container) container.classList.add('is-loading'); if(s) s.style.display = 'block'; setTimeout(() => { window.location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100); };
     window.addEventListener('pageshow', () => { const container = document.querySelector('.video-container'); const s = document.getElementById('main-spinner'); if(container) container.classList.remove('is-loading'); if(s) s.style.display = 'none'; });
+    
+    // শেয়ার লজিক (১০০% অক্ষুণ্ণ)
     window.share = (platform, title) => { const url = encodeURIComponent(window.location.href); const text = encodeURIComponent(title); let link = ''; if(platform === 'fb') link = `https://www.facebook.com/sharer/sharer.php?u=${url}`; else if(platform === 'wa') link = `https://wa.me/?text=${text}%20${url}`; else if(platform === 'tw') link = `https://twitter.com/intent/tweet?text=${text}&url=${url}`; else if(platform === 'tg') link = `https://t.me/share/url?url=${url}&text=${text}`; else if(platform === 'msg') link = `fb-messenger://share/?link=${url}`; window.open(link, '_blank'); };
+    
     init();
 </script>  
 </body>  
