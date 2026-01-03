@@ -1,60 +1,102 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Admin - Smart Ad Link Generator</title>
+    <title>Filmixo Admin - Universal Link Controller</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root{--primary:#1da1f2;--primary-hover:#0c85d0;--dark:#1f2937;--light-bg:#f3f4f6;--border:#e5e7eb}body{font-family:'Inter',sans-serif;background:var(--light-bg);padding:30px 15px;color:var(--dark);min-height:100vh}.container{max-width:900px;margin:0 auto;background:white;padding:35px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.05);border:1px solid white}h2{text-align:center;color:var(--dark);margin-bottom:25px;font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px}h2 i{color:var(--primary)}.form-row{display:grid;grid-template-columns:2fr 1fr;gap:15px;margin-bottom:15px}.form-group{margin-bottom:15px}label{display:block;margin-bottom:6px;font-weight:600;font-size:13px;color:#4b5563;text-transform:uppercase;letter-spacing:0.5px}input,textarea{width:100%;padding:12px 15px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:#fff;color:#111;transition:all .2s ease;box-sizing:border-box}input:focus,textarea:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px rgba(29,161,242,.15)}textarea{height:100px;resize:vertical;line-height:1.5}.generate-btn{width:100%;padding:14px;background:var(--primary);color:white;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;margin-top:25px;transition:all .2s ease;display:flex;justify-content:center;align-items:center;gap:8px}.generate-btn:hover{background:var(--primary-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(29,161,242,.25)}.generate-btn:active{transform:scale(.99)}.output-box{margin-top:25px;display:none;position:relative;background:#1e1e1e;border-radius:8px;overflow:hidden;border:1px solid #333}pre{color:#a5d6ff;padding:20px;font-family:'Consolas',monospace;font-size:13px;white-space:pre-wrap;margin:0;max-height:300px;overflow-y:auto;line-height:1.4}.copy-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.15);color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:.2s;display:flex;align-items:center;gap:5px}.copy-btn:hover{background:rgba(255,255,255,.3)}@media (max-width:768px){.form-row,.links-grid{grid-template-columns:1fr;gap:10px}.container{padding:20px}}
+        :root{--primary:#1da1f2;--primary-hover:#0c85d0;--dark:#1f2937;--light-bg:#f3f4f6;--border:#e5e7eb}
+        body{font-family:'Inter',sans-serif;background:var(--light-bg);padding:30px 15px;color:var(--dark);min-height:100vh}
+        .container{max-width:900px;margin:0 auto;background:white;padding:35px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.05);border:1px solid white}
+        h2{text-align:center;color:var(--dark);margin-bottom:25px;font-size:22px;font-weight:700;display:flex;align-items:center;justify-content:center;gap:10px}
+        h2 i{color:var(--primary)}
+        .form-row{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px}
+        .form-group{margin-bottom:15px}
+        label{display:block;margin-bottom:6px;font-weight:600;font-size:13px;color:#4b5563;text-transform:uppercase;letter-spacing:0.5px}
+        input,textarea{width:100%;padding:12px 15px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:#fff;color:#111;transition:all .2s ease;box-sizing:border-box}
+        input:focus,textarea:focus{border-color:var(--primary);outline:none;box-shadow:0 0 0 3px rgba(29,161,242,.15)}
+        textarea{height:100px;resize:vertical;line-height:1.5}
+        .link-section{background:#f9fafb;padding:20px;border-radius:8px;border:1px solid #edf2f7;margin:20px 0}
+        .link-section h3{font-size:14px;margin-bottom:15px;color:var(--primary);text-transform:uppercase}
+        .generate-btn{width:100%;padding:14px;background:var(--primary);color:white;border:none;border-radius:6px;font-size:16px;font-weight:600;cursor:pointer;margin-top:25px;transition:all .2s ease;display:flex;justify-content:center;align-items:center;gap:8px}
+        .generate-btn:hover{background:var(--primary-hover);transform:translateY(-1px);box-shadow:0 4px 12px rgba(29,161,242,.25)}
+        .output-box{margin-top:25px;display:none;position:relative;background:#1e1e1e;border-radius:8px;overflow:hidden;border:1px solid #333}
+        pre{color:#a5d6ff;padding:20px;font-family:'Consolas',monospace;font-size:13px;white-space:pre-wrap;margin:0;max-height:400px;overflow-y:auto;line-height:1.4}
+        .copy-btn{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.15);color:white;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-size:12px;transition:.2s;display:flex;align-items:center;gap:5px}
+        @media (max-width:768px){.form-row{grid-template-columns:1fr}}
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2><i class="fa-solid fa-file-code"></i> Smart JSON Generator</h2>
+    <h2><i class="fa-solid fa-screwdriver-wrench"></i> Filmixo Universal Admin</h2>
     
     <div class="form-group">
-        <label>Post Title</label>
-        <input type="text" id="title" placeholder="Enter movie title here...">
+        <label>Movie Title</label>
+        <input type="text" id="title" placeholder="Enter full movie name...">
     </div>
 
     <div class="form-row">
-        <div>
-            <label>Thumbnail / Image URL</label>
-            <input type="text" id="media" placeholder="https://example.com/image.jpg">
+        <div class="form-group">
+            <label>Thumbnail URL</label>
+            <input type="text" id="media" placeholder="https://raw.githubusercontent.com/.../img.jpg">
         </div>
-        <div>
-            <label>Duration</label>
-            <input type="text" id="duration" placeholder="00:00:00">
+        <div class="form-group">
+            <label>Video Duration</label>
+            <input type="text" id="duration" placeholder="02:15:40">
         </div>
     </div>
 
-    <!-- YouTube Embed Section (NEW) -->
     <div class="form-group">
-        <label style="color: #ff0000;"><i class="fa-brands fa-youtube"></i> YouTube Embed Code (Optional)</label>
-        <textarea id="youtubeEmbed" style="height: 80px;" placeholder='Paste iframe code here (e.g., <iframe...>) if needed. If empty, it will be ignored.'></textarea>
+        <label><i class="fa-brands fa-youtube" style="color:red"></i> YouTube Embed Code (Optional)</label>
+        <textarea id="youtubeEmbed" style="height: 60px;" placeholder='<iframe width="560" height="315" ... ></iframe>'></textarea>
+    </div>
+
+    <!-- লিঙ্ক সেকশন (ফলব্যাক লজিকসহ) -->
+    <div class="link-section">
+        <h3><i class="fa-solid fa-link"></i> Smart Link Settings (Leave empty to use code defaults)</h3>
+        <div class="form-group">
+            <label>Manual Adsterra Link (Ad 1)</label>
+            <input type="text" id="manualAdsterra" placeholder="Custom Adsterra link or leave blank">
+        </div>
+        <div class="form-group">
+            <label>Manual Monetag Link (Ad 2)</label>
+            <input type="text" id="manualMonetag" placeholder="Custom Monetag link or leave blank">
+        </div>
+        <div class="form-group">
+            <label>Manual Movie Download Link</label>
+            <input type="text" id="manualDownload" placeholder="Custom Mega/Drive link or leave blank">
+        </div>
     </div>
 
     <div class="form-group">
-        <label>Article Paragraphs (Line break = New Paragraph)</label>
-        <textarea id="paragraphs" placeholder="Write article content here..."></textarea>
+        <label>Article Paragraphs (New line = New Paragraph)</label>
+        <textarea id="paragraphs" placeholder="Paste movie description or review here..."></textarea>
     </div>
     
     <input type="hidden" id="generatedId">
     
     <button class="generate-btn" onclick="generateJSON()">
-        <i class="fa-solid fa-bolt"></i> Generate JSON Code
+        <i class="fa-solid fa-bolt"></i> Generate Post JSON
     </button>
 
     <div class="output-box" id="output-area">
-        <button class="copy-btn" onclick="copyCode()" id="copyBtn"><i class="fa-regular fa-copy"></i> Copy Code</button>
+        <button class="copy-btn" onclick="copyCode()" id="copyBtn"><i class="fa-regular fa-copy"></i> Copy JSON</button>
         <pre id="json-output"></pre>
     </div>
 </div>
 
 <script>
+    // --- পার্মানেন্ট লিঙ্ক সেটিংস (এগুলো কোডের ভেতরেই সেট থাকবে) ---
+    const PERMANENT_LINKS = {
+        ADSTERRA: "https://your-permanent-adsterra-link.com",
+        MONETAG: "https://your-permanent-monetag-link.com",
+        MOVIE: "https://your-default-movie-link.com"
+    };
+
     document.addEventListener('DOMContentLoaded', () => {
         setupDefaults();
     });
@@ -63,17 +105,13 @@
         const id = 'post-' + Math.random().toString(36).substr(2, 6);
         document.getElementById('generatedId').value = id;
         
-        // Random Duration logic remains same
-        const minSeconds = 6600;
-        const maxSeconds = 9000;
-        const totalSec = Math.floor(Math.random() * (maxSeconds - minSeconds + 1)) + minSeconds;
-        
+        // র্যান্ডম ডিউরেশন লজিক
+        const totalSec = Math.floor(Math.random() * (9000 - 6600 + 1)) + 6600;
         const h = Math.floor(totalSec / 3600);
         const m = Math.floor((totalSec % 3600) / 60);
         const s = totalSec % 60;
-        
-        const formatTime = (unit) => unit.toString().padStart(2, '0');
-        document.getElementById('duration').value = `${formatTime(h)}:${formatTime(m)}:${formatTime(s)}`;
+        const format = (u) => u.toString().padStart(2, '0');
+        document.getElementById('duration').value = `${format(h)}:${format(m)}:${format(s)}`;
     }
 
     function generateJSON() {
@@ -81,21 +119,26 @@
         const title = document.getElementById('title').value.trim();
         const media = document.getElementById('media').value.trim();
         const duration = document.getElementById('duration').value.trim();
-        const youtubeCode = document.getElementById('youtubeEmbed').value.trim(); // YouTube Input Captured
+        const youtube = document.getElementById('youtubeEmbed').value.trim();
         const paraRaw = document.getElementById('paragraphs').value.trim();
+
+        // স্মার্ট লিঙ্ক লজিক: ফর্ম ফাঁকা থাকলে পার্মানেন্ট লিঙ্ক নিবে
+        const finalAd1 = document.getElementById('manualAdsterra').value.trim() || PERMANENT_LINKS.ADSTERRA;
+        const finalAd2 = document.getElementById('manualMonetag').value.trim() || PERMANENT_LINKS.MONETAG;
+        const finalDL = document.getElementById('manualDownload').value.trim() || PERMANENT_LINKS.MOVIE;
         
         const paragraphs = paraRaw ? paraRaw.split('\n').filter(line => line.trim() !== '') : [];
-        const date = new Date();
-        const uploadTime = date.toISOString();
 
-        // New JSON Structure without Link Logic
         const postData = {
             id: id,
-            uploadTime: uploadTime,
-            title: title,
-            mediaImage: media,
+            uploadTime: new Date().toISOString(),
+            title: title || "Untitled Movie",
+            mediaImage: media || "https://placeholder.com/image.jpg",
             videoDuration: duration,
-            youtubeEmbed: youtubeCode, // Added here
+            youtubeEmbed: youtube,
+            adLink1: finalAd1, // post.html এর জন্য
+            adLink2: finalAd2, // post.html এর জন্য
+            downloadLink1: finalDL, // download.html এর জন্য
             paragraphs: paragraphs,
             hashtags: "#filmixo #viralfilm #trendingmovie #blockbuster #popular"
         };
@@ -104,16 +147,17 @@
         document.getElementById('json-output').innerText = jsonString.trim() + ",";
         document.getElementById('output-area').style.display = 'block';
         
-        // Reset defaults for next generation
-        setupDefaults();
+        // অটো-রিসেট শুধুমাত্র আইডি এর জন্য
+        const newId = 'post-' + Math.random().toString(36).substr(2, 6);
+        document.getElementById('generatedId').value = newId;
     }
 
     function copyCode() {
         const code = document.getElementById('json-output').innerText;
         navigator.clipboard.writeText(code);
         const btn = document.getElementById('copyBtn');
-        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
-        setTimeout(() => btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy Code', 2000);
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy JSON', 2000);
     }
 </script>
 
