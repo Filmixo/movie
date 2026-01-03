@@ -11,21 +11,19 @@
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js"></script>
 
     <style>  
-    /* --- বেসিক সেটআপ (১০০% অরিজিনাল লজিক) --- */
+    /* --- বেসিক সেটআপ (পুরনো লজিক ১০০% অক্ষুণ্ণ) --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }  
-    /* অপাসিটি ১ করার সময় ট্রানজিশন রিমুভ করা হয়েছে যাতে রিফ্রেশে স্থির থাকে */
+    /* Zero Opacity লজিক - রিফ্রেশে স্ক্রিন স্থির রাখার জন্য */
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- হেডার সেকশন --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
     .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
     .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
     header > div { display: flex; align-items: center; gap: 2px; }
         
-    /* --- স্মার্ট অ্যাড বক্স --- */
     .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
     .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
     .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 2px 15px; width: 100%; }
@@ -42,6 +40,7 @@
     .prog-fill { width: 1.5%; height: 100%; background: #ff0000; border-radius: 4px; }
     .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 900; }
     .video-container.is-loading img { filter: brightness(0.6); opacity: 0.7; }
+    .video-container.is-loading .video-controls { display: none !important; }
 
     /* --- পোস্ট ডিটেইলস --- */  
     .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
@@ -128,11 +127,9 @@
     const urlParams = new URLSearchParams(window.location.search);  
     const postId = urlParams.get('id');  
     const CONFIG = { GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea" };  
-    let timeElementsToUpdate = [];  
-    
-    // --- এন্টি-স্ক্যাম টাইমার লজিক (৫ সেকেন্ড) ---
-    const MIN_STAY_TIME = 5; // এই ভ্যালু পরিবর্তন করে সময় কম-বেশি করতে পারেন
-    let pendingBtn = null; let blurTime = 0;
+
+    const STAY_TIME = 5000; // ৫ সেকেন্ড শক্তিশালী টাইমার
+    let pendingTask = null; let blurTimestamp = 0;
 
     function formatCount(n) { if(!n) return 0; return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }  
     function timeAgo(dateString) { const d = new Date(dateString); const seconds = Math.floor((new Date() - d) / 1000); let interval = seconds / 31536000; if (interval > 1) return Math.floor(interval) + "y ago"; interval = seconds / 86400; if (interval > 1) return Math.floor(interval) + "d ago"; interval = seconds / 3600; if (interval > 1) return Math.floor(interval) + "h ago"; interval = seconds / 60; if (interval > 1) return Math.floor(interval) + "m ago"; return "Just now"; }  
@@ -148,41 +145,37 @@
         });
     }
 
-    // --- ডাউনলোড বাটন শক্তিশালী লজিক ---
-    window.handleDownloadClick = function(btnId, pId, adLink1, adLink2) {
-        const storageKey = `btn_map_${pId}`;
-        let mapping = JSON.parse(localStorage.getItem(storageKey)) || {};
+    // --- ডাউনলোড বাটন সুপার পাওয়ারফুল লজিক ---
+    window.handleDownloadClick = function(btnId, pId, ad1, ad2) {
+        const key = `map_${pId}`;
+        let map = JSON.parse(localStorage.getItem(key)) || {};
 
-        if (mapping[btnId]) {
-            if (mapping[btnId] === 'ad1') window.location.href = adLink1;
-            else if (mapping[btnId] === 'ad2') window.location.href = adLink2;
-            else if (mapping[btnId] === 'download') { 
-                localStorage.removeItem(storageKey); 
-                window.location.href = `download.html?id=${pId}`; 
-            }
+        if (map[btnId]) {
+            if (map[btnId] === 'ad1') window.location.href = ad1;
+            else if (map[btnId] === 'ad2') window.location.href = ad2;
+            else if (map[btnId] === 'dl') { localStorage.removeItem(key); window.location.href = `download.html?id=${pId}`; }
             return;
         }
 
-        let assignedCount = Object.keys(mapping).length;
-        if (assignedCount < 2) {
-            pendingBtn = { id: btnId, type: assignedCount === 0 ? 'ad1' : 'ad2', key: storageKey };
-            blurTime = Date.now();
-            window.location.href = assignedCount === 0 ? adLink1 : adLink2;
+        let assigned = Object.keys(map).length;
+        if (assigned < 2) {
+            pendingTask = { id: btnId, type: assigned === 0 ? 'ad1' : 'ad2', key: key };
+            blurTimestamp = Date.now();
+            window.location.href = assigned === 0 ? ad1 : ad2;
         } else {
-            localStorage.removeItem(storageKey);
+            localStorage.removeItem(key);
             window.location.href = `download.html?id=${pId}`;
         }
     };
 
     window.onfocus = function() {
-        if (pendingBtn) {
-            let timeSpent = (Date.now() - blurTime) / 1000;
-            if (timeSpent >= MIN_STAY_TIME) {
-                let mapping = JSON.parse(localStorage.getItem(pendingBtn.key)) || {};
-                mapping[pendingBtn.id] = pendingBtn.type;
-                localStorage.setItem(pendingBtn.key, JSON.stringify(mapping));
+        if (pendingTask) {
+            if ((Date.now() - blurTimestamp) >= STAY_TIME) {
+                let map = JSON.parse(localStorage.getItem(pendingTask.key)) || {};
+                map[pendingTask.id] = pendingTask.type;
+                localStorage.setItem(pendingTask.key, JSON.stringify(map));
             }
-            pendingBtn = null;
+            pendingTask = null;
         }
     };
 
