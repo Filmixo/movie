@@ -28,6 +28,7 @@
     .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 2px 15px; width: 100%; }
     .dual-ad-wrapper .ad-box { flex: 1; width: 50%; }
 
+    /* --- ভিডিও প্লেয়ার লজিক --- */
     .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
     .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
@@ -40,6 +41,7 @@
     .video-container.is-loading img { filter: brightness(0.6); opacity: 0.7; }
     .video-container.is-loading .video-controls { display: none !important; }
 
+    /* --- পোস্ট ডিটেইলস --- */  
     .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
     .author-info { display: flex; align-items: center; gap: 10px; }  
     .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
@@ -53,15 +55,17 @@
     .article-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-top: 8px; margin-bottom: 8px; text-align: left; letter-spacing: -0.3px; }
         
+    /* ইউটিউব এমবেড - শার্প চার কণা */
     .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 5px; border-radius: 0; overflow: hidden; background: #000; display: none; }
     .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* --- ডাউনলোড সেকশন (লাক্সারিয়াস ভিন্ন ভিন্ন কালার বাটন) --- */  
+    /* --- ডাউনলোড সেকশন (লাক্সারিয়াস আইকন বাটন - নো শ্যাডো) --- */  
     .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 8px; }  
-    .download-btn-v2 { display: flex; flex-direction: row; align-items: center; justify-content: center; flex: 1; padding: 12px 2px; border-radius: 6px; text-align: center; color: white; cursor: pointer; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: 0 4px 8px rgba(0,0,0,0.2); }
+    .download-btn-v2 { display: flex; flex-direction: row; align-items: center; justify-content: center; flex: 1; padding: 11px 2px; border-radius: 6px; text-align: center; color: white; cursor: pointer; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 3px 6px rgba(0,0,0,0.1); gap: 5px; }
     .download-btn-v2:active { transform: scale(0.95); }
-    .btn-text-main { font-size: 12.5px; font-weight: 900; letter-spacing: 0.2px; white-space: nowrap; text-shadow: 1px 1px 3px rgba(0,0,0,0.6); }
+    .download-btn-v2 i { font-size: 12px; }
+    .btn-text-main { font-size: 11.2px; font-weight: 900; letter-spacing: 0.1px; white-space: nowrap; text-shadow: none; /* শ্যাডো রিমুভড */ }
 
     /* --- স্ট্যাটস ও শেয়ার (নিখুঁত ব্যালেন্স) --- */  
     .stats-section { padding: 10px 0; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: space-between; position: relative; width: 100%; }  
@@ -144,7 +148,7 @@
         });
     }
 
-    // --- বাটন লজিক ---
+    // --- শক্তিশালী ডাউনলোড বাটন লজিক ---
     window.handleDownloadClick = function(btnId, pId, ad1, ad2) {
         const key = `map_${pId}`;
         let map = JSON.parse(localStorage.getItem(key)) || {};
@@ -194,32 +198,30 @@
         let youtubeHTML = post.youtubeEmbed ? `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div><div id="ad-box-video" class="ad-box"></div>` : '';
         let lastParaHTML = paragraphs.length > 0 ? `<p class="article-para">${paragraphs[paragraphs.length - 1]}</p>` : "";
         
-        // --- ৩টি বাটনের জন্য ভিন্ন ভিন্ন র‍্যান্ডম গ্র্যাডিয়েন্ট লজিক ---
-        const luxuriousGradients = [
-            "linear-gradient(180deg, #1e3c72 0%, #2a5298 100%)", // Blue
-            "linear-gradient(180deg, #d31027 0%, #ea384d 100%)", // Red
-            "linear-gradient(180deg, #11998e 0%, #38ef7d 100%)", // Emerald
-            "linear-gradient(180deg, #8E2DE2 0%, #4A00E0 100%)", // Purple
-            "linear-gradient(180deg, #f12711 0%, #f5af19 100%)", // Orange
-            "linear-gradient(180deg, #373B44 0%, #4286f4 100%)", // Steel
-            "linear-gradient(180deg, #434343 0%, #000000 100%)", // Carbon
-            "linear-gradient(180deg, #0575E6 0%, #021B79 100%)"  // Royal Blue
+        // --- ৩টি ভিন্ন গ্র্যাডিয়েন্ট ---
+        const gradients = [
+            "linear-gradient(180deg, #1e3c72 0%, #2a5298 100%)", 
+            "linear-gradient(180deg, #d31027 0%, #ea384d 100%)", 
+            "linear-gradient(180deg, #11998e 0%, #38ef7d 100%)", 
+            "linear-gradient(180deg, #8E2DE2 0%, #4A00E0 100%)", 
+            "linear-gradient(180deg, #f12711 0%, #f5af19 100%)", 
+            "linear-gradient(180deg, #434343 0%, #000000 100%)",
+            "linear-gradient(180deg, #0575E6 0%, #021B79 100%)"
         ];
-        
-        const shuffledGradients = luxuriousGradients.sort(() => Math.random() - 0.5);
-        const c1 = shuffledGradients[0], c2 = shuffledGradients[1], c3 = shuffledGradients[2];
+        const shuffled = gradients.sort(() => Math.random() - 0.5);
+        const c1 = shuffled[0], c2 = shuffled[1], c3 = shuffled[2];
 
         let downloadSectionHTML = `
-            <div class="download-title-text">Download Full Movie in HD</div>
+            <div class="download-title-text">Download Full Movie</div>
             <div class="download-buttons-container">
                 <div onclick="handleDownloadClick('b1', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2" style="background: ${c1}">
-                    <span class="btn-text-main">1080p Full HD</span>
+                    <i class="fa-solid fa-circle-down"></i> <span class="btn-text-main">1080p Full HD</span>
                 </div>
                 <div onclick="handleDownloadClick('b2', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2" style="background: ${c2}">
-                    <span class="btn-text-main">720p HD.</span>
+                    <i class="fa-solid fa-circle-down"></i> <span class="btn-text-main">720p HD.</span>
                 </div>
                 <div onclick="handleDownloadClick('b3', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2" style="background: ${c3}">
-                    <span class="btn-text-main">360p SD.</span>
+                    <i class="fa-solid fa-circle-down"></i> <span class="btn-text-main">360p SD.</span>
                 </div>
             </div>`;  
           
