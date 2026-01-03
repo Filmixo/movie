@@ -11,26 +11,26 @@
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js"></script>
 
     <style>  
-    /* --- বেসিক সেটআপ (পুরনো কোড থেকে ১০০% সংগৃহীত) --- */
+    /* --- বেসিক সেটআপ (১০০% অরিজিনাল লজিক) --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; }  
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; padding-bottom: 0; opacity: 0; }  
     .main-wrapper.loaded { opacity: 1 !important; }  
 
-    /* --- হেডার সেকশন --- */
+    /* --- হেডার --- */
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
     .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
     .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
     header > div { display: flex; align-items: center; gap: 2px; }
         
-    /* --- স্মার্ট অ্যাড বক্স --- */
+    /* --- অ্যাড বক্স --- */
     .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
     .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
     .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 2px 15px; width: 100%; }
     .dual-ad-wrapper .ad-box { flex: 1; width: 50%; }
 
-    /* --- ভিডিও প্লেয়ার সেকশন --- */
+    /* --- ভিডিও প্লেয়ার --- */
     .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
     .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
@@ -51,9 +51,8 @@
     .author-text h3 { font-size: 18px; margin: 0; color: #0f1419; display: inline-flex; align-items: center; gap: 5px; }  
     .author-text span { font-size: 12px; color: #1da1f2; display: block; margin-top: -1px; }  
     .post-time { font-size: 14px; color: #536471; font-weight: bold; }  
-    .verified-badge { color: #1da1f2; font-size: 15px; }
+    .verified-badge { color: #1da1f2; font-size: 15px; display: inline-flex; align-items: center; }
 
-    /* --- আর্টিকেল ও কন্টেন্ট --- */
     .content-body { padding: 5px 15px 0px 15px; }  
     .article-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: #0f1419; line-height: 1.3; }  
     .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-top: 8px; margin-bottom: 8px; text-align: left; letter-spacing: -0.3px; }
@@ -64,7 +63,7 @@
     /* --- ডাউনলোড সেকশন --- */  
     .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; }  
-    .download-btn-v2 { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 12px 5px; border-radius: 6px; text-align: center; color: white; cursor: pointer; text-decoration: none; position: relative; overflow: hidden; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.15); }
+    .download-btn-v2 { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 12px 5px; border-radius: 6px; text-align: center; color: white; cursor: pointer; position: relative; overflow: hidden; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.15); }
     .download-btn-v2:active { transform: scale(0.95); }
     .btn-res { font-size: 16px; font-weight: 800; letter-spacing: 0.5px; line-height: 1; display: block; margin-bottom: 3px; }
     .btn-tag { font-size: 10px; font-weight: 600; opacity: 0.85; text-transform: uppercase; letter-spacing: 1px; display: block; }
@@ -72,27 +71,26 @@
     .btn-720 { background: linear-gradient(180deg, #1976D2 0%, #0D47A1 100%); border-bottom: 3px solid #002171; }
     .btn-360 { background: linear-gradient(180deg, #388E3C 0%, #1B5E20 100%); border-bottom: 3px solid #003300; }
 
-    /* --- স্ট্যাটস ও শেয়ার (Left-Center-Right Layout) --- */  
-    .stats-section { padding: 10px 0; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: space-between; position: relative; }  
+    /* --- স্ট্যাটস ও শেয়ার (সংশোধিত সমান গ্যাপ লেআউট) --- */  
+    .stats-section { padding: 10px 0; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: space-between; position: relative; width: 100%; }  
     .view-stat { flex: 1; display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
-    .like-stat-container { position: absolute; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; }  
+    .like-stat-container { position: absolute; left: 50%; transform: translateX(-50%); display: flex; justify-content: center; z-index: 2; }  
     .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; }  
-    .love-btn:active { transform: scale(0.9); background: rgba(224, 36, 94, 0.1); }
+    .love-btn:active { transform: scale(0.9); }
     .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
-    .share-icons { flex: 1; display: flex; justify-content: flex-end; gap: 5px; }  
-    .share-icon { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 12px; transition: transform 0.1s; }  
+    .share-icons { flex: 1; display: flex; justify-content: flex-end; gap: 4px; }  
+    .share-icon { width: 23px; height: 23px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 11px; transition: transform 0.1s; }  
     .share-icon:active { transform: scale(0.85); }
 
-    /* --- ফুটার --- */
-    .site-footer { padding: 20px 20px; text-align: center; border-top: 2px solid #e1e8ed; }  
-    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
-    .footer-links a { color: #536471; font-size: 14px; font-weight: 500; transition: color 0.2s; }  
+    /* --- ফুটার (সংশোধিত ফুল লাইন লেআউট) --- */
+    .site-footer { padding: 20px 15px; text-align: center; border-top: 2px solid #e1e8ed; }  
+    .footer-links { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; width: 100%; }  
+    .footer-links a { color: #536471; font-size: 13px; font-weight: 600; transition: color 0.2s; white-space: nowrap; }  
     .footer-links a:hover { color: #1da1f2; text-decoration: underline; }
     .footer-copyright { color: #536471; font-size: 13px; }  
     .footer-copyright a { color: #1da1f2; font-weight: bold; }
     
     .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 8px 15px; border-radius: 20px; z-index: 1002; opacity: 0; transition: 0.3s; pointer-events: none; }  
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }  
 </style>
 </head>  
 <body>  
@@ -114,7 +112,12 @@
     </header>  
     <div id="post-details-container"></div>  
     <footer class="site-footer">  
-        <div class="footer-links"> <a href="#">About</a> <a href="#">Contact</a> <a href="#">Privacy Policy</a> <a href="#">Terms</a> </div>  
+        <div class="footer-links"> 
+            <a href="#">About</a> 
+            <a href="#">Contact</a> 
+            <a href="#">Privacy Policy</a> 
+            <a href="#">Terms & Conditions</a> 
+        </div>  
         <div class="footer-copyright">Copyright © 2026 <a href="index.html">filmixo.com</a>. All rights reserved.</div>  
     </footer>  
     <div id="notification" class="notification"></div>
@@ -135,8 +138,8 @@
     const postId = urlParams.get('id');  
     const CONFIG = { GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea" };  
 
-    const MIN_STAY = 5000; // টাইমার লজিক
-    let activeTask = null; let blurStart = 0;
+    const STAY_TIME = 5000; // ৫ সেকেন্ড শক্তিশালী টাইমার
+    let pendingTask = null; let blurTimestamp = 0;
 
     function formatCount(n) { if(!n) return 0; return n >= 1000000 ? (n/1000000).toFixed(1)+'M' : n >= 1000 ? (n/1000).toFixed(1)+'K' : n; }  
     function timeAgo(dateString) { const d = new Date(dateString); const seconds = Math.floor((new Date() - d) / 1000); let interval = seconds / 31536000; if (interval > 1) return Math.floor(interval) + "y ago"; interval = seconds / 86400; if (interval > 1) return Math.floor(interval) + "d ago"; interval = seconds / 3600; if (interval > 1) return Math.floor(interval) + "h ago"; interval = seconds / 60; if (interval > 1) return Math.floor(interval) + "m ago"; return "Just now"; }  
@@ -152,23 +155,23 @@
         });
     }
 
-    // --- শক্তিশালী ডাউনলোড বাটন লজিক ---
-    window.handleDownloadClick = function(bId, pId, ad1, ad2) {
-        const key = `storage_map_${pId}`;
+    // --- শক্তিশালী ডাউনলোড বাটন লজিক (১০০% নিখুঁত) ---
+    window.handleDownloadClick = function(btnId, pId, ad1, ad2) {
+        const key = `map_${pId}`;
         let map = JSON.parse(localStorage.getItem(key)) || {};
 
-        if (map[bId]) {
-            if (map[bId] === 'ad1') window.location.href = ad1;
-            else if (map[bId] === 'ad2') window.location.href = ad2;
-            else if (map[bId] === 'dl') { localStorage.removeItem(key); window.location.href = `download.html?id=${pId}`; }
+        if (map[btnId]) {
+            if (map[btnId] === 'ad1') window.location.href = ad1;
+            else if (map[btnId] === 'ad2') window.location.href = ad2;
+            else if (map[btnId] === 'dl') { localStorage.removeItem(key); window.location.href = `download.html?id=${pId}`; }
             return;
         }
 
-        let assignedCount = Object.keys(map).length;
-        if (assignedCount < 2) {
-            activeTask = { id: bId, type: assignedCount === 0 ? 'ad1' : 'ad2', key: key };
-            blurStart = Date.now();
-            window.location.href = assignedCount === 0 ? ad1 : ad2;
+        let assigned = Object.keys(map).length;
+        if (assigned < 2) {
+            pendingTask = { id: btnId, type: assigned === 0 ? 'ad1' : 'ad2', key: key };
+            blurTimestamp = Date.now();
+            window.location.href = assigned === 0 ? ad1 : ad2;
         } else {
             localStorage.removeItem(key);
             window.location.href = `download.html?id=${pId}`;
@@ -176,17 +179,18 @@
     };
 
     window.onfocus = function() {
-        if (activeTask) {
-            if ((Date.now() - blurStart) >= MIN_STAY) {
-                let map = JSON.parse(localStorage.getItem(activeTask.key)) || {};
-                map[activeTask.id] = activeTask.type;
-                localStorage.setItem(activeTask.key, JSON.stringify(map));
+        if (pendingTask) {
+            if ((Date.now() - blurTimestamp) >= STAY_TIME) {
+                let map = JSON.parse(localStorage.getItem(pendingTask.key)) || {};
+                map[pendingTask.id] = pendingTask.type;
+                localStorage.setItem(pendingTask.key, JSON.stringify(map));
             }
-            activeTask = null;
+            pendingTask = null;
         }
     };
 
     function renderMainPost(post) {  
+        let titleHTML = `<h1 class="article-title">${post.title}</h1><div id="ad-box-title" class="ad-box"></div>`;
         let paragraphs = post.paragraphs || [];
         let bodyContent = "";
         paragraphs.forEach((p, index) => {
@@ -204,15 +208,17 @@
         let downloadSectionHTML = `
             <div class="download-title-text">Download Full Movie</div>
             <div class="download-buttons-container">
-                <div onclick="handleDownloadClick('b1080', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2 btn-1080"><span class="btn-res">1080p</span><span class="btn-tag">FULL HD</span></div>
-                <div onclick="handleDownloadClick('b720', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2 btn-720"><span class="btn-res">720p</span><span class="btn-tag">HD READY</span></div>
-                <div onclick="handleDownloadClick('b360', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2 btn-360"><span class="btn-res">360p</span><span class="btn-tag">MOBILE</span></div>
+                <div onclick="handleDownloadClick('b1', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2 btn-1080"><span class="btn-res">1080p</span><span class="btn-tag">FULL HD</span></div>
+                <div onclick="handleDownloadClick('b2', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2 btn-720"><span class="btn-res">720p</span><span class="btn-tag">HD READY</span></div>
+                <div onclick="handleDownloadClick('b3', '${post.id}', '${post.adLink1}', '${post.adLink2}')" class="download-btn-v2 btn-360"><span class="btn-res">360p</span><span class="btn-tag">MOBILE</span></div>
             </div>`;  
           
         let statsHTML = `
             <div class="stats-section">
                 <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="view-cnt">0</span> Views</div>
-                <div class="like-stat-container"><div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div></div>
+                <div class="like-stat-container">
+                    <div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="like-cnt">0</span> Likes</div>
+                </div>
                 <div class="share-icons">
                     <div class="share-icon" style="background:#1877f2" onclick="share('fb', '${post.title}')"><i class="fa-brands fa-facebook-f"></i></div>
                     <div class="share-icon" style="background:#0084ff" onclick="share('msg', '${post.title}')"><i class="fa-brands fa-facebook-messenger"></i></div>
@@ -222,11 +228,7 @@
                 </div>
             </div>`;
 
-        document.getElementById('post-details-container').innerHTML = `
-            <div class="post-author-area"><div class="author-info"><div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}"></div><div class="author-text"><h3>FILMIXO<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div></div><div class="post-time">${timeAgo(post.uploadTime)}</div></div>
-            <div id="ad-box-top" class="ad-box"></div>
-            <div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" decoding="sync" fetchpriority="high"><div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><div class="time-text">${post.videoDuration}</div><div class="prog-bg"><div class="prog-fill"></div></div><span class="hd-badge">HD</span></div></div>
-            <div class="content-body"><h1 class="article-title">${post.title}</h1><div id="ad-box-title" class="ad-box"></div>${bodyContent}${youtubeHTML}${lastParaHTML}${downloadSectionHTML}${statsHTML}</div>`;  
+        document.getElementById('post-details-container').innerHTML = `<div class="post-author-area"><div class="author-info"><div class="pfp"><img src="${PERMANENT_PROFILE_IMAGE_URL}"></div><div class="author-text"><h3>FILMIXO<i class="verified-badge fa-solid fa-circle-check"></i></h3><span>@filmixo</span></div></div><div class="post-time">${timeAgo(post.uploadTime)}</div></div><div id="ad-box-top" class="ad-box"></div><div class="video-container" onclick="handleVideoClick()"><img src="${post.mediaImage}" decoding="sync" fetchpriority="high"><div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div><div class="video-controls"><div class="time-text">${post.videoDuration}</div><div class="prog-bg"><div class="prog-fill"></div></div><span class="hd-badge">HD</span></div></div><div class="content-body">${titleHTML}${bodyContent}${youtubeHTML}${lastParaHTML}${downloadSectionHTML}${statsHTML}</div>`;  
           
         injectAd('ad-src-top', 'ad-box-top');
         injectAd('ad-src-title', 'ad-box-title');
@@ -251,12 +253,12 @@
         onSnapshot(doc(db, "views", id), s => document.getElementById('view-cnt').innerText = formatCount(s.data()?.count || 0));  
         const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users`, deviceId), lBtn = document.querySelector('.love-btn');  
         onSnapshot(lRef, s => document.getElementById('like-cnt').innerText = formatCount(s.data()?.count || 0)); 
-        getDoc(uRef).then(s => { if(s.exists()) lBtn.classList.add('liked'); });  
-        lBtn.addEventListener('click', async () => { if(!(await getDoc(uRef)).exists()) { lBtn.classList.add('liked'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); } });  
+        getDoc(uRef).then(s => { if(s.exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); } });  
+        lBtn.addEventListener('click', async () => { if(!(await getDoc(uRef)).exists()) { lBtn.classList.add('liked'); lBtn.querySelector('i').classList.replace('fa-regular','fa-solid'); await setDoc(lRef, { count: increment(1) }, { merge: true }); await setDoc(uRef, { t: new Date() }); } });  
     }  
     
     window.handleVideoClick = function() { const container = document.querySelector('.video-container'); const s = document.getElementById('main-spinner'); container.classList.add('is-loading'); s.style.display = 'block'; setTimeout(() => { window.location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100); };
-    window.share = (platform, title) => { const url = encodeURIComponent(window.location.href); let link = ''; if(platform === 'fb') link = `https://www.facebook.com/sharer/sharer.php?u=${url}`; else if(platform === 'msg') link = `fb-messenger://share/?link=${url}`; else if(platform === 'wa') link = `https://wa.me/?text=${url}`; else if(platform === 'tw') link = `https://twitter.com/intent/tweet?url=${url}`; else if(platform === 'tg') link = `https://t.me/share/url?url=${url}`; window.open(link, '_blank'); };
+    window.share = (platform, title) => { const url = encodeURIComponent(window.location.href); let link = ''; if(platform === 'fb') link = `https://www.facebook.com/sharer/sharer.php?u=${url}`; else if(platform === 'msg') link = `fb-messenger://share/?link=${url}`; else if(platform === 'wa') link = `https://wa.me/?text=${url}`; else if(platform === 'tw') link = `https://twitter.com/intent/tweet?text=${url}`; else if(platform === 'tg') link = `https://t.me/share/url?url=${url}`; window.open(link, '_blank'); };
     init();
 </script>  
 </body>  
