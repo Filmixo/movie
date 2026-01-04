@@ -262,14 +262,21 @@
 
     async function init() {
         try {
+            // পেজ লোড হওয়ার সাথে সাথে স্ক্রলকে একদম উপরে সেট করা হয়েছে
+            window.scrollTo(0, 0); 
+            if ('scrollRestoration' in history) { history.scrollRestoration = 'manual'; }
+
             const res = await fetch('posts.json');
             const data = await res.json();
             const post = data.find(p => p.id === postId) || data[0];
             renderPost(post);
             setupFirebase(post.id);
             document.getElementById('app-wrapper').classList.add('loaded');
+            
+            // রেন্ডার হওয়ার পরও এক মুহূর্ত অপেক্ষা করে পুনরায় স্ক্রল টু টপ নিশ্চিত করা
+            setTimeout(() => window.scrollTo(0, 0), 10);
+
             setInterval(() => { timeElements.forEach(i => i.el.innerText = timeAgo(i.date)); }, 60000);
-            restoreScroll();
         } catch (e) { document.getElementById('app-wrapper').classList.add('loaded'); }
     }
 
@@ -289,10 +296,8 @@
 
     window.addEventListener('pageshow', () => { 
         const c = document.querySelector('.video-container'); if(c) c.classList.remove('is-loading'); 
+        window.scrollTo(0, 0); // ব্যাক বাটন দিয়ে আসলে স্ক্রল টু টপ নিশ্চিত করা
     });
-
-    window.onbeforeunload = () => { if(postId) sessionStorage.setItem(`sp_${postId}`, window.scrollY); };
-    function restoreScroll() { const s = sessionStorage.getItem(`sp_${postId}`); if(s) setTimeout(() => window.scrollTo(0, parseInt(s)), 150); }
 
     window.sh = (p) => {
         const title = document.querySelector('.article-title')?.innerText || "Watch Movie";
