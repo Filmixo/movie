@@ -7,104 +7,102 @@
     
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://prototypesorting.com">
+    <link rel="dns-prefetch" href="https://prototypesorting.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js" async></script>
 
     <style>  
-    /* --- প্রো-লেভেল রিসেট ও লেআউট সেন্টার --- */
+    /* --- বেসিক সেটআপ (অরিজিনাল লজিক ১০০% রিসোরড) --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
-    body { background: #f0f2f5; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; -webkit-tap-highlight-color: transparent; user-select: none; overflow-x: hidden; }  
+    body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; background: #fff; }  
     
-    /* মেইন কন্টেনার ফিক্স (সবসময় মাঝখানে থাকবে) */
-    .main-wrapper { width: 100%; max-width: 600px; background: #fff; position: relative; border-left: 1px solid #e1e8ed; border-right: 1px solid #e1e8ed; opacity: 0; margin: 0 auto; box-shadow: 0 0 10px rgba(0,0,0,0.05); }  
-    .main-wrapper.loaded { opacity: 1 !important; transition: opacity 0.4s ease; }  
+    .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; opacity: 0; margin: 0 auto; }  
+    .main-wrapper.loaded { opacity: 1 !important; } /* ফেডিং ইফেক্ট রিমুভড, সরাসরি দৃশ্যমান হবে */
 
-    header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 1000; height: 50px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }  
-    .logo-area { font-weight: 900; font-size: 22px; text-transform: uppercase; display: flex; align-items: center; letter-spacing: -0.5px; }  
-    .header-btn { background: white; color: #1da1f2; padding: 5px 12px; border-radius: 20px; font-weight: bold; font-size: 11px; cursor: pointer; display: inline-flex; align-items: center; transition: 0.1s; }  
-    .header-btn:active { transform: scale(0.92); }
+    header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
+    .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
+    .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
+    .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
+    header > div { display: flex; align-items: center; gap: 2px; }
 
-    /* --- অ্যাড বক্স লজিক (স্মুথ এনিমেশন ও জিরো হাইট) --- */
-    .ad-box { width: 100%; height: 0; overflow: hidden; display: block; background: transparent; transition: height 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-    .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 0 15px; width: 100%; }
-    .dual-ad-wrapper .ad-box { flex: 1; }
+    /* --- অ্যাড বক্স (অরিজিনাল জিরো লজিক) --- */
+    .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
+    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
+    .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 2px 15px; width: 100%; }
+    .dual-ad-wrapper .ad-box { flex: 1; width: 50%; }
 
-    /* ভিডিও প্লেয়ার (Responsiveness Optimized) */
-    .video-container { position: relative; width: 94%; margin: 8px auto 2px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 8px; contain: content; }
-    .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; transition: 0.3s; will-change: transform; }
-    .video-container.auto-fit img { object-fit: contain; }
+    /* --- ভিডিও প্লেয়ার সেকশন (অরিজিনাল গ্যাপ) --- */
+    .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
+    .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
+    .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
+    .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
+    .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
+    .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; height: 35px; padding: 0 10px; display: flex; align-items: center; gap: 10px; background: rgba(0, 0, 0, 0.5); z-index: 10; color: white; font-size: 11px; }
+    .prog-bg { flex-grow: 1; height: 6px; background: rgba(255, 255, 255, 0.5); border-radius: 4px; }
+    .prog-fill { width: 1.5%; height: 100%; background: #ff0000; border-radius: 4px; }
+    .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 900; }
     
-    .play-btn-center { position: absolute; width: 55px; height: 55px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; z-index: 5; pointer-events: none; display: flex; align-items: center; justify-content: center; }
-    .play-btn-center::after { content: ''; border-left: 18px solid white; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
-    .main-video-spinner { display: none; position: absolute; width: 45px; height: 45px; border: 4px solid rgba(255,255,255,0.2); border-top: 4px solid #fff; border-radius: 50%; animation: spin 0.8s linear infinite; z-index: 6; }
-    
-    .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; height: 32px; padding: 0 10px; display: flex; align-items: center; gap: 10px; background: rgba(0,0,0,0.5); color: white; font-size: 10px; z-index: 10; }
-    .prog-bg { flex-grow: 1; height: 4px; background: rgba(255,255,255,0.3); border-radius: 2px; }
-    .prog-fill { width: 3%; height: 100%; background: #ff0000; }
-    .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-weight: 900; }
-    
-    .video-container.is-loading img { filter: brightness(0.4); }
-    .video-container.is-loading .play-btn-center, .video-container.is-loading .video-controls { display: none !important; }
+    .video-container.is-loading img { filter: brightness(0.6); opacity: 0.7; }
+    .video-container.is-loading .video-controls, .video-container.is-loading .play-btn-center { display: none !important; }
     .video-container.is-loading .main-video-spinner { display: block; }
 
-    /* কন্টেন্ট এরিয়া */
-    .content-body { padding: 5px 15px 0 15px; }  
-    .article-title { font-size: 19px; font-weight: 800; color: #0f1419; line-height: 1.3; margin: 10px 0; }  
-    .article-para { font-size: 14.5px; line-height: 1.5; color: #1c1e21; margin: 12px 0; text-align: left; }
-    
-    .post-author-area { padding: 10px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
-    .pfp { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; background: #eee; }  
-    .author-text h3 { font-size: 17px; display: flex; align-items: center; gap: 4px; }
-    .post-time { font-size: 13px; color: #536471; font-weight: bold; }  
+    /* --- পোস্ট ডিটেইলস ও আর্টিকেল (অরিজিনাল গ্যাপ) --- */  
+    .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
+    .author-info { display: flex; align-items: center; gap: 10px; }  
+    .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
+    .pfp img { width: 100%; height: 100%; object-fit: cover; }  
+    .author-text h3 { font-size: 18px; margin: 0; color: #0f1419; display: inline-flex; align-items: center; gap: 5px; }  
+    .author-text span { font-size: 12px; color: #1da1f2; display: block; margin-top: -1px; }  
+    .post-time { font-size: 14px; color: #536471; font-weight: bold; }  
 
-    /* ইউটিউব এমবেড ফিক্স (লেআউট ভাঙবে না) */
-    .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin: 10px 0; background: #000; border-radius: 8px; overflow: hidden; display: none; }
+    .content-body { padding: 5px 15px 0px 15px; }  
+    .article-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: #0f1419; line-height: 1.3; }  
+    .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-top: 8px; margin-bottom: 8px; text-align: left; letter-spacing: -0.3px; }
+        
+    .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 5px; overflow: hidden; background: #000; display: none; }
     .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* ডাউনলোড সেকশন */
-    .download-title-text { font-size: 19px; font-weight: 800; color: #0f1419; text-align: center; margin: 25px 0 15px 0; padding-top: 15px; border-top: 1px solid #eee; }  
-    .download-buttons-container { display: flex; gap: 8px; margin-bottom: 25px; padding: 0; }  
-    .download-btn-v2 { flex: 1; padding: 12px 2px; border-radius: 8px; color: white; cursor: pointer; transition: 0.1s; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; }
-    .download-btn-v2:active { transform: scale(0.95); }
-    .btn-text-main { font-size: 10.5px; font-weight: 900; white-space: nowrap; }
+    /* --- ডাউনলোড সেকশন (অরিজিনাল গ্যাপ) --- */  
+    .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
+    .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; }  
+    .download-btn-v2 { display: flex; flex-direction: row; align-items: center; justify-content: center; flex: 1; padding: 12px 5px; border-radius: 6px; text-align: center; color: white; cursor: pointer; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.15); gap: 5px; }
+    .download-btn-v2:active { transform: scale(0.98); }
+    .btn-text-main { font-size: 11px; font-weight: 900; letter-spacing: 0.1px; white-space: nowrap; }
 
-    /* স্ট্যাটাস ও শেয়ার (৫টি আইকন ফিরিয়ে আনা হয়েছে) */
-    .stats-section { padding: 15px 0; border-top: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; }  
-    .view-stat, .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 600; font-size: 14px; color: #536471; cursor: pointer; }  
-    .love-btn.liked { color: #e0245e; } 
-    .share-icons { display: flex; gap: 6px; }  
-    .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 13px; transition: 0.1s; }
-    .share-icon:active { transform: scale(0.85); }
+    /* --- স্ট্যাটস ও শেয়ার (অরিজিনাল গ্যাপ) --- */  
+    .stats-section { padding: 10px 0; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; font-size: 15px; color: #536471; font-weight: 500; }  
+    .view-stat { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
+    .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; margin: 0 auto; }  
+    .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
+    .share-icons { display: flex; gap: 8px; }  
+    .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: transform 0.2s; }  
 
-    /* ফুটার ফিক্স (ক্লিন কপিরাইট) */
-    .site-footer { padding: 25px 15px; text-align: center; border-top: 1px solid #eee; background: #fff; margin-top: 10px; }  
-    .footer-links { display: flex; justify-content: space-between; margin-bottom: 15px; gap: 5px; }  
-    .footer-links a { color: #536471; font-size: 10px; font-weight: 700; text-transform: uppercase; }  
-    .footer-copyright { font-size: 13px; color: #536471; font-weight: 500; }
+    .site-footer { padding: 20px 20px; text-align: center; border-top: 1px solid #eee; }  
+    .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
+    .footer-links a { color: #536471; font-size: 14px; font-weight: 500; }  
+    .footer-copyright { color: #536471; font-size: 13px; }  
     .footer-copyright a { color: #1da1f2; font-weight: bold; }
-
-    .notification { position: fixed; top: 60px; left: 50%; transform: translateX(-50%); background: #000; color: #fff; padding: 8px 16px; border-radius: 20px; z-index: 2000; opacity: 0; pointer-events: none; font-size: 12px; transition: 0.3s; }
-    .notification.show { opacity: 1; }
-
+    
+    .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 8px 15px; border-radius: 20px; z-index: 1002; opacity: 0; pointer-events: none; }  
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 </style>
 </head>  
 <body>  
 
-<!-- অ্যাড সোর্স (অক্ষুণ্ণ) -->
+<!-- [AD TEMPLATES] -->
 <template id="ad-src-top"><script>atOptions={'key':'caf6ea59dc8711a1d0bfb5ad9dd98638','format':'iframe','height':90,'width':728,'params':{}};</script><script src="https://prototypesorting.com/caf6ea59dc8711a1d0bfb5ad9dd98638/invoke.js"></script></template>
 <template id="ad-src-title"><script>atOptions={'key':'da9154b956691d2aa7c677010e7b6501','format':'iframe','height':60,'width':468,'params':{}};</script><script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script></template>
 <template id="ad-src-p1"><script>atOptions={'key':'dbae51ad68fb44f5c8a6b535812c9f54','format':'iframe','height':250,'width':300,'params':{}};</script><script src="https://prototypesorting.com/dbae51ad68fb44f5c8a6b535812c9f54/invoke.js"></script></template>
 <template id="ad-src-p2"><script>atOptions={'key':'54012419216a1778423343e5706cb92e','format':'iframe','height':300,'width':160,'params':{}};</script><script src="https://prototypesorting.com/54012419216a1778423343e5706cb92e/invoke.js"></script></template>
 <template id="ad-src-mid"><script async="async" data-cfasync="false" src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script><div id="container-1608cb6a976841a38e804d64801334bb"></div></template>
 <template id="ad-src-video"><script>atOptions={'key':'dbae51ad68fb44f5c8a6b535812c9f54','format':'iframe','height':250,'width':300,'params':{}};</script><script src="https://prototypesorting.com/dbae51ad68fb44f5c8a6b535812c9f54/invoke.js"></script></template>
-    
+
 <div class="main-wrapper" id="app-wrapper">  
     <header>  
         <div class="logo-area"><i class="fa-solid fa-clapperboard" style="margin-right: 8px;"></i>FILMIXO</div>
         <div>  
-            <span class="header-btn" onclick="window.location.href='https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef'"><i class="fa-solid fa-circle-play" style="margin-right: 5px;"></i>Tutorial</span>
+            <span class="header-btn" onclick="window.location.href='https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef'"><i class="fa-solid fa-circle-play" style="margin-right: 5px;"></i>Tutorial Vdo</span>
             <span class="header-btn" onclick="window.location.href='index.html'"><i class="fa-solid fa-house" style="margin-right: 5px;"></i>Home</span>
         </div>  
     </header>  
@@ -113,7 +111,7 @@
 
     <footer class="site-footer">  
         <div class="footer-links"> 
-            <a href="#">About Us</a> <a href="#">Contact</a> <a href="#">Disclaimer</a> <a href="#">Privacy</a> <a href="#">Terms</a> 
+            <a href="#">About Us</a> <a href="#">Contact Us</a> <a href="#">Disclaimer</a> <a href="#">Privacy Policy</a> <a href="#">Terms & Conditions</a> 
         </div>  
         <div class="footer-copyright">Copyright © 2026 <a href="index.html">filmixo.com</a>. All rights reserved.</div>  
     </footer>  
@@ -142,7 +140,7 @@
     function formatCount(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : n || 0; }  
     function timeAgo(s) { const d=new Date(s), n=new Date(), sec=Math.floor((n-d)/1000); if(sec<60)return 'Just now'; const min=Math.floor(sec/60); if(min<60)return min+'m ago'; const hr=Math.floor(min/60); if(hr<24)return hr+'h ago'; return Math.floor(hr/24)+'d ago'; }
 
-    // [অদৃশ্য শক্তিশালী অ্যাড ইনজেক্টর - উইথ স্মুথ স্লাইড]
+    // [অদৃশ্য অ্যাড ইনজেক্টর - অরিজিনাল গ্যাপ লজিক]
     function injectAd(tid, cid) {
         const t = document.getElementById(tid), c = document.getElementById(cid);
         if (!t || !c) return;
@@ -151,10 +149,11 @@
             iframe.style.width = '100%'; iframe.style.height = '1px'; iframe.style.border = 'none'; iframe.scrolling = 'no';
             c.appendChild(iframe);
             const doc = iframe.contentWindow.document;
-            doc.open(); doc.write(`<html><body style="margin:0;display:flex;justify-content:center;">${t.innerHTML}<script>function rs(){const h=document.body.scrollHeight; if(h>10 && window.frameElement){const frame=window.frameElement; frame.style.height=h+'px'; const parent=frame.parentElement; parent.style.height=(h+12)+'px'; parent.style.marginTop='6px'; parent.style.marginBottom='6px';}} window.onload=rs; setInterval(rs,1000);<\/script></body></html>`); doc.close();
+            doc.open(); doc.write(`<html><body style="margin:0;display:flex;justify-content:center;">${t.innerHTML}<script>function rs(){const h=document.body.scrollHeight; if(h>10 && window.frameElement){const frame=window.frameElement; frame.style.height=h+'px'; const parent=frame.parentElement; parent.style.height=h+'px'; parent.style.marginTop='4px'; parent.style.marginBottom='4px';}} window.onload=rs; setInterval(rs,600);<\/script></body></html>`); doc.close();
         });
     }
 
+    // [ডাউনলোড লজিক - অক্ষুণ্ণ]
     window.handleDownloadClick = (btnId, pId, ad1, ad2) => {
         const key = `map_${pId}`; let map = JSON.parse(localStorage.getItem(key)) || {};
         if (map[btnId]) {
@@ -193,21 +192,21 @@
             }
         });
 
-        const grads = ["#1e3c72", "#d31027", "#11998e", "#8E2DE2", "#f12711"].sort(() => 0.5 - Math.random());
+        const grads = ["linear-gradient(180deg, #D32F2F 0%, #B71C1C 100%)", "linear-gradient(180deg, #1976D2 0%, #0D47A1 100%)", "linear-gradient(180deg, #388E3C 0%, #1B5E20 100%)"];
         const pfp = "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg";
 
         document.getElementById('post-details-container').innerHTML = `
             <div class="post-author-area">
-                <div style="display:flex;align-items:center;gap:10px">
-                    <div class="pfp"><img src="${pfp}" style="width:100%;height:100%;object-fit:cover"></div>
-                    <div><h3 style="font-size:17px;color:#0f1419">FILMIXO <i class="fa-solid fa-circle-check" style="color:#1da1f2;font-size:14px"></i></h3><span style="font-size:12px;color:#1da1f2">@filmixo</span></div>
+                <div class="author-info">
+                    <div class="pfp"><img src="${pfp}"></div>
+                    <div class="author-text"><h3>FILMIXO <i class="fa-solid fa-circle-check" style="color:#1da1f2;font-size:15px"></i></h3><span>@filmixo</span></div>
                 </div>
                 <div class="post-time" id="time-display">${timeAgo(post.uploadTime)}</div>
             </div>
             <div id="ad-box-top" class="ad-box"></div>
             <div class="video-container" onclick="handleVideoClick()">
                 <img src="${post.mediaImage}" decoding="sync" fetchpriority="high" id="main-img">
-                <div class="play-btn-center"></div><div class="main-video-spinner"></div>
+                <div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div>
                 <div class="video-controls">
                     <span>${post.videoDuration}</span><div class="prog-bg"><div class="prog-fill"></div></div><span class="hd-badge">HD</span>
                 </div>
@@ -237,7 +236,7 @@
                 </div>
             </div>`;
 
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             injectAd('ad-src-top', 'ad-box-top');
             injectAd('ad-src-title', 'ad-box-title');
             injectAd('ad-src-p1', 'ad-box-p1');
@@ -245,7 +244,7 @@
             injectAd('ad-src-p2', 'ad-box-p2-r');
             injectAd('ad-src-mid', 'ad-box-mid');
             injectAd('ad-src-video', 'ad-box-video');
-        }, 150);
+        });
 
         const img = document.getElementById('main-img');
         img.onload = () => { if(img.naturalWidth/img.naturalHeight < 1.2) img.closest('.video-container').classList.add('auto-fit'); };
