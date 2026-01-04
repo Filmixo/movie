@@ -23,7 +23,7 @@
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
     .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
-    .header-btn:active { transform: scale(0.97); }
+    .header-btn:active { transform: scale(0.98); }
     header > div { display: flex; align-items: center; gap: 2px; }
 
     .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
@@ -65,26 +65,27 @@
     .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; }  
     .download-btn-v2 { display: flex; flex-direction: row; align-items: center; justify-content: center; flex: 1; padding: 12px 5px; border-radius: 6px; text-align: center; color: white; cursor: pointer; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.15); gap: 5px; }
-    .download-btn-v2:active { transform: scale(0.97); }
+    .download-btn-v2:active { transform: scale(0.98); }
     .btn-text-main { font-size: 11px; font-weight: 900; letter-spacing: 0.1px; white-space: nowrap; }
 
-    /* স্ট্যাটস সেকশন - পারফেক্ট অ্যালাইনমেন্ট */
+    /* স্ট্যাটস সেকশন - রিকুয়েস্টেড পজিশনিং */
     .stats-section { padding: 10px 15px; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: #536471; font-weight: 500; }  
     .view-stat { display: flex; align-items: center; gap: 4px; font-size: 15px; width: 100px; justify-content: flex-start; }  
-    .view-stat span { font-size: 12.5px; }
+    .view-stat span { font-size: 12px; }
     
-    .love-btn { display: flex; align-items: center; justify-content: center; gap: 4px; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.1s; user-select: none; flex-grow: 1; text-align: center; font-size: 15px; }  
-    .love-btn span { font-size: 12.5px; }
-    .love-btn:active { transform: scale(0.95); }
+    .love-btn { display: flex; align-items: center; justify-content: center; gap: 4px; cursor: pointer; padding: 5px; border-radius: 20px; transition: 0.1s; user-select: none; flex-grow: 1; text-align: center; font-size: 15px; }  
+    .love-btn span { font-size: 12px; }
+    .love-btn:active { transform: scale(0.98); }
     .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
 
     .share-icons { display: flex; gap: 6px; justify-content: flex-end; width: 140px; }  
     .share-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 10px; transition: transform 0.1s; }  
-    .share-icon:active { transform: scale(0.90); }
+    .share-icon:active { transform: scale(0.98); }
 
     .site-footer { padding: 20px 10px; text-align: center; border-top: 1px solid #eee; }  
-    .footer-links { display: flex; justify-content: center; gap: 10px; margin-bottom: 15px; flex-wrap: nowrap; }  
-    .footer-links a { color: #536471; font-size: 12.5px; font-weight: 500; white-space: nowrap; }  
+    .footer-links { display: flex; justify-content: center; gap: 12px; margin-bottom: 15px; flex-wrap: nowrap; }  
+    .footer-links a { color: #536471; font-size: 12.5px; font-weight: 500; white-space: nowrap; transition: color 0.1s, transform 0.1s; display: inline-block; }  
+    .footer-links a:active { color: #1da1f2 !important; transform: scale(0.97); }
     .footer-copyright { color: #536471; font-size: 13px; }  
     .footer-copyright a { color: #1da1f2; font-weight: bold; }
     
@@ -114,7 +115,10 @@
 
     <footer class="site-footer">  
         <div class="footer-links"> 
-            <a href="#">About Us</a> <a href="#">Contact Us</a> <a href="#">Privacy Policy</a> <a href="#">Terms & Conditions</a> 
+            <a href="about.html">About Us</a> 
+            <a href="contact.html">Contact Us</a> 
+            <a href="privacy.html">Privacy Policy</a> 
+            <a href="terms.html">Terms & Conditions</a> 
         </div>  
         <div class="footer-copyright">Copyright © 2026 <a href="index.html">filmixo.com</a>. All rights reserved.</div>  
     </footer>  
@@ -291,13 +295,17 @@
     function restoreScroll() { const s = sessionStorage.getItem(`sp_${postId}`); if(s) setTimeout(() => window.scrollTo(0, parseInt(s)), 150); }
 
     window.sh = (p) => {
-        const u = encodeURIComponent(location.href);
+        const title = document.querySelector('.article-title')?.innerText || "Watch Movie";
+        const url = location.href;
+        const fullText = encodeURIComponent(title + "\n\n" + url);
+        const encodedUrl = encodeURIComponent(url);
+        
         let l = '';
-        if(p==='fb') l = `https://fb.com/sharer/sharer.php?u=${u}`;
-        else if(p==='wa') l = `https://wa.me/?text=${u}`;
-        else if(p==='msg') l = `fb-messenger://share/?link=${u}`;
-        else if(p==='tw') l = `https://twitter.com/intent/tweet?url=${u}`;
-        else if(p==='tg') l = `https://t.me/share/url?url=${u}`;
+        if(p==='fb') l = `https://fb.com/sharer/sharer.php?u=${encodedUrl}`;
+        else if(p==='wa') l = `https://wa.me/?text=${fullText}`;
+        else if(p==='msg') l = `fb-messenger://share/?link=${encodedUrl}`;
+        else if(p==='tw') l = `https://twitter.com/intent/tweet?text=${fullText}`;
+        else if(p==='tg') l = `https://t.me/share/url?url=${encodedUrl}&text=${encodeURIComponent(title)}`;
         window.open(l, '_blank');
     };
 
