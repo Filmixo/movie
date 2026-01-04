@@ -13,7 +13,7 @@
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js" async></script>
 
     <style>  
-    /* --- বেসিক সেটআপ (অরিজিনাল লজিক ১০০% রিসোরড) --- */
+    /* --- বেসিক সেটআপ --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; background: #fff; }  
     
@@ -68,7 +68,6 @@
     .download-btn-v2:active { transform: scale(0.98); }
     .btn-text-main { font-size: 11px; font-weight: 900; letter-spacing: 0.1px; white-space: nowrap; }
 
-    /* স্ট্যাটস সেকশন - রিকুয়েস্টেড পজিশনিং */
     .stats-section { padding: 10px 15px; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: #536471; font-weight: 500; }  
     .view-stat { display: flex; align-items: center; gap: 4px; font-size: 15px; width: 100px; justify-content: flex-start; }  
     .view-stat span { font-size: 12px; }
@@ -89,7 +88,6 @@
     .footer-copyright { color: #536471; font-size: 13px; }  
     .footer-copyright a { color: #1da1f2; font-weight: bold; }
     
-    .notification { position: fixed; top: 70px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.9); color: white; padding: 8px 15px; border-radius: 20px; z-index: 1002; opacity: 0; pointer-events: none; }  
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 </style>
 </head>  
@@ -122,7 +120,6 @@
         </div>  
         <div class="footer-copyright">Copyright © 2026 <a href="index.html">filmixo.com</a>. All rights reserved.</div>  
     </footer>  
-    <div id="notification" class="notification"></div>
 </div>  
 
 <script type="module">  
@@ -140,7 +137,7 @@
     const postId = urlParams.get('id');  
     const CONFIG = { GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea" };  
 
-    const STAY_TIME = 3000; 
+    const STAY_TIME = 5000; 
     let pendingTask = null; let blurTimestamp = 0;
     let timeElements = [];
 
