@@ -18,36 +18,36 @@
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; background: #fff; }  
     
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; opacity: 0; margin: 0 auto; }  
-    .main-wrapper.loaded { opacity: 1 !important; } /* ফেডিং ইফেক্ট রিমুভড, সরাসরি দৃশ্যমান হবে */
+    .main-wrapper.loaded { opacity: 1 !important; }
 
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
     .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
-    .header-btn:active { transform: scale(0.95); box-shadow: 0 0 5px rgba(0, 0, 0, 0.2) inset; }
+    .header-btn:active { transform: scale(0.90); }
     header > div { display: flex; align-items: center; gap: 2px; }
 
-    /* --- অ্যাড বক্স (অরিজিনাল জিরো লজিক) --- */
     .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
     .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
     .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 2px 15px; width: 100%; }
     .dual-ad-wrapper .ad-box { flex: 1; width: 50%; }
 
-    /* --- ভিডিও প্লেয়ার সেকশন (অরিজিনাল গ্যাপ) --- */
     .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
     .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
     .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
     .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
-    .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; height: 35px; padding: 0 10px; display: flex; align-items: center; gap: 10px; background: rgba(0, 0, 0, 0.5); z-index: 10; color: white; font-size: 11px; }
-    .prog-bg { flex-grow: 1; height: 6px; background: rgba(255, 255, 255, 0.5); border-radius: 4px; }
+    
+    /* ভিডিও কন্ট্রোলস মডিফিকেশন */
+    .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; height: 35px; padding: 0 10px; display: flex; align-items: center; background: rgba(0, 0, 0, 0.5); z-index: 10; color: white; font-size: 11px; }
+    .v-divider { width: 1px; height: 12px; background: rgba(255,255,255,0.4); margin: 0 8px; }
+    .prog-bg { flex-grow: 1; height: 6px; background: rgba(255, 255, 255, 0.5); border-radius: 4px; margin: 0 10px; }
     .prog-fill { width: 1.5%; height: 100%; background: #ff0000; border-radius: 4px; }
-    .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 900; }
+    .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 900; margin-left: 2px; }
     
     .video-container.is-loading img { filter: brightness(0.6); opacity: 0.7; }
     .video-container.is-loading .video-controls, .video-container.is-loading .play-btn-center { display: none !important; }
     .video-container.is-loading .main-video-spinner { display: block; }
 
-    /* --- পোস্ট ডিটেইলস ও আর্টিকেল (অরিজিনাল গ্যাপ) --- */  
     .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
     .author-info { display: flex; align-items: center; gap: 10px; }  
     .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
@@ -63,20 +63,21 @@
     .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 5px; overflow: hidden; background: #000; display: none; }
     .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    /* --- ডাউনলোড সেকশন (অরিজিনাল গ্যাপ) --- */  
     .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; }  
     .download-btn-v2 { display: flex; flex-direction: row; align-items: center; justify-content: center; flex: 1; padding: 12px 5px; border-radius: 6px; text-align: center; color: white; cursor: pointer; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.15); gap: 5px; }
-    .download-btn-v2:active { transform: scale(0.98); }
+    .download-btn-v2:active { transform: scale(0.92); }
     .btn-text-main { font-size: 11px; font-weight: 900; letter-spacing: 0.1px; white-space: nowrap; }
 
-    /* --- স্ট্যাটস ও শেয়ার (অরিজিনাল গ্যাপ) --- */  
-    .stats-section { padding: 10px 0; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; font-size: 15px; color: #536471; font-weight: 500; }  
-    .view-stat { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; }  
-    .love-btn { display: flex; align-items: center; gap: 5px; font-weight: 500; font-size: 15px; color: #536471; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.2s; user-select: none; margin: 0 auto; }  
+    /* স্ট্যাটস সেকশন মডিফিকেশন */
+    .stats-section { padding: 10px 15px; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: #536471; font-weight: 500; }  
+    .view-stat { display: flex; align-items: center; gap: 5px; width: 85px; flex-shrink: 0; }  
+    .love-btn { display: flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer; padding: 5px 10px; border-radius: 20px; transition: 0.1s; user-select: none; flex-grow: 1; text-align: center; }  
+    .love-btn:active { transform: scale(0.90); }
     .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
-    .share-icons { display: flex; gap: 8px; }  
-    .share-icon { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 13px; transition: transform 0.2s; }  
+    .share-icons { display: flex; gap: 6px; justify-content: flex-end; width: 140px; flex-shrink: 0; }  
+    .share-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 10px; transition: transform 0.1s; }  
+    .share-icon:active { transform: scale(0.85); }
 
     .site-footer { padding: 20px 20px; text-align: center; border-top: 1px solid #eee; }  
     .footer-links { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 15px; }  
@@ -90,7 +91,6 @@
 </head>  
 <body>  
 
-<!-- [AD TEMPLATES] -->
 <template id="ad-src-top"><script>atOptions={'key':'caf6ea59dc8711a1d0bfb5ad9dd98638','format':'iframe','height':90,'width':728,'params':{}};</script><script src="https://prototypesorting.com/caf6ea59dc8711a1d0bfb5ad9dd98638/invoke.js"></script></template>
 <template id="ad-src-title"><script>atOptions={'key':'da9154b956691d2aa7c677010e7b6501','format':'iframe','height':60,'width':468,'params':{}};</script><script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script></template>
 <template id="ad-src-p1"><script>atOptions={'key':'dbae51ad68fb44f5c8a6b535812c9f54','format':'iframe','height':250,'width':300,'params':{}};</script><script src="https://prototypesorting.com/dbae51ad68fb44f5c8a6b535812c9f54/invoke.js"></script></template>
@@ -111,7 +111,7 @@
 
     <footer class="site-footer">  
         <div class="footer-links"> 
-            <a href="#">About Us</a> <a href="#">Contact Us</a> <a href="#">Disclaimer</a> <a href="#">Privacy Policy</a> <a href="#">Terms & Conditions</a> 
+            <a href="#">About Us</a> <a href="#">Contact Us</a> <a href="#">Privacy Policy</a> <a href="#">Terms & Conditions</a> 
         </div>  
         <div class="footer-copyright">Copyright © 2026 <a href="index.html">filmixo.com</a>. All rights reserved.</div>  
     </footer>  
@@ -140,7 +140,6 @@
     function formatCount(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : n || 0; }  
     function timeAgo(s) { const d=new Date(s), n=new Date(), sec=Math.floor((n-d)/1000); if(sec<60)return 'Just now'; const min=Math.floor(sec/60); if(min<60)return min+'m ago'; const hr=Math.floor(min/60); if(hr<24)return hr+'h ago'; return Math.floor(hr/24)+'d ago'; }
 
-    // [অদৃশ্য অ্যাড ইনজেক্টর - অরিজিনাল গ্যাপ লজিক]
     function injectAd(tid, cid) {
         const t = document.getElementById(tid), c = document.getElementById(cid);
         if (!t || !c) return;
@@ -153,7 +152,6 @@
         });
     }
 
-    // [ডাউনলোড লজিক - অক্ষুণ্ণ]
     window.handleDownloadClick = (btnId, pId, ad1, ad2) => {
         const key = `map_${pId}`; let map = JSON.parse(localStorage.getItem(key)) || {};
         if (map[btnId]) {
@@ -208,7 +206,11 @@
                 <img src="${post.mediaImage}" decoding="sync" fetchpriority="high" id="main-img">
                 <div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div>
                 <div class="video-controls">
-                    <span>${post.videoDuration}</span><div class="prog-bg"><div class="prog-fill"></div></div><span class="hd-badge">HD</span>
+                    <span>${post.videoDuration}</span>
+                    <div class="v-divider"></div>
+                    <i class="fa-solid fa-volume-high" style="font-size: 11px;"></i>
+                    <div class="prog-bg"><div class="prog-fill"></div></div>
+                    <span class="hd-badge">HD</span>
                 </div>
             </div>
             <div class="content-body">
@@ -219,13 +221,13 @@
                 <p class="article-para">${paras[paras.length-1] || ''}</p>
                 <div class="download-title-text">Download Full Movie</div>
                 <div class="download-buttons-container">
-                    <div onclick="handleDownloadClick('b1','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[0]}"><span class="btn-text-main">1080P FULL HD</span></div>
-                    <div onclick="handleDownloadClick('b2','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[1]}"><span class="btn-text-main">720P HD READY</span></div>
-                    <div onclick="handleDownloadClick('b3','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[2]}"><span class="btn-text-main">360P MOBILE</span></div>
+                    <div onclick="handleDownloadClick('b1','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[0]}"><i class="fa-solid fa-circle-down"></i> <span class="btn-text-main">1080P FULL HD</span></div>
+                    <div onclick="handleDownloadClick('b2','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[1]}"><i class="fa-solid fa-download"></i> <span class="btn-text-main">720P HD READY</span></div>
+                    <div onclick="handleDownloadClick('b3','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[2]}"><i class="fa-solid fa-file-arrow-down" style="font-size: 0.9em;"></i> <span class="btn-text-main">360P MOBILE</span></div>
                 </div>
                 <div class="stats-section">
-                    <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="v-cnt">0</span> Views</div>
-                    <div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="l-cnt">0</span> Likes</div>
+                    <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="v-cnt">0</span></div>
+                    <div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="l-cnt">0</span></div>
                     <div class="share-icons">
                         <div class="share-icon" style="background:#1877f2" onclick="sh('fb')"><i class="fa-brands fa-facebook-f"></i></div>
                         <div class="share-icon" style="background:#0084ff" onclick="sh('msg')"><i class="fa-brands fa-facebook-messenger"></i></div>
