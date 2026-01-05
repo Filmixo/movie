@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Admin - Firebase Cloud</title>
+    <title>Filmixo Admin - Smart Cloud Uploader</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -44,6 +43,8 @@
         label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; margin-bottom: 8px; }
         label i { font-size: 16px; width: 20px; color: var(--accent); }
 
+        .required-star { color: #ff4444; margin-left: 2px; }
+
         input, textarea {
             width: 100%; background: var(--field-bg); border: 1px solid var(--border);
             border-radius: 8px; padding: 12px 15px; color: white; font-size: 14px;
@@ -52,7 +53,6 @@
 
         input:focus, textarea:focus { outline: none; border-color: var(--accent); background: #1d242c; }
 
-        textarea#youtubeEmbed { height: 80px; font-family: monospace; font-size: 12px; color: #f8d7da; }
         textarea#paragraphs { height: 350px; line-height: 1.6; }
 
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
@@ -66,61 +66,57 @@
             text-transform: uppercase;
         }
         .publish-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(245, 130, 13, 0.3); }
-        .publish-btn:active { transform: scale(0.97); }
 
-        #status-msg { 
-            text-align: center; padding: 15px; border-radius: 8px; 
-            margin-top: 20px; font-weight: 700; display: none;
-        }
+        #status-msg { text-align: center; padding: 15px; border-radius: 8px; margin-top: 20px; font-weight: 700; display: none; }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
     <header>
-        <h1><i class="fa-solid fa-cloud-arrow-up" style="color: var(--firebase-orange);"></i> FILMIXO PUBLISHER</h1>
-        <p>Direct Firebase Cloud Data Injection</p>
+        <h1><i class="fa-solid fa-bolt" style="color: var(--firebase-orange);"></i> FILMIXO SMART PUBLISHER</h1>
+        <p>Premium Database Management System</p>
     </header>
 
-    <div class="section-label">1. Basic Metadata</div>
+    <div class="section-label">1. Mandatory Info</div>
     <div class="input-group">
-        <label><i class="fa-solid fa-file-signature"></i> Movie Title</label>
-        <input type="text" id="title" placeholder="Full movie title and release year...">
+        <label><i class="fa-solid fa-file-signature"></i> Movie Title <span class="required-star">*</span></label>
+        <input type="text" id="title" placeholder="Full movie title...">
     </div>
 
+    <div class="input-group">
+        <label><i class="fa-solid fa-image"></i> Poster URL <span class="required-star">*</span></label>
+        <input type="text" id="media" placeholder="Poster image link...">
+    </div>
+
+    <div class="input-group">
+        <label><i class="fa-solid fa-align-left"></i> Description (Paragraphs) <span class="required-star">*</span></label>
+        <textarea id="paragraphs" placeholder="Write at least one paragraph..."></textarea>
+    </div>
+
+    <div class="section-label">2. Optional Details (Auto-gen if empty)</div>
     <div class="form-grid">
         <div class="input-group">
-            <label><i class="fa-solid fa-image"></i> Poster URL</label>
-            <input type="text" id="media" placeholder="GitHub image raw link...">
-        </div>
-        <div class="input-group">
-            <label><i class="fa-solid fa-clock"></i> Duration</label>
+            <label><i class="fa-solid fa-clock"></i> Video Duration</label>
             <input type="text" id="duration">
         </div>
+        <div class="input-group">
+            <label style="color:var(--yt-red)"><i class="fa-brands fa-youtube"></i> YouTube Embed</label>
+            <input type="text" id="youtubeEmbed" placeholder="Iframe code or video ID...">
+        </div>
     </div>
 
-    <div class="section-label">2. Content & Media</div>
-    <div class="input-group">
-        <label style="color:var(--yt-red)"><i class="fa-brands fa-youtube"></i> YouTube Iframe Embed</label>
-        <textarea id="youtubeEmbed" placeholder='<iframe width="560" height="315" src="..."></iframe>'></textarea>
-    </div>
-
-    <div class="input-group">
-        <label><i class="fa-solid fa-align-left"></i> Movie Description (Paragraphs)</label>
-        <textarea id="paragraphs" placeholder="Write the article here. Use 'Enter' to separate paragraphs..."></textarea>
-    </div>
-
-    <div class="section-label">3. Cloud Links (Optional)</div>
+    <div class="section-label">3. Destination Links (Smart Logic)</div>
     <div class="form-grid">
-        <input type="text" id="linkAd1" placeholder="Adsterra Link">
-        <input type="text" id="linkAd2" placeholder="Monetag Link">
+        <input type="text" id="linkAd1" placeholder="Adsterra (or leave for Google)">
+        <input type="text" id="linkAd2" placeholder="Monetag (or leave for YouTube)">
     </div>
     <div class="input-group" style="margin-top: 15px;">
-        <input type="text" id="linkMovie" placeholder="Final Movie Download Link">
+        <input type="text" id="linkMovie" placeholder="Download Link (or leave for Website)">
     </div>
     
-    <button class="publish-btn" onclick="publishToCloud()">
-        <i class="fa-solid fa-bolt"></i> Publish to Firebase
+    <button class="publish-btn" id="pubBtn" onclick="publishToCloud()">
+        <i class="fa-solid fa-cloud-arrow-up"></i> Publish Now
     </button>
 
     <div id="status-msg"></div>
@@ -130,7 +126,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
-    // আপনার দেওয়া ফায়ারবেস কনফিগারেশন
     const firebaseConfig = { 
         apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", 
         authDomain: "my-ad-analytics-4560a.firebaseapp.com", 
@@ -143,83 +138,85 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    // --- আপনি যেমনটা চেয়েছেন: ডিফল্ট ৩টি লিংক ---
     const DEFAULTS = {
-        ADSTERRA: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
-        MONETAG: "https://google.com",
-        MOVIE: "https://facebook.com"
+        AD1: "https://www.google.com",
+        AD2: "https://www.youtube.com",
+        DOWNLOAD: "https://www.filmixo.com" // আপনার ওয়েবসাইটের লিংক এখানে বসবে
     };
 
-    // রেন্ডম মুভি ডিউরেশন অটো-জেনারেটর
-    window.onload = () => {
-        const totalSec = Math.floor(Math.random() * (9500 - 6800 + 1)) + 6800;
-        const h = Math.floor(totalSec / 3600);
-        const m = Math.floor((totalSec % 3600) / 60);
-        const s = totalSec % 60;
-        const fmt = (u) => u.toString().padStart(2, '0');
-        document.getElementById('duration').value = `${fmt(h)}:${fmt(m)}:${fmt(s)}`;
-    };
-
-    // ৫ অক্ষরের ইউনিক আইডি জেনারেটর
-    function generateId() {
-        return Math.random().toString(36).substr(2, 5);
+    // রেন্ডম ডিউরেশন জেনারেটর
+    function generateDuration() {
+        const h = "02", m = Math.floor(Math.random() * 59), s = Math.floor(Math.random() * 59);
+        return `${h}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
     }
+
+    window.onload = () => {
+        document.getElementById('duration').value = generateDuration();
+    };
 
     window.publishToCloud = async function() {
         const title = document.getElementById('title').value.trim();
         const media = document.getElementById('media').value.trim();
-        const duration = document.getElementById('duration').value.trim();
-        const youtube = document.getElementById('youtubeEmbed').value.trim();
         const paraRaw = document.getElementById('paragraphs').value.trim();
-        const ad1 = document.getElementById('linkAd1').value.trim() || DEFAULTS.ADSTERRA;
-        const ad2 = document.getElementById('linkAd2').value.trim() || DEFAULTS.MONETAG;
-        const movie = document.getElementById('linkMovie').value.trim() || DEFAULTS.MOVIE;
         const status = document.getElementById('status-msg');
-
-        if(!title || !media || !paraRaw) { 
-            alert("Please fill Title, Poster URL, and Description!"); 
-            return; 
+        const pubBtn = document.getElementById('pubBtn');
+        
+        if(!title || !media || !paraRaw) {
+            alert("⚠️ Title, Poster URL, and Description are MANDATORY!");
+            return;
         }
 
-        const paragraphs = paraRaw.split('\n').filter(l => l.trim() !== '');
-        const finalId = generateId();
-
-        const postData = {
-            id: finalId,
-            uploadTime: new Date().toISOString(),
-            title: title,
-            mediaImage: media,
-            videoDuration: duration,
-            youtubeEmbed: youtube,
-            adLink1: ad1,
-            adLink2: ad2,
-            downloadLink1: movie,
-            paragraphs: paragraphs
-        };
-
         try {
+            pubBtn.disabled = true;
             status.style.display = "block";
-            status.innerText = "🚀 Publishing to Cloud... Please wait.";
-            status.style.background = "rgba(255, 255, 255, 0.05)";
+            status.innerText = "⏳ Uploading... Please don't close this window.";
             status.style.color = "var(--accent)";
 
-            // সরাসরি ফায়ারবেস 'posts' কালেকশনে সেভ হচ্ছে
+            const finalId = Math.random().toString(36).substr(2, 5);
+            const paragraphs = paraRaw.split('\n').filter(p => p.trim() !== '');
+
+            // স্মার্ট লিংক লজিক
+            const adLink1 = document.getElementById('linkAd1').value.trim() || DEFAULTS.AD1;
+            const adLink2 = document.getElementById('linkAd2').value.trim() || DEFAULTS.AD2;
+            const downloadLink = document.getElementById('linkMovie').value.trim() || DEFAULTS.DOWNLOAD;
+
+            const postData = {
+                title: title,
+                mediaImage: media,
+                youtubeEmbed: document.getElementById('youtubeEmbed').value.trim() || "",
+                uploadTime: new Date().toISOString(),
+                videoDuration: document.getElementById('duration').value.trim(),
+                adLink1: adLink1,
+                adLink2: adLink2,
+                downloadLink1: downloadLink,
+                paragraphs: paragraphs,
+                id: finalId
+            };
+
+            // ফায়ারবেসে ডাটা পাঠানো
             await setDoc(doc(db, "posts", finalId), postData);
 
-            status.innerText = "✅ SUCCESS! Post is now Live on Firebase. ID: " + finalId;
-            status.style.background = "rgba(0, 186, 124, 0.1)";
+            // সফল হলে মেসেজ দেখানো এবং ফর্ম ক্লিয়ার করা
+            status.innerText = "✅ PUBLISHED SUCCESSFULLY! ID: " + finalId;
             status.style.color = "var(--success)";
             
-            // ইনপুট বক্স ক্লিয়ার করা
+            // ফর্ম ক্লিয়ারিং (রিসেট)
             document.getElementById('title').value = "";
             document.getElementById('media').value = "";
             document.getElementById('paragraphs').value = "";
+            document.getElementById('youtubeEmbed').value = "";
+            document.getElementById('linkAd1').value = "";
+            document.getElementById('linkAd2').value = "";
             document.getElementById('linkMovie').value = "";
-            
+            document.getElementById('duration').value = generateDuration(); // নতুন ডিউরেশন
+
         } catch (e) {
             console.error(e);
-            status.innerText = "❌ ERROR: Could not publish! Check internet or Firebase Console.";
-            status.style.background = "rgba(255, 0, 0, 0.1)";
+            status.innerText = "❌ FAILED! Connection Error. Your data is still in the boxes.";
             status.style.color = "var(--yt-red)";
+        } finally {
+            pubBtn.disabled = false;
         }
     }
 </script>
