@@ -40,7 +40,7 @@
     .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 2px 15px; width: 100%; }
     .dual-ad-wrapper .ad-box { flex: 1; width: 50%; }
 
-    .video-container { position: relative; width: 94%; margin: 15px auto 5px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; border-radius: 8px; }
+    .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; contain: content; }
     .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
     .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
     .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
@@ -56,12 +56,18 @@
     .video-container.is-loading .video-controls, .video-container.is-loading .play-btn-center { display: none !important; }
     .video-container.is-loading .main-video-spinner { display: block; }
 
-    .content-body { padding: 5px 15px 0px 15px; }  
-    .article-title { font-size: 19px; font-weight: 800; margin-bottom: 8px; color: #0f1419; line-height: 1.3; }  
-    .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-top: 8px; margin-bottom: 8px; text-align: left; letter-spacing: -0.3px; }
-    
-    .relocated-time { font-size: 13px; color: #536471; font-weight: 600; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+    .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
+    .author-info { display: flex; align-items: center; gap: 10px; }  
+    .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
+    .pfp img { width: 100%; height: 100%; object-fit: cover; }  
+    .author-text h3 { font-size: 18px; margin: 0; color: #0f1419; display: inline-flex; align-items: center; gap: 5px; }  
+    .author-text span { font-size: 12px; color: #1da1f2; display: block; margin-top: -1px; }  
+    .post-time { font-size: 14px; color: #536471; font-weight: bold; }  
 
+    .content-body { padding: 5px 15px 0px 15px; }  
+    .article-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: #0f1419; line-height: 1.3; }  
+    .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-top: 8px; margin-bottom: 8px; text-align: left; letter-spacing: -0.3px; }
+        
     .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 5px; overflow: hidden; background: #000; display: none; }
     .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
@@ -71,10 +77,17 @@
     .download-btn-v2:active { transform: scale(0.98); }
     .btn-text-main { font-size: 11px; font-weight: 900; letter-spacing: 0.1px; white-space: nowrap; }
 
-    .share-section { padding: 15px 0; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: center; gap: 10px; }
-    .share-label { font-size: 14px; font-weight: 700; color: #536471; }
-    .share-icons { display: flex; gap: 8px; }  
-    .share-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 14px; transition: transform 0.1s; }  
+    .stats-section { padding: 10px 15px; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: #536471; font-weight: 500; }  
+    .view-stat { display: flex; align-items: center; gap: 4px; font-size: 15px; width: 100px; justify-content: flex-start; }  
+    .view-stat span { font-size: 12px; }
+    
+    .love-btn { display: flex; align-items: center; justify-content: center; gap: 4px; cursor: pointer; padding: 5px; border-radius: 20px; transition: 0.1s; user-select: none; flex-grow: 1; text-align: center; font-size: 15px; }  
+    .love-btn span { font-size: 12px; }
+    .love-btn:active { transform: scale(0.98); }
+    .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
+
+    .share-icons { display: flex; gap: 6px; justify-content: flex-end; width: 140px; }  
+    .share-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 10px; transition: transform 0.1s; }  
     .share-icon:active { transform: scale(0.98); }
 
     .site-footer { padding: 20px 10px; text-align: center; border-top: 1px solid #eee; }  
@@ -118,7 +131,17 @@
     </footer>  
 </div>  
 
-<script>  
+<script type="module">  
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";  
+    import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";  
+  
+    const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };  
+    const app = initializeApp(firebaseConfig);  
+    const db = getFirestore(app);  
+    
+    const deviceId = localStorage.getItem('deviceId') || ('id-' + Math.random().toString(36).substr(2, 9));
+    localStorage.setItem('deviceId', deviceId);
+
     const urlParams = new URLSearchParams(window.location.search);  
     const postId = urlParams.get('id');  
     const CONFIG = { GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea" };  
@@ -135,6 +158,7 @@
         return clean.trim();
     };
 
+    // আইডি ভিত্তিক স্থায়ী সংখ্যা জেনারেটর
     const getSeed = (id) => {
         let hash = 0;
         for (let i = 0; i < id.length; i++) {
@@ -150,6 +174,7 @@
     const cleanDesc = rawDesc.substring(0, 160).replace(/["]/g, '') + "...";
     const formattedDate = post.uploadTime ? (post.uploadTime.includes('T') ? post.uploadTime : `${post.uploadTime}T09:00:00+06:00`) : new Date().toISOString();
     
+    // স্থায়ী রেটিং (৪.৬ - ৫.০) এবং ভোট (৫ লক্ষ - ২৫ লক্ষ)
     const randomRating = (4.6 + (seed % 5) / 10).toFixed(1);
     const randomVotes = Math.floor((seed % (2500000 - 500000 + 1)) + 500000);
 
@@ -196,6 +221,37 @@
                     "bestRating": "5",
                     "ratingCount": randomVotes.toString()
                 }
+            },
+            {
+                "@type": "VideoObject",
+                "name": `${movieName} Official Trailer & Review`,
+                "description": `Detailed visual analysis and official trailer preview of ${movieName}.`,
+                "thumbnailUrl": [post.mediaImage],
+                "uploadDate": formattedDate,
+                "contentUrl": CONFIG.GLOBAL_VIDEO_LINK,
+                "embedUrl": post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : CONFIG.GLOBAL_VIDEO_LINK,
+                "potentialAction": {
+                    "@type": "SeekAction",
+                    "target": (post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : CONFIG.GLOBAL_VIDEO_LINK) + "={seek_to_second_number}",
+                    "startOffset-input": "required name=seek_to_second_number"
+                }
+            },
+            {
+                "@type": "Review",
+                "itemReviewed": { 
+                    "@type": "Movie", 
+                    "name": movieName, 
+                    "image": post.mediaImage,
+                    "@id": window.location.href + "#movie"
+                },
+                "reviewBody": rawDesc,
+                "reviewRating": { "@type": "Rating", "ratingValue": randomRating, "bestRating": "5" },
+                "author": { "@type": "Organization", "name": "FILMIXO Expert Panel" },
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "FILMIXO",
+                    "logo": { "@type": "ImageObject", "url": "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg" }
+                }
             }
         ]
     };
@@ -210,6 +266,7 @@
     schemaScript.textContent = JSON.stringify(schemaData);
 };
 
+    function formatCount(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : n || 0; }  
     function timeAgo(s) { const d=new Date(s), n=new Date(), sec=Math.floor((n-d)/1000); if(sec<60)return 'Just now'; const min=Math.floor(sec/60); if(min<60)return min+'m ago'; const hr=Math.floor(min/60); if(hr<24)return hr+'h ago'; return Math.floor(hr/24)+'d ago'; }
 
     function injectAd(tid, cid) {
@@ -263,8 +320,16 @@
         });
 
         const grads = ["linear-gradient(180deg, #D32F2F 0%, #B71C1C 100%)", "linear-gradient(180deg, #1976D2 0%, #0D47A1 100%)", "linear-gradient(180deg, #388E3C 0%, #1B5E20 100%)"];
+        const pfp = "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg";
 
         document.getElementById('post-details-container').innerHTML = `
+            <div class="post-author-area">
+                <div class="author-info">
+                    <div class="pfp"><img src="${pfp}"></div>
+                    <div class="author-text"><h3>FILMIXO <i class="fa-solid fa-circle-check" style="color:#1da1f2;font-size:15px"></i></h3><span>@filmixo</span></div>
+                </div>
+                <div class="post-time" id="time-display">${timeAgo(post.uploadTime)}</div>
+            </div>
             <div id="ad-box-top" class="ad-box"></div>
             <div class="video-container" onclick="handleVideoClick()">
                 <img src="${post.mediaImage}" decoding="sync" fetchpriority="high" id="main-img">
@@ -278,7 +343,6 @@
                 </div>
             </div>
             <div class="content-body">
-                <div class="relocated-time"><i class="fa-regular fa-clock"></i> <span id="time-display">${timeAgo(post.uploadTime)}</span></div>
                 <h1 class="article-title">${post.title}</h1>
                 <div id="ad-box-title" class="ad-box"></div>
                 ${body}
@@ -290,9 +354,9 @@
                     <div onclick="handleDownloadClick('b2','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[1]}"><i class="fa-solid fa-download"></i> <span class="btn-text-main">720P HD READY</span></div>
                     <div onclick="handleDownloadClick('b3','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[2]}"><i class="fa-solid fa-file-arrow-down" style="font-size: 0.9em;"></i> <span class="btn-text-main">360P MOBILE</span></div>
                 </div>
-                
-                <div class="share-section">
-                    <span class="share-label">SHARE THIS:</span>
+                <div class="stats-section">
+                    <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="v-cnt">0</span> <span>Views</span></div>
+                    <div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="l-cnt">0</span> <span>Likes</span></div>
                     <div class="share-icons">
                         <div class="share-icon" style="background:#1877f2" onclick="sh('fb')"><i class="fa-brands fa-facebook-f"></i></div>
                         <div class="share-icon" style="background:#0084ff" onclick="sh('msg')"><i class="fa-brands fa-facebook-messenger"></i></div>
@@ -318,17 +382,30 @@
         timeElements.push({ el: document.getElementById('time-display'), date: post.uploadTime });
     }
 
-    async function init() {
+        async function init() {
         try {
             const res = await fetch('posts.json');
             const data = await res.json();
             const post = data.find(p => p.id === postId) || data[0];
+            
+            // রেন্ডার করার আগেই এসইও ডাটা বটের জন্য রেডি করুন
             generatePremiumSEO(post); 
+            
             renderPost(post);
+            setupFirebase(post.id);
             document.getElementById('app-wrapper').classList.add('loaded');
             setInterval(() => { timeElements.forEach(i => i.el.innerText = timeAgo(i.date)); }, 60000);
             restoreScroll();
         } catch (e) { document.getElementById('app-wrapper').classList.add('loaded'); }
+    }
+
+    function setupFirebase(id) {
+        setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true });
+        onSnapshot(doc(db, "views", id), s => document.getElementById('v-cnt').innerText = formatCount(s.data()?.count));
+        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users/${deviceId}`), lBtn = document.querySelector('.love-btn');
+        onSnapshot(lRef, s => document.getElementById('l-cnt').innerText = formatCount(s.data()?.count));
+        getDoc(uRef).then(s => { if(s.exists()) lBtn.classList.add('liked'), lBtn.querySelector('i').className='fa-solid fa-heart'; });
+        lBtn.onclick = async () => { if(!(await getDoc(uRef)).exists()){ lBtn.classList.add('liked'); lBtn.querySelector('i').className='fa-solid fa-heart'; await setDoc(lRef, {count:increment(1)}, {merge:true}); await setDoc(uRef, {t:new Date()}); } };
     }
 
     window.handleVideoClick = () => {
