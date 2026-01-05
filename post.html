@@ -3,8 +3,7 @@
 <head>  
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
-    <title>FILMIXO | Professional Movie Insights & HD Downloads</title>  
-    
+        <title>FILMIXO | Professional Movie Insights & HD Downloads</title>
     <meta name="description" content="FILMIXO: Expert movie reviews, Director & Actor insights, and technical analysis (VFX/Audio). Watch trailers and download HD movies.">
     <meta name="keywords" content="expert movie review, filmixo analysis, vfx review, director insights, audience reaction, movie download, hd movies">
     <meta name="author" content="FILMIXO Editorial Team">
@@ -12,8 +11,9 @@
     <meta property="og:site_name" content="FILMIXO">
     <meta property="og:title" content="FILMIXO | Professional Movie Insights & HD Downloads">
     <meta property="og:description" content="Explore research-based reviews and technical breakdowns of the latest films. Quality and Accuracy guaranteed.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg">
     <script type="application/ld+json" id="dynamic-schema"></script>
-
+    
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://prototypesorting.com">
     <link rel="dns-prefetch" href="https://prototypesorting.com">
@@ -151,29 +151,25 @@
     let timeElements = [];
 
         const generatePremiumSEO = (post) => {
-        // ১. ব্রাউজার টাইটেল আপডেট
-        document.title = `${post.title} - Full Review, Insights & Download | FILMIXO`;
+        // ১. টাইটেল আপডেট (এসইও ফ্রেন্ডলি)
+        document.title = `${post.title} - Full Review & Analysis | FILMIXO`;
 
-        // ২. সোশ্যাল মিডিয়া কার্ড আপডেট (এই অংশটিই মুভির ছবি আনবে)
-        const updateMeta = (prop, val) => {
-            let el = document.querySelector(`meta[property="${prop}"]`);
-            if (!el) {
-                el = document.createElement('meta');
-                el.setAttribute('property', prop);
-                document.head.appendChild(el);
-            }
-            el.setAttribute('content', val);
+        // ২. সোশ্যাল মিডিয়া কার্ড ও মেটা আপডেট (আপনার প্রিমিয়াম মেটা বজায় রেখে)
+        const setMeta = (property, content) => {
+            let el = document.querySelector(`meta[property="${property}"]`) || document.querySelector(`meta[name="${property}"]`);
+            if (el) el.setAttribute('content', content);
         };
 
         if (post) {
-            updateMeta('og:title', post.title);
-            updateMeta('og:image', post.mediaImage);
-            updateMeta('og:description', post.paragraphs[0]?.substring(0, 150) + "...");
-            updateMeta('og:url', window.location.href);
-            updateMeta('og:type', 'video.movie');
+            setMeta('og:title', `${post.title} - Professional Insights`);
+            setMeta('og:image', post.mediaImage);
+            setMeta('og:description', post.paragraphs[0]?.substring(0, 160) || "Expert analysis and technical breakdown.");
+            setMeta('og:url', window.location.href);
+            // সার্চ ইঞ্জিনের জন্য ডেসক্রিপশন আপডেট
+            setMeta('description', `${post.title}: ${post.paragraphs[0]?.substring(0, 150)}`);
         }
 
-        // ৩. গুগল স্কিমা ডাটা (আপনার আগের সেই শক্তিশালী এসিও কোড)
+        // ৩. আপনার সেই শক্তিশালী গুগল স্কিমা (যা আপনি আগে চেয়েছিলেন)
         const schemaData = {
             "@context": "https://schema.org",
             "@graph": [
@@ -181,7 +177,7 @@
                     "@type": "Movie",
                     "name": post.title,
                     "image": post.mediaImage,
-                    "description": post.paragraphs[0] || "Expert movie analysis and production insights.",
+                    "description": post.paragraphs[0] || "Professional movie analysis.",
                     "workFeatured": {
                         "@type": "VideoObject",
                         "name": `${post.title} Official Trailer`,
@@ -193,8 +189,8 @@
                 {
                     "@type": "Review",
                     "itemReviewed": { "@type": "Movie", "name": post.title },
-                    "reviewAspect": ["VFX Analysis", "Director Vision", "Sound Engineering", "Audience Verdict"],
-                    "reviewBody": "Detailed research-based review featuring director perspectives and technical evaluation of graphics and audio.",
+                    "reviewAspect": ["VFX Analysis", "Director Vision", "Sound Engineering", "Production Value"],
+                    "reviewBody": post.paragraphs[0] || "Research-based technical evaluation.",
                     "author": { "@type": "Organization", "name": "FILMIXO Expert Panel" },
                     "publisher": { "@type": "Organization", "name": "FILMIXO", "logo": "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg" }
                 }
