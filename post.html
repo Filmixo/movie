@@ -28,7 +28,8 @@
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; background: #fff; }  
     
-   .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; margin: 0 auto; }  
+       .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; margin: 0 auto; contain: content; }
+
 
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
@@ -36,7 +37,8 @@
     .header-btn:active { transform: scale(0.98); }
     header > div { display: flex; align-items: center; gap: 2px; }
 
-    .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
+        .ad-box { width: 100%; min-height: 90px; overflow: hidden; margin: 5px 0; display: block; }
+
     .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
     .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 2px 15px; width: 100%; }
     .dual-ad-wrapper .ad-box { flex: 1; width: 50%; }
@@ -133,7 +135,7 @@
 </div>  
 
 <script type="module">  
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";  
+    setTimeout(() => {
     import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";  
   
     const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };  
@@ -326,7 +328,8 @@
         document.getElementById('post-details-container').innerHTML = `
             <div class="post-author-area">
                 <div class="author-info">
-                    <div class="pfp"><img src="${pfp}"></div>
+                    <div class="pfp"><img src="${pfp}" width="45" height="45" alt="FILMIXO Author"></div>
+
                     <div class="author-text"><h3>FILMIXO <i class="fa-solid fa-circle-check" style="color:#1da1f2;font-size:15px"></i></h3><span>@filmixo</span></div>
                 </div>
                 <div class="post-time" id="time-display">${timeAgo(post.uploadTime)}</div>
