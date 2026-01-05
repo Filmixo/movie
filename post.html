@@ -164,7 +164,7 @@
     const cleanDesc = rawDesc.substring(0, 160).replace(/["]/g, '') + "...";
     const formattedDate = post.uploadTime ? (post.uploadTime.includes('T') ? post.uploadTime : `${post.uploadTime}T09:00:00+06:00`) : new Date().toISOString();
     const randomRating = (Math.random() * (5.0 - 4.6) + 4.6).toFixed(1);
-    const randomVotes = Math.floor(Math.random() * (980000 - 12000 + 1)) + 12000;
+    const randomVotes = Math.floor(Math.random() * (2500000 - 25000 + 1)) + 25000;
 
     document.title = fullTitle;
 
