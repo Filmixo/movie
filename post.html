@@ -12,7 +12,6 @@
     <meta property="og:site_name" content="FILMIXO">
     <meta property="og:title" content="FILMIXO | Professional Movie Insights & HD Downloads">
     <meta property="og:description" content="Explore research-based reviews and technical breakdowns of the latest films. Quality and Accuracy guaranteed.">
-    <meta property="og:image" content="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg">
     <script type="application/ld+json" id="dynamic-schema"></script>
 
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
@@ -151,20 +150,30 @@
     let pendingTask = null; let blurTimestamp = 0;
     let timeElements = [];
 
-         const generatePremiumSEO = (post) => {
+        const generatePremiumSEO = (post) => {
+        // ১. ব্রাউজার টাইটেল আপডেট
         document.title = `${post.title} - Full Review, Insights & Download | FILMIXO`;
 
-        const setMeta = (p, v) => {
-            let el = document.querySelector(`meta[property="${p}"]`);
-            if (el) el.setAttribute('content', v);
+        // ২. সোশ্যাল মিডিয়া কার্ড আপডেট (এই অংশটিই মুভির ছবি আনবে)
+        const updateMeta = (prop, val) => {
+            let el = document.querySelector(`meta[property="${prop}"]`);
+            if (!el) {
+                el = document.createElement('meta');
+                el.setAttribute('property', prop);
+                document.head.appendChild(el);
+            }
+            el.setAttribute('content', val);
         };
+
         if (post) {
-            setMeta('og:title', post.title);
-            setMeta('og:image', post.mediaImage);
-            setMeta('og:description', post.paragraphs[0]?.substring(0, 150));
-            setMeta('og:url', window.location.href);
+            updateMeta('og:title', post.title);
+            updateMeta('og:image', post.mediaImage);
+            updateMeta('og:description', post.paragraphs[0]?.substring(0, 150) + "...");
+            updateMeta('og:url', window.location.href);
+            updateMeta('og:type', 'video.movie');
         }
 
+        // ৩. গুগল স্কিমা ডাটা (আপনার আগের সেই শক্তিশালী এসিও কোড)
         const schemaData = {
             "@context": "https://schema.org",
             "@graph": [
