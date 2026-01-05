@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Elite Control - Final</title>
+    <title>Filmixo Elite Control - Final Updated</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -37,7 +37,7 @@
     <div class="section-label">Core Information</div>
     <div class="input-group">
         <label><i class="fa-solid fa-file-signature"></i> Content Title</label>
-        <input type="text" id="title" placeholder="Movie Name 2026">
+        <input type="text" id="title" placeholder="যেমন: Pushpa 2 (2025) Hindi Dubbed">
     </div>
     <div class="input-group">
         <label><i class="fa-solid fa-image"></i> Poster / Thumbnail Link</label>
@@ -50,23 +50,29 @@
             <input type="text" id="duration">
         </div>
         <div class="input-group">
-            <label><i class="fa-brands fa-youtube"></i> YouTube Video Link / ID</label>
-            <input type="text" id="ytInput" placeholder="Paste link or ID">
+            <label><i class="fa-brands fa-youtube"></i> YouTube Video (Link/Iframe/ID)</label>
+            <input type="text" id="ytInput" placeholder="Paste link, short link, or embed code">
         </div>
     </div>
 
-    <div class="section-label">Connections & Narrative</div>
+    <div class="section-label">Ads & Download Settings</div>
     <div class="grid-layout">
-        <input type="text" id="linkAd1" placeholder="Ad Link 01">
-        <input type="text" id="linkAd2" placeholder="Ad Link 02">
+        <div class="input-group">
+            <label>Ad Link 01 (Adsterra)</label>
+            <input type="text" id="linkAd1" placeholder="Example: https://adsterra.com/direct-link">
+        </div>
+        <div class="input-group">
+            <label>Ad Link 02 (Monetag)</label>
+            <input type="text" id="linkAd2" placeholder="Example: https://monetag.com/your-tag">
+        </div>
     </div>
     <div style="margin-top: 20px" class="input-group">
-        <label><i class="fa-solid fa-cloud-arrow-down"></i> Primary Download Link</label>
-        <input type="text" id="linkMovie" placeholder="Download Link">
+        <label><i class="fa-solid fa-cloud-arrow-down"></i> Original Movie Download Link</label>
+        <input type="text" id="linkMovie" placeholder="Example: https://server-link.com/movie.mkv">
     </div>
     <div class="input-group">
         <label><i class="fa-solid fa-align-left"></i> Article Paragraphs (Each line = New paragraph)</label>
-        <textarea id="paragraphs" class="article-box"></textarea>
+        <textarea id="paragraphs" class="article-box" placeholder="মুভি সম্পর্কে লিখুন..."></textarea>
     </div>
 
     <div class="security-box">
@@ -96,12 +102,18 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // ID Generator
     function generateId() {
         const charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         let res = '';
         for (let i = 0; i < 6; i++) res += charset.charAt(Math.floor(Math.random() * charset.length));
         return res;
+    }
+
+    // স্মার্ট আইডি এক্সট্রাক্টর ফাংশন
+    function getYouTubeId(input) {
+        const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/;
+        const match = input.match(regex);
+        return (match && match[1]) ? match[1] : input.trim();
     }
 
     window.onload = () => { 
@@ -124,13 +136,10 @@
             btn.disabled = true;
             status.innerText = "Uploading to Cloud...";
 
-            let vid = ytRaw;
-            if (ytRaw.includes("v=")) vid = ytRaw.split("v=")[1].split("&")[0];
-            else if (ytRaw.includes("be/")) vid = ytRaw.split("be/")[1];
-
+            // ইউটিউব আইডি বের করা (লিঙ্ক বা এমবেড কোড থেকে)
+            const finalVidId = getYouTubeId(ytRaw);
             const finalId = generateId();
             
-            // রুলসের সাথে ১০০% ম্যাচ করা ডাটা স্ট্রাকচার
             const postData = {
                 id: finalId,
                 adminKey: adminKey,
@@ -138,10 +147,11 @@
                 mediaImage: document.getElementById('media').value.trim(),
                 videoDuration: document.getElementById('duration').value.trim(),
                 uploadTime: new Date().toLocaleString(),
-                adLink1: document.getElementById('linkAd1').value.trim() || "https://google.com",
-                adLink2: document.getElementById('linkAd2').value.trim() || "https://youtube.com",
-                downloadLink1: document.getElementById('linkMovie').value.trim() || "https://facebook.com",
-                youtubeEmbed: vid ? `<iframe src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen></iframe>` : "",
+                // ডিফল্ট লিঙ্ক হিসেবে আপনার চাওয়া অ্যাড নেটওয়ার্কের নাম দিয়ে রাখলাম
+                adLink1: document.getElementById('linkAd1').value.trim() || "https://adsterra-link.com",
+                adLink2: document.getElementById('linkAd2').value.trim() || "https://monetag-link.com",
+                downloadLink1: document.getElementById('linkMovie').value.trim() || "https://original-download-link.com",
+                youtubeEmbed: finalVidId, // শুধু আইডি ডাটাবেসে যাবে
                 paragraphs: document.getElementById('paragraphs').value.trim().split('\n').filter(p => p.trim() !== '')
             };
 
