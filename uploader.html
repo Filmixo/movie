@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Elite Control - Final Updated</title>
+    <title>Filmixo Elite Control - Standard Final</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -23,7 +23,7 @@
         .article-box { min-height: 200px; resize: vertical; }
         .security-box { background: rgba(245, 130, 13, 0.05); padding: 25px; border-radius: 12px; border: 1px dashed var(--accent); margin: 40px 0; }
         .action-area { text-align: center; }
-        .publish-btn { background: var(--accent); color: white; border: none; padding: 15px 40px; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.2s; }
+        .publish-btn { background: var(--accent); color: white; border: none; padding: 15px 40px; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.2s; box-shadow: 0 4px 15px rgba(245, 130, 13, 0.2); }
         .publish-btn:active { transform: scale(0.95); }
         #status-msg { margin-top: 20px; font-weight: 600; }
         @media (max-width: 600px) { .grid-layout { grid-template-columns: 1fr; } }
@@ -32,12 +32,12 @@
 <body>
 
 <div class="admin-panel">
-    <header><h1><i class="fa-solid fa-shield-halved"></i> FILMIXO CONTROL</h1></header>
+    <header><h1><i class="fa-solid fa-shield-halved"></i> FILMIXO CONTROL PRO</h1></header>
 
     <div class="section-label">Core Information</div>
     <div class="input-group">
         <label><i class="fa-solid fa-file-signature"></i> Content Title</label>
-        <input type="text" id="title" placeholder="যেমন: Pushpa 2 (2025) Hindi Dubbed">
+        <input type="text" id="title" placeholder="Example: Pushpa 2 (2025) Dual Audio">
     </div>
     <div class="input-group">
         <label><i class="fa-solid fa-image"></i> Poster / Thumbnail Link</label>
@@ -51,37 +51,37 @@
         </div>
         <div class="input-group">
             <label><i class="fa-brands fa-youtube"></i> YouTube Video (Link/Iframe/ID)</label>
-            <input type="text" id="ytInput" placeholder="Paste link, short link, or embed code">
+            <input type="text" id="ytInput" placeholder="Paste link, embed code, or ID">
         </div>
     </div>
 
-    <div class="section-label">Ads & Download Settings</div>
+    <div class="section-label">Connections & Narrative</div>
     <div class="grid-layout">
         <div class="input-group">
             <label>Ad Link 01 (Adsterra)</label>
-            <input type="text" id="linkAd1" placeholder="Example: https://adsterra.com/direct-link">
+            <input type="text" id="linkAd1" placeholder="Example: https://adsterra-link.com">
         </div>
         <div class="input-group">
             <label>Ad Link 02 (Monetag)</label>
-            <input type="text" id="linkAd2" placeholder="Example: https://monetag.com/your-tag">
+            <input type="text" id="linkAd2" placeholder="Example: https://monetag-link.com">
         </div>
     </div>
     <div style="margin-top: 20px" class="input-group">
-        <label><i class="fa-solid fa-cloud-arrow-down"></i> Original Movie Download Link</label>
-        <input type="text" id="linkMovie" placeholder="Example: https://server-link.com/movie.mkv">
+        <label><i class="fa-solid fa-cloud-arrow-down"></i> Primary Download Link (Movie)</label>
+        <input type="text" id="linkMovie" placeholder="Example: https://original-download-link.com">
     </div>
     <div class="input-group">
         <label><i class="fa-solid fa-align-left"></i> Article Paragraphs (Each line = New paragraph)</label>
-        <textarea id="paragraphs" class="article-box" placeholder="মুভি সম্পর্কে লিখুন..."></textarea>
+        <textarea id="paragraphs" class="article-box" placeholder="Write movie details..."></textarea>
     </div>
 
     <div class="security-box">
         <label style="color: var(--accent);">MASTER SECRET KEY</label>
-        <input type="password" id="adminKey" placeholder="Enter key to publish...">
+        <input type="password" id="adminKey" placeholder="Verify identity to publish...">
     </div>
     
     <div class="action-area">
-        <button class="publish-btn" id="pubBtn" onclick="publishToCloud()">Publish Now</button>
+        <button class="publish-btn" id="pubBtn" onclick="publishToCloud()">🚀 Publish Now</button>
         <div id="status-msg"></div>
     </div>
 </div>
@@ -102,22 +102,25 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
+    // ১. নিখুঁত ছোট হাতের আইডি জেনারেটর (Lowercase)
     function generateId() {
-        const charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const charset = '0123456789abcdefghijklmnopqrstuvwxyz'; // সব ছোট হাতের
         let res = '';
-        for (let i = 0; i < 6; i++) res += charset.charAt(Math.floor(Math.random() * charset.length));
+        for (let i = 0; i < 6; i++) {
+            res += charset.charAt(Math.floor(Math.random() * charset.length));
+        }
         return res;
     }
 
-    // স্মার্ট আইডি এক্সট্রাক্টর ফাংশন
+    // ২. শক্তিশালী ইউটিউব আইডি এক্সট্রাক্টর
     function getYouTubeId(input) {
-        const regex = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/|youtube\.com\/embed\/)([a-zA-Z0-9_-]{11})/;
-        const match = input.match(regex);
-        return (match && match[1]) ? match[1] : input.trim();
+        const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
+        const match = input.match(regExp);
+        return (match && match[2].length == 11) ? match[2] : input.trim();
     }
 
     window.onload = () => { 
-        document.getElementById('duration').value = "02:" + Math.floor(Math.random()*40+10) + ":25";
+        document.getElementById('duration').value = "02:" + Math.floor(Math.random()*40+10).toString().padStart(2,'0') + ":25";
     };
 
     window.publishToCloud = async function() {
@@ -128,18 +131,18 @@
         const status = document.getElementById('status-msg');
 
         if(!title || !adminKey) {
-            status.innerHTML = `<span style="color:var(--error)">Title and Key are required!</span>`;
+            status.innerHTML = `<span style="color:var(--error)">Title and Admin Key are mandatory!</span>`;
             return;
         }
 
         try {
             btn.disabled = true;
-            status.innerText = "Uploading to Cloud...";
+            status.innerText = "Syncing with Database...";
 
-            // ইউটিউব আইডি বের করা (লিঙ্ক বা এমবেড কোড থেকে)
-            const finalVidId = getYouTubeId(ytRaw);
+            const vidId = getYouTubeId(ytRaw);
             const finalId = generateId();
             
+            // ফায়ারবেস রুলসের সাথে ১০০% সামঞ্জস্যপূর্ণ ডাটা স্ট্রাকচার
             const postData = {
                 id: finalId,
                 adminKey: adminKey,
@@ -147,21 +150,22 @@
                 mediaImage: document.getElementById('media').value.trim(),
                 videoDuration: document.getElementById('duration').value.trim(),
                 uploadTime: new Date().toLocaleString(),
-                // ডিফল্ট লিঙ্ক হিসেবে আপনার চাওয়া অ্যাড নেটওয়ার্কের নাম দিয়ে রাখলাম
                 adLink1: document.getElementById('linkAd1').value.trim() || "https://adsterra-link.com",
                 adLink2: document.getElementById('linkAd2').value.trim() || "https://monetag-link.com",
                 downloadLink1: document.getElementById('linkMovie').value.trim() || "https://original-download-link.com",
-                youtubeEmbed: finalVidId, // শুধু আইডি ডাটাবেসে যাবে
+                // ব্যাকটিক (`) ব্যবহার করা হয়েছে যাতে ডাইনামিক আইডি সঠিকভাবে এমবেড হয়
+                youtubeEmbed: vidId ? `<iframe src="https://www.youtube.com/embed/${vidId}" frameborder="0" allowfullscreen></iframe>` : "",
                 paragraphs: document.getElementById('paragraphs').value.trim().split('\n').filter(p => p.trim() !== '')
             };
 
             await setDoc(doc(db, "posts", finalId), postData);
 
-            status.innerHTML = `<span style="color:var(--success)">✅ Pushed Successfully! ID: ${finalId}</span>`;
+            status.innerHTML = `<span style="color:var(--success)">✅ Successfully Published! ID: ${finalId}</span>`;
             setTimeout(() => location.reload(), 3000);
 
         } catch (e) {
-            status.innerHTML = `<span style="color:var(--error)">❌ Access Denied: Incorrect Secret Key</span>`;
+            console.error("Error:", e);
+            status.innerHTML = `<span style="color:var(--error)">❌ Access Denied: Incorrect Master Key</span>`;
             btn.disabled = false;
         }
     }
