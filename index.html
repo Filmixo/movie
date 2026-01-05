@@ -307,7 +307,7 @@
             sentinel.classList.remove('loading');
         }
 
-        function initializeFirebaseForCard(card, id) {
+            function initializeFirebaseForCard(card, id) {
             const viewEl = card.querySelector('.view-count');
             const likeEl = card.querySelector('.like-count');
             const loveBtn = card.querySelector('.love-group');
@@ -316,15 +316,17 @@
             const userRef = doc(db, `loves/${id}/users`, deviceId);
             getDoc(userRef).then(s => { if(s.exists()) { loveBtn.classList.add('liked'); loveBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid'); } });
             onSnapshot(loveRef, (s) => likeEl.innerText = formatCount(s.data()?.count || 0));
-            loveBtn.addEventListener('click', async (e) => {
+            loveBtn.onclick = async (e) => {
                 e.stopPropagation();
+                loveBtn.style.pointerEvents = 'none';
                 const s = await getDoc(userRef);
                 if(!s.exists()) { 
                     loveBtn.classList.add('liked'); loveBtn.querySelector('i').classList.replace('fa-regular', 'fa-solid'); 
                     await setDoc(loveRef, { count: increment(1) }, { merge: true }); 
                     await setDoc(userRef, { time: new Date() }); 
                 }
-            });
+                loveBtn.style.pointerEvents = 'auto';
+            };
         }
 
         function setupObserver() {
@@ -442,12 +444,17 @@
 
         searchInput.addEventListener('input', () => renderSearchResults(searchInput.value.trim()));
 
-        // --- স্মার্ট ব্যাচ-স্কিপ লোডিং (Smart Skip Restoration) ---
-        async function loadFeed() {
+           async function loadFeed() {
             try {
-                const res = await fetch('posts.json');
-                const posts = await res.json();
-                allPosts = posts.sort((a, b) => new Date(b.uploadTime).getTime() - new Date(a.uploadTime).getTime()); 
+                const postsRef = collection(db, "posts");
+                const q = query(postsRef, orderBy("uploadTime", "desc"));
+                const querySnapshot = await getDocs(q);
+                
+                allPosts = [];
+                querySnapshot.forEach((doc) => {
+                    allPosts.push({ id: doc.id, ...doc.data() });
+                });
+
                 generateHomepageSEO(allPosts.length);
                 startCoverSlider(allPosts);
                 document.getElementById('total-videos-count').innerText = formatCount(allPosts.length); 
@@ -459,28 +466,21 @@
                 if (savedPos && savedIndex) {
                     const pos = parseInt(savedPos);
                     const idx = parseInt(savedIndex);
-                    
-                    // হিসাব করা হচ্ছে কতগুলো কার্ড বাদ দিয়ে সরাসরি টার্গেট ব্যাচে যাওয়া যায়
                     const postsToSkip = Math.max(0, idx - (CONFIG.BATCH_SIZE * 2));
                     const spacerHeight = (postsToSkip / 2) * CONFIG.ESTIMATED_CARD_HEIGHT;
-                    
                     const feed = document.getElementById('feed-container');
                     const spacer = document.createElement('div');
                     spacer.id = 'top-restoration-spacer';
                     spacer.style.gridColumn = 'span 2';
                     spacer.style.height = spacerHeight + 'px';
                     feed.appendChild(spacer);
-                    
                     currentIndex = postsToSkip;
                     await loadNextBatch(idx - postsToSkip);
-                    
                     setTimeout(() => {
                         window.scrollTo({ top: pos, behavior: 'instant' });
                         sessionStorage.removeItem('index_scroll');
                         sessionStorage.removeItem('index_count');
                     }, 300);
-
-                    // ইউজার উপরে স্ক্রল করলে স্পেসারের কাছে আসা মাত্রই উপরের কার্ডগুলো লোড হবে
                     const restorationObserver = new IntersectionObserver((entries) => {
                         if (entries[0].isIntersecting && window.scrollY < spacerHeight + 500) {
                             spacer.remove();
@@ -492,14 +492,12 @@
                         }
                     }, { rootMargin: '200px' });
                     restorationObserver.observe(spacer);
-
                 } else {
                     await loadNextBatch(CONFIG.INITIAL_LOAD);
                 }
-                
                 setupObserver();
                 document.getElementById('main-footer').style.display = 'block';
-            } catch (error) { console.error(error); }
+            } catch (error) { console.error("Firebase Error:", error); }
         }
 
         document.getElementById('loginForm').addEventListener('submit', (e) => {
