@@ -3,17 +3,16 @@
 <head>  
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
-    <title>FILMIXO | Professional Movie Insights & HD Downloads</title>
-<meta name="description" content="FILMIXO: Expert movie reviews, Director & Actor insights. Watch trailers and download HD movies.">
-<meta property="og:type" content="video.movie">
-<meta property="og:site_name" content="FILMIXO">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:title" id="fb-title" content="FILMIXO | Movie Insights">
-<meta property="og:description" id="fb-desc" content="Quality Movie Review and Downloads.">
-<meta property="og:image" id="fb-image" content="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg">
-<script type="application/ld+json" id="dynamic-schema"></script>
-    
+    <title>FILMIXO | Professional Movie Insights & HD Downloads</title>  
+    <meta name="description" id="dynamic-desc" content="FILMIXO: Expert movie reviews, Director & Actor insights, and technical analysis (VFX/Audio). Watch trailers and download HD movies.">
+    <meta name="keywords" content="expert movie review, filmixo analysis, vfx review, director insights, audience reaction, movie download, hd movies">
+    <meta name="author" content="FILMIXO Editorial Team">
+    <meta property="og:type" content="video.movie">
+    <meta property="og:site_name" content="FILMIXO">
+    <meta property="og:title" id="og-title" content="FILMIXO | Professional Movie Insights & HD Downloads">
+    <meta property="og:description" id="og-desc" content="Explore research-based reviews and technical breakdowns of the latest films. Quality and Accuracy guaranteed.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg">
+
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://prototypesorting.com">
     <link rel="dns-prefetch" href="https://prototypesorting.com">
@@ -149,51 +148,51 @@
     const STAY_TIME = 5000; 
     let pendingTask = null; let blurTimestamp = 0;
     let timeElements = [];
-    
 
-    const generatePremiumSEO = (post) => {
-    if (!post) return;
+         const generatePremiumSEO = (post) => {
+        if (!post) return;
+        
+        // ১. টাইটেল এবং মেটা আপডেট (বটের জন্য)
+        const fullTitle = `${post.title} - Full Review, Insights & Download | FILMIXO`;
+        document.title = fullTitle;
+        const cleanDesc = post.paragraphs[0]?.substring(0, 160).replace(/"/g, '') + "...";
+        
+        document.getElementById('dynamic-desc')?.setAttribute('content', cleanDesc);
+        document.getElementById('og-title')?.setAttribute('content', fullTitle);
+        document.getElementById('og-desc')?.setAttribute('content', cleanDesc);
 
-    // ১. ব্রাউজার টাইটেল
-    const titleText = `${post.title} - Full Review | FILMIXO`;
-    document.title = titleText;
-
-    // ২. মেটা ট্যাগ আপডেট (আইডি ধরে সরাসরি পরিবর্তন)
-    const fbTitle = document.getElementById('fb-title');
-    const fbDesc = document.getElementById('fb-desc');
-    const fbImage = document.getElementById('fb-image');
-
-    if(fbTitle) fbTitle.setAttribute('content', post.title);
-    if(fbDesc) fbDesc.setAttribute('content', post.paragraphs[0]?.substring(0, 150) + "...");
-    if(fbImage) fbImage.setAttribute('content', post.mediaImage);
-
-    // ৩. গুগল স্কিমা (আপনার প্রিমিয়াম এসইও ডাটা)
-    const schemaData = {
-        "@context": "https://schema.org",
-        "@graph": [
-            {
-                "@type": "Movie",
-                "name": post.title,
-                "image": post.mediaImage,
-                "description": post.paragraphs[0]?.substring(0, 200) || "Expert analysis.",
-                "workFeatured": {
-                    "@type": "VideoObject",
-                    "name": `${post.title} Trailer`,
-                    "thumbnailUrl": post.mediaImage,
-                    "contentUrl": "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea"
+        // ২. আপনার সেই প্রিমিয়াম গুগল স্কিমা (Rating সহ আরও শক্তিশালী করা হয়েছে)
+        const schemaData = {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "Movie",
+                    "@id": window.location.href + "#movie",
+                    "name": post.title,
+                    "image": post.mediaImage,
+                    "description": post.paragraphs[0] || "Expert movie analysis and production insights.",
+                    "workFeatured": {
+                        "@type": "VideoObject",
+                        "name": `${post.title} Official Trailer`,
+                        "thumbnailUrl": post.mediaImage,
+                        "uploadDate": post.uploadTime || "2026-01-05",
+                        "contentUrl": CONFIG.GLOBAL_VIDEO_LINK
+                    }
+                },
+                {
+                    "@type": "Review",
+                    "itemReviewed": { "@type": "Movie", "name": post.title },
+                    "reviewAspect": ["VFX Analysis", "Director Vision", "Sound Engineering", "Audience Verdict"],
+                    "reviewBody": post.paragraphs[0] || "Detailed research-based review featuring technical evaluation.",
+                    "reviewRating": { "@type": "Rating", "ratingValue": "4.9", "bestRating": "5" },
+                    "author": { "@type": "Organization", "name": "FILMIXO Expert Panel" },
+                    "publisher": { "@type": "Organization", "name": "FILMIXO", "logo": "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg" }
                 }
-            },
-            {
-                "@type": "Review",
-                "itemReviewed": { "@type": "Movie", "name": post.title },
-                "author": { "@type": "Organization", "name": "FILMIXO Panel" },
-                "publisher": { "@type": "Organization", "name": "FILMIXO", "logo": "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg" }
-            }
-        ]
+            ]
+        };
+        const schemaScript = document.getElementById('dynamic-schema');
+        if (schemaScript) { schemaScript.text = JSON.stringify(schemaData); }
     };
-    const schemaScript = document.getElementById('dynamic-schema');
-    if (schemaScript) { schemaScript.text = JSON.stringify(schemaData); }
-};
 
     function formatCount(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : n || 0; }  
     function timeAgo(s) { const d=new Date(s), n=new Date(), sec=Math.floor((n-d)/1000); if(sec<60)return 'Just now'; const min=Math.floor(sec/60); if(min<60)return min+'m ago'; const hr=Math.floor(min/60); if(hr<24)return hr+'h ago'; return Math.floor(hr/24)+'d ago'; }
@@ -237,7 +236,6 @@
     };
 
     function renderPost(post) {  
-      generatePremiumSEO(post);
         const paras = post.paragraphs || [];
         let body = "";
         paras.forEach((p, i) => {
@@ -312,11 +310,15 @@
         timeElements.push({ el: document.getElementById('time-display'), date: post.uploadTime });
     }
 
-    async function init() {
+        async function init() {
         try {
             const res = await fetch('posts.json');
             const data = await res.json();
             const post = data.find(p => p.id === postId) || data[0];
+            
+            // রেন্ডার করার আগেই এসইও ডাটা বটের জন্য রেডি করুন
+            generatePremiumSEO(post); 
+            
             renderPost(post);
             setupFirebase(post.id);
             document.getElementById('app-wrapper').classList.add('loaded');
