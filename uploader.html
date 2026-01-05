@@ -3,137 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Admin - Secure Dashboard</title>
+    <title>Filmixo Elite Control - Secure Admin Panel</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --accent: #1da1f2; --bg: #0f1419; --field-bg: #1a1f26;
-            --text: #e7e9ea; --border: #333639; --firebase-orange: #f5820d;
-            --success: #00ba7c; --error: #f4212e;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        
-        /* ফুল বডি ডিজাইন */
-        body { 
-            background: var(--bg); 
-            color: var(--text); 
-            padding: 40px; 
-            min-height: 100vh; 
-            width: 100%;
+            --primary: #1da1f2;
+            --accent: #f5820d;
+            --bg: #0b0f13;
+            --card-bg: #161b22;
+            --input-bg: #1c2128;
+            --border: #30363d;
+            --text-main: #e6edf3;
+            --text-dim: #8b949e;
+            --success: #238636;
+            --error: #f85149;
+            --glow: rgba(245, 130, 13, 0.15);
         }
 
-        .wrapper { 
-            width: 100%; 
-            max-width: 1200px; /* বড় স্ক্রিনে সুন্দর দেখাবে */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(29, 161, 242, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(245, 130, 13, 0.05) 0%, transparent 20%);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
             margin: 0 auto;
         }
 
-        header { text-align: left; margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
-        header h1 { font-size: 32px; font-weight: 800; color: white; display: flex; align-items: center; gap: 15px; }
-        
-        .section-label { 
-            display: block; font-size: 12px; font-weight: 800; text-transform: uppercase; 
-            color: var(--accent); margin: 40px 0 20px 0; letter-spacing: 2px; 
+        /* Header Styling */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
         }
 
-        .input-group { margin-bottom: 25px; }
-        label { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; margin-bottom: 12px; color: #bbb; }
-        label i { color: var(--firebase-orange); font-size: 18px; width: 25px; }
-
-        input, textarea { 
-            width: 100%; background: var(--field-bg); border: 1px solid var(--border); 
-            border-radius: 12px; padding: 16px 20px; color: white; font-size: 15px; 
-            transition: 0.3s; outline: none; 
-        }
-        input:focus, textarea:focus { border-color: var(--accent); background: #1e252e; }
-
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
-
-        /* পাবলিশ বাটন */
-        .publish-area { display: flex; flex-direction: column; align-items: center; margin-top: 50px; }
-        .publish-btn { 
-            width: 100%; max-width: 400px; padding: 20px; background: var(--firebase-orange); 
-            color: white; border: none; border-radius: 50px; font-size: 18px; font-weight: 800; 
-            cursor: pointer; transition: 0.3s; display: flex; align-items: center; 
-            justify-content: center; gap: 15px; text-transform: uppercase; 
-            box-shadow: 0 10px 30px rgba(245, 130, 13, 0.3);
-        }
-        .publish-btn:hover { background: #ff9100; transform: scale(1.02); }
-        .publish-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-
-        #status-msg { text-align: center; font-weight: 700; margin-top: 20px; font-size: 16px; }
-
-        /* পাসওয়ার্ড সেকশন */
-        .secure-zone { 
-            background: rgba(245, 130, 13, 0.05); 
-            padding: 30px; border-radius: 15px; border: 1px dashed var(--firebase-orange); 
-            margin-top: 40px;
+        header h1 {
+            font-size: 38px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
         }
 
-        @media (max-width: 768px) { 
-            body { padding: 20px; }
-            .form-grid { grid-template-columns: 1fr; } 
+        header p {
+            color: var(--text-dim);
+            font-size: 14px;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Section Labels */
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin: 40px 0 25px;
+        }
+
+        .section-header span {
+            height: 1px;
+            flex-grow: 1;
+            background: var(--border);
+        }
+
+        .section-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Form Components */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-main);
+        }
+
+        label i {
+            color: var(--accent);
+            width: 20px;
+            font-size: 16px;
+        }
+
+        input, textarea {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 20px;
+            color: white;
+            font-size: 15px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--glow);
+            background: #21262d;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #57606a;
+        }
+
+        /* Specific Field Sizes */
+        .large-area {
+            min-height: 280px;
+            line-height: 1.8;
+            resize: vertical;
+        }
+
+        .youtube-field {
+            border-left: 4px solid #ff0000;
+        }
+
+        /* Grid Layout */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        /* Security Zone */
+        .security-card {
+            background: rgba(245, 130, 13, 0.03);
+            border: 1px solid rgba(245, 130, 13, 0.2);
+            padding: 30px;
+            border-radius: 20px;
+            margin-top: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .security-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--accent);
+        }
+
+        /* Action Button */
+        .publish-container {
+            text-align: center;
+            margin-top: 50px;
+            padding-bottom: 80px;
+        }
+
+        .btn-publish {
+            background: linear-gradient(135deg, var(--accent) 0%, #ff9100 100%);
+            color: white;
+            border: none;
+            padding: 18px 45px;
+            border-radius: 14px;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 25px rgba(245, 130, 13, 0.3);
+        }
+
+        .btn-publish:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(245, 130, 13, 0.4);
+        }
+
+        .btn-publish:active {
+            transform: translateY(0);
+        }
+
+        .btn-publish:disabled {
+            background: #30363d;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        #status-msg {
+            margin-top: 25px;
+            font-weight: 600;
+            font-size: 15px;
+            min-height: 24px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        @media (max-width: 768px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            header h1 { font-size: 28px; }
+            body { padding: 20px 15px; }
         }
     </style>
 </head>
 <body>
 
-<div class="wrapper">
+<div class="container">
     <header>
-        <h1><i class="fa-solid fa-shield-virus"></i> FILMIXO CLOUD CONTROL</h1>
+        <h1><i class="fa-solid fa-crown"></i> FILMIXO ELITE</h1>
+        <p>Premium Content Management System</p>
     </header>
 
-    <div class="section-label">Step 1: Content Setup</div>
-    <div class="input-group">
-        <label><i class="fa-solid fa-clapperboard"></i> Movie Title</label>
-        <input type="text" id="title" placeholder="Enter Movie Title...">
-    </div>
-    <div class="input-group">
-        <label><i class="fa-solid fa-image"></i> Poster Image Link</label>
-        <input type="text" id="media" placeholder="Enter Your Poster URL...">
-    </div>
-    <div class="input-group">
-        <label><i class="fa-solid fa-pen-nib"></i> Article / Description</label>
-        <textarea id="paragraphs" style="height: 200px;" placeholder="Write description (New line for new paragraph)..."></textarea>
+    <!-- Step 1 -->
+    <div class="section-header">
+        <div class="section-label">Step 1: Primary Identity</div>
+        <span></span>
     </div>
 
-    <div class="section-label">Step 2: Technical Metadata</div>
-    <div class="form-grid">
-        <div class="input-group">
-            <label><i class="fa-solid fa-hourglass-start"></i> Video Duration</label>
-            <input type="text" id="duration">
+    <div class="form-group">
+        <label><i class="fa-solid fa-clapperboard"></i> Cinematic Movie Title</label>
+        <input type="text" id="title" placeholder="e.g. Avatar: The Way of Water (2024)">
+    </div>
+
+    <div class="form-group">
+        <label><i class="fa-solid fa-image"></i> High-Resolution Poster URL</label>
+        <input type="text" id="media" placeholder="https://domain.com/path-to-image.jpg">
+    </div>
+
+    <div class="form-group">
+        <label><i class="fa-solid fa-paragraph"></i> Extended Article Content</label>
+        <textarea id="paragraphs" class="large-area" placeholder="Write the movie summary, plot details, and interesting facts here. 
+Press Enter for new paragraphs. 
+Minimum 3-4 paragraphs recommended for SEO..."></textarea>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="section-header">
+        <div class="section-label">Step 2: Multimedia & Technical</div>
+        <span></span>
+    </div>
+
+    <div class="grid-2">
+        <div class="form-group">
+            <label><i class="fa-solid fa-clock"></i> Run Time Duration</label>
+            <input type="text" id="duration" readonly style="color: var(--accent); font-weight: 700;">
         </div>
-        <div class="input-group">
-            <label><i class="fa-brands fa-youtube"></i> YouTube Link or ID</label>
-            <input type="text" id="youtubeEmbed" placeholder="Paste YouTube Link or ID...">
+        <div class="form-group">
+            <label><i class="fa-brands fa-youtube"></i> YouTube Trailer (Link or ID)</label>
+            <input type="text" id="youtubeEmbed" class="youtube-field" placeholder="Paste Video URL or ID here...">
         </div>
     </div>
 
-    <div class="section-label">Step 3: Smart Links</div>
-    <div class="form-grid">
-        <div class="input-group">
-            <label><i class="fa-solid fa-link"></i> Ad Link 1</label>
-            <input type="text" id="linkAd1" placeholder="Empty = Default Google">
-        </div>
-        <div class="input-group">
-            <label><i class="fa-solid fa-link"></i> Ad Link 2</label>
-            <input type="text" id="linkAd2" placeholder="Empty = Default YouTube">
-        </div>
-    </div>
-    <div class="input-group">
-        <label><i class="fa-solid fa-cloud-arrow-down"></i> Main Download Link</label>
-        <input type="text" id="linkMovie" placeholder="Empty = Default Facebook">
+    <!-- Step 3 -->
+    <div class="section-header">
+        <div class="section-label">Step 3: Access & Monetization Links</div>
+        <span></span>
     </div>
 
-    <div class="secure-zone">
-        <label style="color: var(--firebase-orange);"><i class="fa-solid fa-lock"></i> SYSTEM AUTHORIZATION KEY</label>
-        <input type="password" id="adminKey" placeholder="Enter Your Secret Key...">
+    <div class="grid-2">
+        <div class="form-group">
+            <label><i class="fa-solid fa-ad"></i> Ad Server Link 01</label>
+            <input type="text" id="linkAd1" placeholder="Optional: Secondary link">
+        </div>
+        <div class="form-group">
+            <label><i class="fa-solid fa-ad"></i> Ad Server Link 02</label>
+            <input type="text" id="linkAd2" placeholder="Optional: Tertiary link">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label><i class="fa-solid fa-download"></i> Direct Movie Access Link (Main)</label>
+        <input type="text" id="linkMovie" placeholder="Enter the final destination/download URL...">
+    </div>
+
+    <!-- Security Area -->
+    <div class="security-card">
+        <div class="form-group" style="margin-bottom: 0;">
+            <label style="color: var(--accent);"><i class="fa-solid fa-vault"></i> MASTER AUTHORIZATION KEY</label>
+            <input type="password" id="adminKey" placeholder="Enter your secret admin credentials..." style="background: rgba(0,0,0,0.3);">
+        </div>
     </div>
     
-    <div class="publish-area">
-        <button class="publish-btn" id="pubBtn" onclick="publishToCloud()">
-            <i class="fa-solid fa-paper-plane"></i> Publish to Cloud
+    <!-- Action Area -->
+    <div class="publish-container">
+        <button class="btn-publish" id="pubBtn" onclick="publishToCloud()">
+            <i class="fa-solid fa-paper-plane"></i> Initialize Publication
         </button>
         <div id="status-msg"></div>
     </div>
@@ -143,6 +324,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
+    // Firebase Configuration
     const firebaseConfig = { 
         apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", 
         authDomain: "my-ad-analytics-4560a.firebaseapp.com", 
@@ -161,15 +343,16 @@
         DOWNLOAD: "https://www.facebook.com"
     };
 
+    // Auto-generate realistic duration
     function generateDuration() {
         const hh = "02";
-        const mm = Math.floor(Math.random() * 60).toString().padStart(2, '0');
-        const ss = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+        const mm = Math.floor(Math.random() * 40 + 10).toString().padStart(2, '0');
+        const ss = Math.floor(Math.random() * 59).toString().padStart(2, '0');
         return `${hh}:${mm}:${ss}`;
     }
 
     function generateId() {
-        return Math.random().toString(36).substring(2, 7);
+        return Math.random().toString(36).substring(2, 8).toUpperCase();
     }
 
     window.onload = () => { 
@@ -178,19 +361,22 @@
 
     window.publishToCloud = async function() {
         const adminKey = document.getElementById('adminKey').value.trim();
+        const title = document.getElementById('title').value.trim();
         const ytInput = document.getElementById('youtubeEmbed').value.trim();
         const status = document.getElementById('status-msg');
+        const pubBtn = document.getElementById('pubBtn');
 
-        if(!document.getElementById('title').value || !adminKey) {
-            alert("Title and Password Key are required!");
+        if(!title || !adminKey) {
+            status.innerHTML = `<span style="color: var(--error)"><i class="fa-solid fa-triangle-exclamation"></i> Required fields missing!</span>`;
             return;
         }
 
         try {
-            document.getElementById('pubBtn').disabled = true;
-            status.style.color = "var(--accent)";
-            status.innerText = "⏳ Authorization in progress...";
+            pubBtn.disabled = true;
+            status.style.color = "var(--primary)";
+            status.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Encrypting & Uploading to Cloud...`;
 
+            // YouTube ID Extraction Logic
             let vid = ytInput;
             if (ytInput.includes("v=")) vid = ytInput.split("v=")[1].split("&")[0];
             else if (ytInput.includes("be/")) vid = ytInput.split("be/")[1];
@@ -199,7 +385,7 @@
             const postData = {
                 adminKey: adminKey,
                 id: finalId,
-                title: document.getElementById('title').value.trim(),
+                title: title,
                 mediaImage: document.getElementById('media').value.trim(),
                 uploadTime: new Date().toISOString(),
                 videoDuration: document.getElementById('duration').value.trim(),
@@ -212,15 +398,21 @@
 
             await setDoc(doc(db, "posts", finalId), postData);
 
-            status.innerText = "✅ DATA INJECTED! ID: " + finalId;
-            status.style.color = "var(--success)";
-            document.querySelectorAll('input, textarea').forEach(e => e.value = "");
-            document.getElementById('duration').value = generateDuration();
+            status.innerHTML = `<span style="color: var(--success)"><i class="fa-solid fa-circle-check"></i> Post Published! ID: ${finalId}</span>`;
+            
+            // Success Reset
+            setTimeout(() => {
+                document.querySelectorAll('input, textarea').forEach(e => {
+                    if(e.id !== 'duration') e.value = "";
+                });
+                document.getElementById('duration').value = generateDuration();
+            }, 2000);
+
         } catch (e) {
-            status.innerText = "❌ ACCESS DENIED: Invalid Passkey!";
-            status.style.color = "var(--error)";
+            status.innerHTML = `<span style="color: var(--error)"><i class="fa-solid fa-circle-xmark"></i> Access Denied: Invalid Key</span>`;
+            console.error(e);
         } finally {
-            document.getElementById('pubBtn').disabled = false;
+            pubBtn.disabled = false;
         }
     }
 </script>
