@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Admin - Firebase Pro</title>
+    <title>Filmixo Admin - Firebase Cloud</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -56,59 +57,41 @@
 
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
 
-        .btn-container { display: flex; gap: 10px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
-
-        .btn {
-            padding: 12px 25px; border: none; border-radius: 30px; 
-            font-size: 13px; font-weight: 800; cursor: pointer; 
-            transition: all 0.3s ease; text-transform: uppercase;
-            display: flex; align-items: center; gap: 8px;
+        .publish-btn {
+            width: 100%; max-width: 300px; padding: 15px;
+            background: var(--firebase-orange); color: white; border: none;
+            border-radius: 30px; font-size: 15px; font-weight: 800;
+            cursor: pointer; transition: all 0.3s ease;
+            margin: 30px auto; display: flex; align-items: center; justify-content: center; gap: 10px;
+            text-transform: uppercase;
         }
+        .publish-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(245, 130, 13, 0.3); }
+        .publish-btn:active { transform: scale(0.97); }
 
-        .generate-btn { background: var(--accent); color: white; }
-        .publish-btn { background: var(--firebase-orange); color: white; }
-        
-        .btn:hover { transform: translateY(-2px); filter: brightness(1.1); }
-        .btn:active { transform: scale(0.97); }
-
-        .output-container { margin-top: 40px; width: 100%; display: none; }
-        .output-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-
-        .copy-btn {
-            background: white; color: black; border: none;
-            padding: 8px 18px; border-radius: 20px; font-size: 11px;
-            font-weight: 800; cursor: pointer; white-space: nowrap;
+        #status-msg { 
+            text-align: center; padding: 15px; border-radius: 8px; 
+            margin-top: 20px; font-weight: 700; display: none;
         }
-        .copy-btn.copied { background: var(--success); color: white; }
-
-        pre {
-            background: #000; padding: 25px; border-radius: 12px;
-            border: 1px solid var(--border); color: #a5d6ff;
-            font-family: 'Consolas', monospace; font-size: 13px;
-            line-height: 1.6; overflow-x: auto; white-space: pre-wrap;
-        }
-
-        #status-msg { margin-top: 10px; font-size: 13px; font-weight: 600; text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
     <header>
-        <h1><i class="fa-solid fa-fire" style="color: var(--firebase-orange);"></i> FILMIXO CLOUD ADMIN</h1>
-        <p>Firebase & JSON Dual-Engine Uploader</p>
+        <h1><i class="fa-solid fa-cloud-arrow-up" style="color: var(--firebase-orange);"></i> FILMIXO PUBLISHER</h1>
+        <p>Direct Firebase Cloud Data Injection</p>
     </header>
 
     <div class="section-label">1. Basic Metadata</div>
     <div class="input-group">
         <label><i class="fa-solid fa-file-signature"></i> Movie Title</label>
-        <input type="text" id="title" placeholder="Enter movie title...">
+        <input type="text" id="title" placeholder="Full movie title and release year...">
     </div>
 
     <div class="form-grid">
         <div class="input-group">
             <label><i class="fa-solid fa-image"></i> Poster URL</label>
-            <input type="text" id="media" placeholder="Image URL...">
+            <input type="text" id="media" placeholder="GitHub image raw link...">
         </div>
         <div class="input-group">
             <label><i class="fa-solid fa-clock"></i> Duration</label>
@@ -116,48 +99,38 @@
         </div>
     </div>
 
-    <div class="section-label">2. Media & Description</div>
+    <div class="section-label">2. Content & Media</div>
     <div class="input-group">
-        <label style="color:var(--yt-red)"><i class="fa-brands fa-youtube"></i> YouTube Embed Code</label>
-        <textarea id="youtubeEmbed" placeholder='<iframe ...></iframe>'></textarea>
+        <label style="color:var(--yt-red)"><i class="fa-brands fa-youtube"></i> YouTube Iframe Embed</label>
+        <textarea id="youtubeEmbed" placeholder='<iframe width="560" height="315" src="..."></iframe>'></textarea>
     </div>
 
     <div class="input-group">
-        <label><i class="fa-solid fa-align-left"></i> Movie Description</label>
-        <textarea id="paragraphs" placeholder="Enter paragraphs here..."></textarea>
+        <label><i class="fa-solid fa-align-left"></i> Movie Description (Paragraphs)</label>
+        <textarea id="paragraphs" placeholder="Write the article here. Use 'Enter' to separate paragraphs..."></textarea>
     </div>
 
-    <div class="section-label">3. Destination Links</div>
-    <div class="link-panel">
-        <input type="text" id="linkAd1" placeholder="Ad Link 1" style="margin-bottom: 10px;">
-        <input type="text" id="linkAd2" placeholder="Ad Link 2" style="margin-bottom: 10px;">
-        <input type="text" id="linkMovie" placeholder="Final Movie Link">
+    <div class="section-label">3. Cloud Links (Optional)</div>
+    <div class="form-grid">
+        <input type="text" id="linkAd1" placeholder="Adsterra Link">
+        <input type="text" id="linkAd2" placeholder="Monetag Link">
+    </div>
+    <div class="input-group" style="margin-top: 15px;">
+        <input type="text" id="linkMovie" placeholder="Final Movie Download Link">
     </div>
     
-    <div class="btn-container">
-        <button class="btn generate-btn" onclick="processData('json')">
-            <i class="fa-solid fa-code"></i> Generate JSON
-        </button>
-        <button class="btn publish-btn" onclick="processData('firebase')">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Publish to Firebase
-        </button>
-    </div>
+    <button class="publish-btn" onclick="publishToCloud()">
+        <i class="fa-solid fa-bolt"></i> Publish to Firebase
+    </button>
 
     <div id="status-msg"></div>
-
-    <div class="output-container" id="outputArea">
-        <div class="output-header">
-            <span style="font-weight: 800; font-size: 12px; color: var(--accent);">PREVIEW DATA:</span>
-            <button class="copy-btn" onclick="copyJSON()" id="copyBtn">COPY JSON</button>
-        </div>
-        <pre id="jsonOutput"></pre>
-    </div>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
     import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
+    // আপনার দেওয়া ফায়ারবেস কনফিগারেশন
     const firebaseConfig = { 
         apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", 
         authDomain: "my-ad-analytics-4560a.firebaseapp.com", 
@@ -176,15 +149,7 @@
         MOVIE: "https://facebook.com"
     };
 
-    // আইডি জেনারেশন
-    function generateNewId() {
-        const pool = 'abcdefghijklmnopqrstuvwxyz0123456789';
-        let res = '';
-        for (let i = 0; i < 5; i++) res += pool.charAt(Math.floor(Math.random() * pool.length));
-        return res;
-    }
-
-    // টাইম এবং ডিউরেশন সেটআপ
+    // রেন্ডম মুভি ডিউরেশন অটো-জেনারেটর
     window.onload = () => {
         const totalSec = Math.floor(Math.random() * (9500 - 6800 + 1)) + 6800;
         const h = Math.floor(totalSec / 3600);
@@ -194,7 +159,12 @@
         document.getElementById('duration').value = `${fmt(h)}:${fmt(m)}:${fmt(s)}`;
     };
 
-    window.processData = async function(mode) {
+    // ৫ অক্ষরের ইউনিক আইডি জেনারেটর
+    function generateId() {
+        return Math.random().toString(36).substr(2, 5);
+    }
+
+    window.publishToCloud = async function() {
         const title = document.getElementById('title').value.trim();
         const media = document.getElementById('media').value.trim();
         const duration = document.getElementById('duration').value.trim();
@@ -203,11 +173,15 @@
         const ad1 = document.getElementById('linkAd1').value.trim() || DEFAULTS.ADSTERRA;
         const ad2 = document.getElementById('linkAd2').value.trim() || DEFAULTS.MONETAG;
         const movie = document.getElementById('linkMovie').value.trim() || DEFAULTS.MOVIE;
+        const status = document.getElementById('status-msg');
 
-        if(!title || !media) { alert("Title and Media URL are required!"); return; }
+        if(!title || !media || !paraRaw) { 
+            alert("Please fill Title, Poster URL, and Description!"); 
+            return; 
+        }
 
-        const paragraphs = paraRaw ? paraRaw.split('\n').filter(l => l.trim() !== '') : [];
-        const finalId = generateNewId();
+        const paragraphs = paraRaw.split('\n').filter(l => l.trim() !== '');
+        const finalId = generateId();
 
         const postData = {
             id: finalId,
@@ -222,39 +196,31 @@
             paragraphs: paragraphs
         };
 
-        if(mode === 'json') {
-            document.getElementById('jsonOutput').innerText = JSON.stringify(postData, null, 4) + ",";
-            document.getElementById('outputArea').style.display = 'block';
-            document.getElementById('status-msg').innerText = "JSON Generated Below!";
-            document.getElementById('status-msg').style.color = "var(--accent)";
-        } else {
-            const status = document.getElementById('status-msg');
-            try {
-                status.innerText = "Publishing to Cloud...";
-                status.style.color = "var(--firebase-orange)";
-                
-                await setDoc(doc(db, "posts", finalId), postData);
-                
-                status.innerText = "SUCCESS! Post Live in Firebase (ID: " + finalId + ")";
-                status.style.color = "var(--success)";
-                
-                // প্রিভিউ দেখানো
-                document.getElementById('jsonOutput').innerText = JSON.stringify(postData, null, 4);
-                document.getElementById('outputArea').style.display = 'block';
-            } catch (e) {
-                console.error(e);
-                status.innerText = "Error Publishing! Check Console.";
-                status.style.color = "var(--yt-red)";
-            }
-        }
-    }
+        try {
+            status.style.display = "block";
+            status.innerText = "🚀 Publishing to Cloud... Please wait.";
+            status.style.background = "rgba(255, 255, 255, 0.05)";
+            status.style.color = "var(--accent)";
 
-    window.copyJSON = function() {
-        const text = document.getElementById('jsonOutput').innerText;
-        navigator.clipboard.writeText(text);
-        const btn = document.getElementById('copyBtn');
-        btn.innerText = "COPIED!";
-        setTimeout(() => btn.innerText = "COPY JSON", 2000);
+            // সরাসরি ফায়ারবেস 'posts' কালেকশনে সেভ হচ্ছে
+            await setDoc(doc(db, "posts", finalId), postData);
+
+            status.innerText = "✅ SUCCESS! Post is now Live on Firebase. ID: " + finalId;
+            status.style.background = "rgba(0, 186, 124, 0.1)";
+            status.style.color = "var(--success)";
+            
+            // ইনপুট বক্স ক্লিয়ার করা
+            document.getElementById('title').value = "";
+            document.getElementById('media').value = "";
+            document.getElementById('paragraphs').value = "";
+            document.getElementById('linkMovie').value = "";
+            
+        } catch (e) {
+            console.error(e);
+            status.innerText = "❌ ERROR: Could not publish! Check internet or Firebase Console.";
+            status.style.background = "rgba(255, 0, 0, 0.1)";
+            status.style.color = "var(--yt-red)";
+        }
     }
 </script>
 
