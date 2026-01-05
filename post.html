@@ -1,123 +1,76 @@
-
 <!DOCTYPE html>  
 <html lang="en">  
 <head>  
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
-    <title>FILMIXO | Professional Movie Insights & HD Downloads</title>  
-    <meta name="description" id="dynamic-desc" content="FILMIXO: Expert movie reviews, Director & Actor insights, and technical analysis (VFX/Audio). Watch trailers and download HD movies.">
-    <meta name="keywords" content="expert movie review, filmixo analysis, vfx review, director insights, audience reaction, movie download, hd movies">
+    <title>FILMIXO | Professional Movie Insights</title>  
+    <meta name="description" id="dynamic-desc" content="FILMIXO: Expert movie reviews, Director & Actor insights, and technical analysis. Quality and Accuracy guaranteed.">
     <meta name="author" content="FILMIXO Editorial Team">
     <meta property="og:type" content="video.movie">
     <meta property="og:site_name" content="FILMIXO">
-    <meta property="og:title" id="og-title" content="FILMIXO | Professional Movie Insights & HD Downloads">
-    <meta property="og:description" id="og-desc" content="Explore research-based reviews and technical breakdowns of the latest films. Quality and Accuracy guaranteed.">
     <meta property="og:image" content="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg">
     <link rel="canonical" href="https://filmixo.com/">
     <meta name="robots" content="index, follow">
     <script type="application/ld+json" id="dynamic-schema"></script>
     
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="preconnect" href="https://prototypesorting.com">
-    <link rel="dns-prefetch" href="https://prototypesorting.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'">
-
-    <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js" async></script>
 
     <style>  
     /* --- বেসিক সেটআপ --- */
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; background: #fff; }  
     
-    /* Performance Fix: Contain content and remove initial opacity for faster FCP */
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; margin: 0 auto; contain: content; }  
 
     header { background: #1da1f2; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: white; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }  
     .logo-area { font-weight: 900; font-size: 23px; text-transform: uppercase; line-height: 1; display: flex; align-items: center; }  
-    .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; transition: transform 0.1s ease; display: inline-flex; align-items: center; justify-content: center; }  
-    .header-btn:active { transform: scale(0.98); }
-    header > div { display: flex; align-items: center; gap: 2px; }
+    .header-btn { background: white; color: #1da1f2; padding: 6px 15px; border-radius: 15px; font-weight: bold; font-size: 12px; margin-left: 5px; cursor: pointer; display: inline-flex; align-items: center; }  
 
-    /* Ad-box optimized for Layout Stability */
-    .ad-box { width: 100%; height: 0; overflow: hidden; transition: height 0.3s ease, margin 0.3s ease; margin: 0; display: block; }
-    .ad-box iframe { width: 100%; border: none; overflow: hidden; display: block; } 
-    .dual-ad-wrapper { display: flex; justify-content: center; gap: 8px; padding: 2px 15px; width: 100%; }
-    .dual-ad-wrapper .ad-box { flex: 1; width: 50%; }
-
-    .video-container { position: relative; width: 94%; margin: 5px auto 0px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-    .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.85; display: block; will-change: transform; transition: all 0.3s ease; }
-    .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; pointer-events: none; }
+    .video-container { position: relative; width: 94%; margin: 15px auto 5px auto; aspect-ratio: 16/9; background: #000; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; border-radius: 8px; }
+    .video-container img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; display: block; }
+    .play-btn-center { position: absolute; width: 60px; height: 60px; background: rgba(0,0,0,0.6); border-radius: 50%; border: 3px solid #fff; display: flex; align-items: center; justify-content: center; z-index: 5; }
     .play-btn-center::after { content: ''; border-left: 20px solid white; border-top: 12px solid transparent; border-bottom: 12px solid transparent; margin-left: 5px; }
-    .main-video-spinner { display: none; position: absolute; width: 50px; height: 50px; border: 5px solid rgba(255, 255, 255, 0.3); border-top: 5px solid #fff; border-radius: 50%; animation: spin 1s linear infinite; z-index: 6; }
     
     .video-controls { position: absolute; bottom: 0; left: 0; width: 100%; height: 35px; padding: 0 10px; display: flex; align-items: center; background: rgba(0, 0, 0, 0.5); z-index: 10; color: white; font-size: 11px; }
     .v-divider { width: 1px; height: 12px; background: rgba(255,255,255,0.4); margin: 0 8px; }
     .prog-bg { flex-grow: 1; height: 6px; background: rgba(255, 255, 255, 0.5); border-radius: 4px; margin: 0 10px; }
-    .prog-fill { width: 1.5%; height: 100%; background: #ff0000; border-radius: 4px; }
-    .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 900; margin-left: 2px; }
+    .prog-fill { width: 45%; height: 100%; background: #ff0000; border-radius: 4px; }
+    .hd-badge { background: #ffad1f; color: #000; padding: 1px 4px; border-radius: 3px; font-size: 9px; font-weight: 900; }
     
-    .video-container.is-loading img { filter: brightness(0.6); opacity: 0.7; }
-    .video-container.is-loading .video-controls, .video-container.is-loading .play-btn-center { display: none !important; }
-    .video-container.is-loading .main-video-spinner { display: block; }
-
-    .post-author-area { padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
+    .post-author-area { padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed; }  
     .author-info { display: flex; align-items: center; gap: 10px; }  
     .pfp { width: 45px; height: 45px; border-radius: 50%; overflow: hidden; background: #ddd; }  
     .pfp img { width: 45px; height: 45px; object-fit: cover; }  
-    .author-text h3 { font-size: 18px; margin: 0; color: #0f1419; display: inline-flex; align-items: center; gap: 5px; }  
-    .author-text span { font-size: 12px; color: #1da1f2; display: block; margin-top: -1px; }  
-    .post-time { font-size: 14px; color: #536471; font-weight: bold; }  
+    .author-text h3 { font-size: 18px; color: #0f1419; display: inline-flex; align-items: center; gap: 5px; }  
+    .author-text span { font-size: 12px; color: #1da1f2; display: block; }  
 
-    .content-body { padding: 5px 15px 0px 15px; }  
-    .article-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: #0f1419; line-height: 1.3; }  
-    .article-para { font-size: 14px; line-height: 1.2; color: #1c1e21; margin-top: 8px; margin-bottom: 8px; text-align: left; letter-spacing: -0.3px; }
+    .content-body { padding: 15px; }  
+    .article-title { font-size: 20px; font-weight: 800; margin-bottom: 12px; color: #0f1419; line-height: 1.3; }  
+    .article-para { font-size: 15px; line-height: 1.5; color: #1c1e21; margin-bottom: 15px; }
         
-    .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 5px; overflow: hidden; background: #000; display: none; }
+    .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin: 15px 0; overflow: hidden; background: #000; border-radius: 8px; }
     .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    .download-title-text { font-size: 20px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
-    .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; }  
-    .download-btn-v2 { display: flex; flex-direction: row; align-items: center; justify-content: center; flex: 1; padding: 12px 5px; border-radius: 6px; text-align: center; color: white; cursor: pointer; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.15); gap: 5px; }
-    .download-btn-v2:active { transform: scale(0.98); }
-    .btn-text-main { font-size: 11px; font-weight: 900; letter-spacing: 0.1px; white-space: nowrap; }
+    .download-section { margin-top: 25px; border-top: 1px solid #eee; padding-top: 20px; text-align: center; }
+    .download-title-text { font-size: 18px; font-weight: 800; margin-bottom: 20px; color: #0f1419; }  
+    .download-buttons-container { display: flex; flex-direction: column; gap: 10px; padding: 0 10px; }  
+    .download-btn-v2 { display: flex; align-items: center; justify-content: center; padding: 14px; border-radius: 8px; color: white; font-weight: 900; gap: 10px; cursor: pointer; }
 
-    .stats-section { padding: 10px 15px; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: #536471; font-weight: 500; }  
-    .view-stat { display: flex; align-items: center; gap: 4px; font-size: 15px; width: 100px; justify-content: flex-start; }  
-    .view-stat span { font-size: 12px; }
-    
-    .love-btn { display: flex; align-items: center; justify-content: center; gap: 4px; cursor: pointer; padding: 5px; border-radius: 20px; transition: 0.1s; user-select: none; flex-grow: 1; text-align: center; font-size: 15px; }  
-    .love-btn span { font-size: 12px; }
-    .love-btn:active { transform: scale(0.98); }
-    .love-btn.liked { color: #e0245e; } .love-btn.liked i { font-weight: 900; }  
+    .stats-section { padding: 15px; margin-top: 15px; border-top: 1px solid #eee; display: flex; align-items: center; justify-content: space-between; color: #536471; }  
+    .love-btn.liked { color: #e0245e; } 
 
-    .share-icons { display: flex; gap: 6px; justify-content: flex-end; width: 140px; }  
-    .share-icon { width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; cursor: pointer; font-size: 10px; transition: transform 0.1s; }  
-    .share-icon:active { transform: scale(0.98); }
-
-    .site-footer { padding: 20px 10px; text-align: center; border-top: 1px solid #eee; }  
-    .footer-links { display: flex; justify-content: center; gap: 12px; margin-bottom: 15px; flex-wrap: nowrap; }  
-    .footer-links a { color: #536471; font-size: 12.5px; font-weight: 500; white-space: nowrap; transition: color 0.1s, transform 0.1s; display: inline-block; }  
-    .footer-links a:active { color: #1da1f2 !important; transform: scale(0.97); }
-    .footer-copyright { color: #536471; font-size: 13px; }  
-    .footer-copyright a { color: #1da1f2; font-weight: bold; }
-    
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-</style>
+    .site-footer { padding: 30px 10px; text-align: center; border-top: 1px solid #eee; background: #fafafa; }  
+    .footer-links { display: flex; justify-content: center; gap: 15px; margin-bottom: 10px; }  
+    .footer-links a { color: #536471; font-size: 13px; }
+    </style>
 </head>  
 <body>  
-
-<template id="ad-src-top"><script>atOptions={'key':'caf6ea59dc8711a1d0bfb5ad9dd98638','format':'iframe','height':90,'width':728,'params':{}};</script><script src="https://prototypesorting.com/caf6ea59dc8711a1d0bfb5ad9dd98638/invoke.js"></script></template>
-<template id="ad-src-title"><script>atOptions={'key':'da9154b956691d2aa7c677010e7b6501','format':'iframe','height':60,'width':468,'params':{}};</script><script src="https://prototypesorting.com/da9154b956691d2aa7c677010e7b6501/invoke.js"></script></template>
-<template id="ad-src-p1"><script>atOptions={'key':'dbae51ad68fb44f5c8a6b535812c9f54','format':'iframe','height':250,'width':300,'params':{}};</script><script src="https://prototypesorting.com/dbae51ad68fb44f5c8a6b535812c9f54/invoke.js"></script></template>
-<template id="ad-src-p2"><script>atOptions={'key':'54012419216a1778423343e5706cb92e','format':'iframe','height':300,'width':160,'params':{}};</script><script src="https://prototypesorting.com/54012419216a1778423343e5706cb92e/invoke.js"></script></template>
-<template id="ad-src-mid"><script async="async" data-cfasync="false" src="https://prototypesorting.com/1608cb6a976841a38e804d64801334bb/invoke.js"></script><div id="container-1608cb6a976841a38e804d64801334bb"></div></template>
-<template id="ad-src-video"><script>atOptions={'key':'dbae51ad68fb44f5c8a6b535812c9f54','format':'iframe','height':250,'width':300,'params':{}};</script><script src="https://prototypesorting.com/dbae51ad68fb44f5c8a6b535812c9f54/invoke.js"></script></template>
 
 <div class="main-wrapper" id="app-wrapper">  
     <header>  
         <div class="logo-area"><i class="fa-solid fa-clapperboard" style="margin-right: 8px;"></i>FILMIXO</div>
         <div>  
-            <span class="header-btn" onclick="window.location.href='https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef'"><i class="fa-solid fa-circle-play" style="margin-right: 5px;"></i>Tutorial Vdo</span>
             <span class="header-btn" onclick="window.location.href='index.html'"><i class="fa-solid fa-house" style="margin-right: 5px;"></i>Home</span>
         </div>  
     </header>  
@@ -126,12 +79,9 @@
 
     <footer class="site-footer">  
         <div class="footer-links"> 
-            <a href="about.html">About Us</a> 
-            <a href="contact.html">Contact Us</a> 
-            <a href="privacy.html">Privacy Policy</a> 
-            <a href="terms.html">Terms & Conditions</a> 
+            <a href="about.html">About</a> <a href="contact.html">Contact</a> <a href="privacy.html">Privacy</a> 
         </div>  
-        <div class="footer-copyright">Copyright © 2026 <a href="index.html">filmixo.com</a>. All rights reserved.</div>  
+        <div class="footer-copyright">Copyright © 2026 <a href="index.html">filmixo.com</a></div>  
     </footer>  
 </div>  
 
@@ -139,7 +89,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";  
     import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";  
   
-    const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", databaseURL: "https://my-ad-analytics-4560a-default-rtdb.firebaseio.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f", measurementId: "G-WS7QSQ9H0Y" };  
+    const firebaseConfig = { apiKey: "AIzaSyCAsD8wucLsudzY5oNbiixLGyjN2apdV0Q", authDomain: "my-ad-analytics-4560a.firebaseapp.com", projectId: "my-ad-analytics-4560a", storageBucket: "my-ad-analytics-4560a.firebasestorage.app", messagingSenderId: "104213283950", appId: "1:104213283950:web:b5a25ecd54df809625127f" };  
     const app = initializeApp(firebaseConfig);  
     const db = getFirestore(app);  
     
@@ -148,214 +98,60 @@
 
     const urlParams = new URLSearchParams(window.location.search);  
     const postId = urlParams.get('id');  
-    const CONFIG = { GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea" };  
+    const CONFIG = { GLOBAL_VIDEO_LINK: "https://filmixo.com/video-player" };  
 
-    const STAY_TIME = 5000; 
-    let pendingTask = null; let blurTimestamp = 0;
-    let timeElements = [];
-
-    const generatePremiumSEO = (post) => {
-        if (!post) return;
-        const getCleanMovieName = (title) => {
-            let clean = title.split(/[,.\-|:_\(\)\[\]]|\bfull\b|\bdownload\b|\b202\d\b|\b1080p\b|\b720p\b/i)[0];
-            return clean.trim();
-        };
-        const getSeed = (id) => {
-            let hash = 0;
-            for (let i = 0; i < id.length; i++) {
-                hash = id.charCodeAt(i) + ((hash << 5) - hash);
-            }
-            return Math.abs(hash);
-        };
-        const seed = getSeed(post.id);
-        const movieName = getCleanMovieName(post.title);
-        const fullTitle = `${post.title} | Official Review & Download - FILMIXO`;
-        const rawDesc = post.paragraphs && post.paragraphs[0] ? post.paragraphs[0] : "Explore detailed production insights, VFX analysis, and technical movie reviews on FILMIXO.";
-        const cleanDesc = rawDesc.substring(0, 160).replace(/["]/g, '') + "...";
-        const formattedDate = post.uploadTime ? (post.uploadTime.includes('T') ? post.uploadTime : `${post.uploadTime}T09:00:00+06:00`) : new Date().toISOString();
-        const randomRating = (4.6 + (seed % 5) / 10).toFixed(1);
-        const randomVotes = Math.floor((seed % (2500000 - 500000 + 1)) + 500000);
-        document.title = fullTitle;
-        const metaTags = {
-            "description": cleanDesc,
-            "og:title": fullTitle,
-            "og:description": cleanDesc,
-            "og:image": post.mediaImage,
-            "og:url": window.location.href,
-            "twitter:card": "summary_large_image",
-            "twitter:title": fullTitle,
-            "twitter:description": cleanDesc,
-            "twitter:image": post.mediaImage
-        };
-        Object.entries(metaTags).forEach(([name, content]) => {
-            let el = document.querySelector(`meta[name="${name}"], meta[property="${name}"]`);
-            if (!el) {
-                el = document.createElement('meta');
-                if (name.includes('og:') || name.includes('twitter:')) el.setAttribute('property', name);
-                else el.setAttribute('name', name);
-                document.head.appendChild(el);
-            }
-            el.setAttribute('content', content);
-        });
-        const schemaData = {
-            "@context": "https://schema.org",
-            "@graph": [
-                {
-                    "@type": "Movie",
-                    "@id": window.location.href + "#movie",
-                    "name": movieName,
-                    "image": [post.mediaImage],
-                    "description": rawDesc,
-                    "dateCreated": formattedDate,
-                    "datePublished": formattedDate,
-                    "director": { "@type": "Person", "name": `${movieName} Production Team` },
-                    "aggregateRating": {
-                        "@type": "AggregateRating",
-                        "ratingValue": randomRating,
-                        "bestRating": "5",
-                        "ratingCount": randomVotes.toString()
-                    }
-                },
-                {
-                    "@type": "VideoObject",
-                    "name": `${movieName} Official Trailer & Review`,
-                    "description": `Detailed visual analysis and official trailer preview of ${movieName}.`,
-                    "thumbnailUrl": [post.mediaImage],
-                    "uploadDate": formattedDate,
-                    "contentUrl": CONFIG.GLOBAL_VIDEO_LINK,
-                    "embedUrl": post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : CONFIG.GLOBAL_VIDEO_LINK,
-                    "potentialAction": {
-                        "@type": "SeekAction",
-                        "target": (post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : CONFIG.GLOBAL_VIDEO_LINK) + "={seek_to_second_number}",
-                        "startOffset-input": "required name=seek_to_second_number"
-                    }
-                }
-            ]
-        };
-        let schemaScript = document.getElementById('dynamic-schema');
-        if (!schemaScript) {
-            schemaScript = document.createElement('script');
-            schemaScript.id = 'dynamic-schema';
-            schemaScript.type = 'application/ld+json';
-            document.head.appendChild(schemaScript);
-        }
-        schemaScript.textContent = JSON.stringify(schemaData);
-    };
-
-    function formatCount(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : n || 0; }  
-    function timeAgo(s) { const d=new Date(s), n=new Date(), sec=Math.floor((n-d)/1000); if(sec<60)return 'Just now'; const min=Math.floor(sec/60); if(min<60)return min+'m ago'; const hr=Math.floor(min/60); if(hr<24)return hr+'h ago'; return Math.floor(hr/24)+'d ago'; }
-
-    function injectAd(tid, cid) {
-        const t = document.getElementById(tid), c = document.getElementById(cid);
-        if (!t || !c) return;
-        requestAnimationFrame(() => {
-            const iframe = document.createElement('iframe');
-            iframe.style.width = '100%'; iframe.style.height = '1px'; iframe.style.border = 'none'; iframe.scrolling = 'no';
-            c.appendChild(iframe);
-            const doc = iframe.contentWindow.document;
-            doc.open(); doc.write(`<html><body style="margin:0;display:flex;justify-content:center;">${t.innerHTML}<script>function rs(){const h=document.body.scrollHeight; if(h>10 && window.frameElement){const frame=window.frameElement; frame.style.height=h+'px'; const parent=frame.parentElement; parent.style.height=h+'px'; parent.style.marginTop='4px'; parent.style.marginBottom='4px';}} window.onload=rs; setInterval(rs,600);<\/script></body></html>`); doc.close();
-        });
+    function timeAgo(s) { 
+        const d=new Date(s), n=new Date(), sec=Math.floor((n-d)/1000); 
+        if(sec<60)return 'Just now'; 
+        const min=Math.floor(sec/60); if(min<60)return min+'m ago';
+        const hr=Math.floor(min/60); if(hr<24)return hr+'h ago';
+        return Math.floor(hr/24)+'d ago'; 
     }
 
-    window.handleDownloadClick = (btnId, pId, ad1, ad2) => {
-        const key = `map_${pId}`; let map = JSON.parse(localStorage.getItem(key)) || {};
-        if (map[btnId]) {
-            if (map[btnId] === 'ad1') location.href = ad1;
-            else if (map[btnId] === 'ad2') location.href = ad2;
-            else { localStorage.removeItem(key); location.href = `download.html?id=${pId}`; }
-            return;
-        }
-        let assigned = Object.keys(map).length;
-        if (assigned < 2) {
-            pendingTask = { id: btnId, type: assigned === 0 ? 'ad1' : 'ad2', key: key };
-            blurTimestamp = Date.now(); location.href = assigned === 0 ? ad1 : ad2;
-        } else {
-            localStorage.removeItem(key); location.href = `download.html?id=${pId}`;
-        }
-    };
-
-    window.onfocus = () => {
-        if (pendingTask && (Date.now() - blurTimestamp) >= STAY_TIME) {
-            let map = JSON.parse(localStorage.getItem(pendingTask.key)) || {};
-            map[pendingTask.id] = pendingTask.type;
-            localStorage.setItem(pendingTask.key, JSON.stringify(map));
-        }
-        pendingTask = null;
-    };
-
     function renderPost(post) {  
-        const paras = post.paragraphs || [];
-        let body = "";
-        paras.forEach((p, i) => {
-            if (i < paras.length - 1) {
-                body += `<p class="article-para">${p}</p>`;
-                if(i === 0) body += `<div id="ad-box-p1" class="ad-box"></div>`;
-                if(i === 1) body += `<div class="dual-ad-wrapper"><div id="ad-box-p2-l" class="ad-box"></div><div id="ad-box-p2-r" class="ad-box"></div></div>`;
-                if(i === 2) body += `<div id="ad-box-mid" class="ad-box"></div>`;
-            }
-        });
-
-        const grads = ["linear-gradient(180deg, #D32F2F 0%, #B71C1C 100%)", "linear-gradient(180deg, #1976D2 0%, #0D47A1 100%)", "linear-gradient(180deg, #388E3C 0%, #1B5E20 100%)"];
         const pfp = "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg";
-
-        document.getElementById('post-details-container').innerHTML = `
+        const postHTML = `
             <div class="post-author-area">
                 <div class="author-info">
-                    <div class="pfp"><img src="${pfp}" width="45" height="45" alt="FILMIXO Author"></div>
+                    <div class="pfp"><img src="${pfp}" width="45" height="45" alt="FILMIXO"></div>
                     <div class="author-text"><h3>FILMIXO <i class="fa-solid fa-circle-check" style="color:#1da1f2;font-size:15px"></i></h3><span>@filmixo</span></div>
                 </div>
-                <div class="post-time" id="time-display">${timeAgo(post.uploadTime)}</div>
+                <div class="post-time">${timeAgo(post.uploadTime)}</div>
             </div>
-            <div id="ad-box-top" class="ad-box"></div>
-            <div class="video-container" onclick="handleVideoClick()">
-                <img src="${post.mediaImage}" decoding="async" fetchpriority="high" id="main-img" alt="${post.title}">
-                <div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div>
+
+            <div class="video-container" onclick="location.href='${CONFIG.GLOBAL_VIDEO_LINK}'">
+                <img src="${post.mediaImage}" decoding="async" fetchpriority="high" alt="${post.title}">
+                <div class="play-btn-center"></div>
                 <div class="video-controls">
                     <span>${post.videoDuration}</span>
                     <div class="v-divider"></div>
-                    <i class="fa-solid fa-volume-high" style="font-size: 11px;"></i>
                     <div class="prog-bg"><div class="prog-fill"></div></div>
                     <span class="hd-badge">HD</span>
                 </div>
             </div>
+
             <div class="content-body">
                 <h1 class="article-title">${post.title}</h1>
-                <div id="ad-box-title" class="ad-box"></div>
-                ${body}
-                ${post.youtubeEmbed ? `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div><div id="ad-box-video" class="ad-box"></div>` : ''}
-                <p class="article-para">${paras[paras.length-1] || ''}</p>
-                <div class="download-title-text">↕️🔰 Download Full Movie in HD 🔰↕️</div>
-                <div class="download-buttons-container">
-                    <div onclick="handleDownloadClick('b1','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[0]}"><i class="fa-solid fa-circle-down"></i> <span class="btn-text-main">1080P FULL HD</span></div>
-                    <div onclick="handleDownloadClick('b2','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[1]}"><i class="fa-solid fa-download"></i> <span class="btn-text-main">720P HD READY</span></div>
-                    <div onclick="handleDownloadClick('b3','${post.id}','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[2]}"><i class="fa-solid fa-file-arrow-down" style="font-size: 0.9em;"></i> <span class="btn-text-main">360P MOBILE</span></div>
-                </div>
-                <div class="stats-section">
-                    <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="v-cnt">0</span> <span>Views</span></div>
-                    <div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="l-cnt">0</span> <span>Likes</span></div>
-                    <div class="share-icons">
-                        <div class="share-icon" style="background:#1877f2" onclick="sh('fb')"><i class="fa-brands fa-facebook-f"></i></div>
-                        <div class="share-icon" style="background:#0084ff" onclick="sh('msg')"><i class="fa-brands fa-facebook-messenger"></i></div>
-                        <div class="share-icon" style="background:#25d366" onclick="sh('wa')"><i class="fa-brands fa-whatsapp"></i></div>
-                        <div class="share-icon" style="background:#1da1f2" onclick="sh('tw')"><i class="fa-brands fa-twitter"></i></div>
-                        <div class="share-icon" style="background:#0088cc" onclick="sh('tg')"><i class="fa-brands fa-telegram"></i></div>
+                ${post.paragraphs.map(p => `<p class="article-para">${p}</p>`).join('')}
+                
+                ${post.youtubeEmbed ? `<div class="youtube-embed-wrapper">${post.youtubeEmbed}</div>` : ''}
+
+                <div class="download-section">
+                    <div class="download-title-text">⬇️ Download Movie in HD ⬇️</div>
+                    <div class="download-buttons-container">
+                        <div onclick="location.href='download.html?id=${post.id}&q=1080'" class="download-btn-v2" style="background:#D32F2F">1080P FULL HD</div>
+                        <div onclick="location.href='download.html?id=${post.id}&q=720'" class="download-btn-v2" style="background:#1976D2">720P HD READY</div>
                     </div>
+                </div>
+
+                <div class="stats-section">
+                    <div><i class="fa-solid fa-eye"></i> <span id="v-cnt">0</span> Views</div>
+                    <div class="love-btn" id="l-btn"><i class="fa-regular fa-heart"></i> <span id="l-cnt">0</span> Likes</div>
                 </div>
             </div>`;
 
-        requestAnimationFrame(() => {
-            injectAd('ad-src-top', 'ad-box-top');
-            injectAd('ad-src-title', 'ad-box-title');
-            injectAd('ad-src-p1', 'ad-box-p1');
-            injectAd('ad-src-p2', 'ad-box-p2-l');
-            injectAd('ad-src-p2', 'ad-box-p2-r');
-            injectAd('ad-src-mid', 'ad-box-mid');
-            injectAd('ad-src-video', 'ad-box-video');
-        });
-
-        const img = document.getElementById('main-img');
-        img.onload = () => { if(img.naturalWidth/img.naturalHeight < 1.2) img.closest('.video-container').classList.add('auto-fit'); };
-        timeElements.push({ el: document.getElementById('time-display'), date: post.uploadTime });
+        document.getElementById('post-details-container').innerHTML = postHTML;
+        setupInteractions(post.id);
     }
 
     async function init() {
@@ -363,59 +159,30 @@
             const res = await fetch('posts.json');
             const data = await res.json();
             const post = data.find(p => p.id === postId) || data[0];
-            generatePremiumSEO(post); 
             renderPost(post);
-            // Script Execution optimization: slight delay for Firebase to not block UI
-            setTimeout(() => {
-                setupFirebase(post.id);
-                setInterval(() => { timeElements.forEach(i => i.el.innerText = timeAgo(i.date)); }, 60000);
-            }, 1000);
-            restoreScroll();
-        } catch (e) { }
+        } catch (e) { console.error("Load failed"); }
     }
 
-    function setupFirebase(id) {
+    function setupInteractions(id) {
+        // Views increment
         setDoc(doc(db, "views", id), { count: increment(1) }, { merge: true });
-        onSnapshot(doc(db, "views", id), s => {
-            const cnt = document.getElementById('v-cnt');
-            if(cnt) cnt.innerText = formatCount(s.data()?.count);
-        });
-        const lRef = doc(db, "loves", id), uRef = doc(db, `loves/${id}/users/${deviceId}`), lBtn = document.querySelector('.love-btn');
-        onSnapshot(lRef, s => {
-            const lcnt = document.getElementById('l-cnt');
-            if(lcnt) lcnt.innerText = formatCount(s.data()?.count);
-        });
-        getDoc(uRef).then(s => { if(s.exists() && lBtn) lBtn.classList.add('liked'), lBtn.querySelector('i').className='fa-solid fa-heart'; });
-        if(lBtn) {
-            lBtn.onclick = async () => { if(!(await getDoc(uRef)).exists()){ lBtn.classList.add('liked'); lBtn.querySelector('i').className='fa-solid fa-heart'; await setDoc(lRef, {count:increment(1)}, {merge:true}); await setDoc(uRef, {t:new Date()}); } };
-        }
+        onSnapshot(doc(db, "views", id), s => document.getElementById('v-cnt').innerText = s.data()?.count || 0);
+        
+        // Likes logic
+        const lBtn = document.getElementById('l-btn');
+        onSnapshot(doc(db, "loves", id), s => document.getElementById('l-cnt').innerText = s.data()?.count || 0);
+        
+        lBtn.onclick = async () => {
+            const uRef = doc(db, `loves/${id}/users/${deviceId}`);
+            const s = await getDoc(uRef);
+            if(!s.exists()) {
+                await setDoc(doc(db, "loves", id), {count: increment(1)}, {merge: true});
+                await setDoc(uRef, {liked: true});
+                lBtn.classList.add('liked');
+                lBtn.querySelector('i').className = 'fa-solid fa-heart';
+            }
+        };
     }
-
-    window.handleVideoClick = () => {
-        document.querySelector('.video-container').classList.add('is-loading');
-        setTimeout(() => { location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100);
-    };
-
-    window.addEventListener('pageshow', () => { 
-        const c = document.querySelector('.video-container'); if(c) c.classList.remove('is-loading'); 
-    });
-
-    window.onbeforeunload = () => { if(postId) sessionStorage.setItem(`sp_${postId}`, window.scrollY); };
-    function restoreScroll() { const s = sessionStorage.getItem(`sp_${postId}`); if(s) setTimeout(() => window.scrollTo(0, parseInt(s)), 150); }
-
-    window.sh = (p) => {
-        const title = document.querySelector('.article-title')?.innerText || "Watch Movie";
-        const url = location.href;
-        const fullText = encodeURIComponent(title + "\n\n" + url);
-        const encodedUrl = encodeURIComponent(url);
-        let l = '';
-        if(p==='fb') l = `https://fb.com/sharer/sharer.php?u=${encodedUrl}`;
-        else if(p==='wa') l = `https://wa.me/?text=${fullText}`;
-        else if(p==='msg') l = `fb-messenger://share/?link=${encodedUrl}`;
-        else if(p==='tw') l = `https://twitter.com/intent/tweet?text=${fullText}`;
-        else if(p==='tg') l = `https://t.me/share/url?url=${encodedUrl}&text=${encodeURIComponent(title)}`;
-        window.open(l, '_blank');
-    };
 
     init();
 </script>  
