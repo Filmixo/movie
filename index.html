@@ -5,12 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FILMIXO | Home of Professional Movie Reviews</title>
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="FILMIXO - Watch & Download Latest Movies">
-    <meta property="og:description" content="Explore expert movie reviews and high-quality production insights on FILMIXO.">
-    <meta property="og:image" content="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg">
-    <meta property="og:url" content="https://filmixo.github.io/movie/index.html">
-    
+    <meta name="description" content="FILMIXO: Your ultimate HD movie hub for expert reviews and technical analysis.">
+    <link rel="canonical" href="https://filmixo.github.io/movie/index.html">
+    <script type="application/ld+json" id="homepage-schema"></script>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- ইমেজ প্রি-লোড এবং প্রায়োরিটি হাই -->
@@ -447,6 +445,7 @@
                 const res = await fetch('posts.json');
                 const posts = await res.json();
                 allPosts = posts.sort((a, b) => new Date(b.uploadTime).getTime() - new Date(a.uploadTime).getTime()); 
+                generateHomepageSEO(allPosts.length);
                 startCoverSlider(allPosts);
                 document.getElementById('total-videos-count').innerText = formatCount(allPosts.length); 
                 calculateTotalViews(); 
@@ -507,6 +506,44 @@
         });
         
         loadFeed();
+        
+        // --- হোমপেজ এসইও জেনারেটর ফাংশন ---
+    const generateHomepageSEO = (totalPosts) => {
+    const siteTitle = "FILMIXO | Home of Professional Movie Reviews & HD Insights";
+    const siteDesc = "Explore FILMIXO, the premier movie database with " + totalPosts + "+ expert reviews, VFX analysis, and high-quality production insights.";
+    
+    document.title = siteTitle;
+
+    const schemaData = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": window.location.origin + "/#website",
+                "url": window.location.origin,
+                "name": "FILMIXO",
+                "publisher": {
+                    "@type": "Organization",
+                    "name": "FILMIXO Editorial Team",
+                    "logo": { "@type": "ImageObject", "url": "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg" }
+                },
+                "potentialAction": {
+                    "@type": "SearchAction",
+                    "target": window.location.origin + "/index.html?search={search_term_string}",
+                    "query-input": "required name=search_term_string"
+                }
+            },
+            {
+                "@type": "CollectionPage",
+                "@id": window.location.origin + "/#collection",
+                "name": "Latest Movie Database",
+                "description": siteDesc
+            }
+        ]
+    };
+    document.getElementById('homepage-schema').textContent = JSON.stringify(schemaData);
+};
+        
     </script>
 </body>
 </html>
