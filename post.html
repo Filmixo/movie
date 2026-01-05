@@ -63,6 +63,7 @@
     .author-text h3 { font-size: 18px; margin: 0; color: #0f1419; display: inline-flex; align-items: center; gap: 5px; }  
     .author-text span { font-size: 12px; color: #1da1f2; display: block; margin-top: -1px; }  
     .post-time { font-size: 14px; color: #536471; font-weight: bold; }  
+    .post-time { font-size: 14px; color: #536471; font-weight: bold; display: flex; align-items: center; gap: 5px; }
 
     .content-body { padding: 5px 15px 0px 15px; }  
     .article-title { font-size: 18px; font-weight: 800; margin-bottom: 8px; color: #0f1419; line-height: 1.3; }  
@@ -328,7 +329,9 @@
                     <div class="pfp"><img src="${pfp}"></div>
                     <div class="author-text"><h3>FILMIXO <i class="fa-solid fa-circle-check" style="color:#1da1f2;font-size:15px"></i></h3><span>@filmixo</span></div>
                 </div>
-                <div class="post-time" id="time-display">${timeAgo(post.uploadTime)}</div>
+                <div class="post-time" id="time-display">
+               <i class="fa-regular fa-clock" style="margin-right: 5px;"></i>${timeAgo(post.uploadTime)}
+              </div>
             </div>
             <div id="ad-box-top" class="ad-box"></div>
             <div class="video-container" onclick="handleVideoClick()">
