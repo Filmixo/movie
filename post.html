@@ -385,20 +385,30 @@
     }
 
         async function init() {
+        if (!postId) { window.location.href = 'index.html'; return; }
         try {
-            const res = await fetch('posts.json');
-            const data = await res.json();
-            const post = data.find(p => p.id === postId) || data[0];
-            
-            // রেন্ডার করার আগেই এসইও ডাটা বটের জন্য রেডি করুন
-            generatePremiumSEO(post); 
-            
-            renderPost(post);
-            setupFirebase(post.id);
+            const docRef = doc(db, "posts", postId);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                const post = docSnap.data();
+                
+                generatePremiumSEO(post);
+                
+                renderPost(post);
+                setupFirebase(post.id);
+                document.getElementById('app-wrapper').classList.add('loaded');
+                setInterval(() => { 
+                    timeElements.forEach(i => i.el.innerText = timeAgo(i.date)); 
+                }, 60000);
+                restoreScroll();
+            } else {
+                window.location.href = 'index.html';
+            }
+        } catch (e) {
+            console.error(e);
             document.getElementById('app-wrapper').classList.add('loaded');
-            setInterval(() => { timeElements.forEach(i => i.el.innerText = timeAgo(i.date)); }, 60000);
-            restoreScroll();
-        } catch (e) { document.getElementById('app-wrapper').classList.add('loaded'); }
+        }
     }
 
     function setupFirebase(id) {
