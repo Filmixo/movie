@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Elite Control</title>
+    <title>Filmixo Elite Control - Final</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -19,78 +19,63 @@
         label { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; margin-bottom: 8px; color: #8b949e; }
         input, textarea { width: 100%; background: var(--field-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; color: white; font-size: 14px; transition: 0.2s; outline: none; }
         input:focus, textarea:focus { border-color: var(--primary); background: #21262d; }
-        input::placeholder, textarea::placeholder { color: #484f58; }
         .grid-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .article-box { min-height: 260px; line-height: 1.7; resize: vertical; }
-        .security-box { background: rgba(245, 130, 13, 0.03); padding: 25px; border-radius: 12px; border: 1px dashed rgba(245, 130, 13, 0.3); margin: 40px 0; }
-        .action-area { text-align: center; margin-top: 30px; }
-        .publish-btn { background: var(--accent); color: white; border: none; padding: 12px 28px; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; text-transform: uppercase; transition: transform 0.1s; box-shadow: none; }
-        .publish-btn:active { transform: scale(0.94); }
-        .publish-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-        #status-msg { margin-top: 20px; font-size: 14px; font-weight: 600; min-height: 20px; }
+        .article-box { min-height: 200px; resize: vertical; }
+        .security-box { background: rgba(245, 130, 13, 0.05); padding: 25px; border-radius: 12px; border: 1px dashed var(--accent); margin: 40px 0; }
+        .action-area { text-align: center; }
+        .publish-btn { background: var(--accent); color: white; border: none; padding: 15px 40px; border-radius: 10px; font-size: 14px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.2s; }
+        .publish-btn:active { transform: scale(0.95); }
+        #status-msg { margin-top: 20px; font-weight: 600; }
         @media (max-width: 600px) { .grid-layout { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
 
 <div class="admin-panel">
-    <header>
-        <h1><i class="fa-solid fa-shield-halved"></i> FILMIXO CONTROL</h1>
-    </header>
+    <header><h1><i class="fa-solid fa-shield-halved"></i> FILMIXO CONTROL</h1></header>
 
     <div class="section-label">Core Information</div>
     <div class="input-group">
         <label><i class="fa-solid fa-file-signature"></i> Content Title</label>
-        <input type="text" id="title" placeholder="Enter full title (e.g. Movie Name 2026)">
+        <input type="text" id="title" placeholder="Movie Name 2026">
     </div>
     <div class="input-group">
         <label><i class="fa-solid fa-image"></i> Poster / Thumbnail Link</label>
-        <input type="text" id="media" placeholder="Enter direct image URL (https://...)">
+        <input type="text" id="media" placeholder="https://image-link.com/photo.jpg">
     </div>
 
-    <div class="section-label">Technical Data</div>
     <div class="grid-layout">
         <div class="input-group">
-            <label><i class="fa-solid fa-stopwatch"></i> Video Duration (Editable)</label>
-            <input type="text" id="duration" placeholder="HH:MM:SS">
+            <label><i class="fa-solid fa-stopwatch"></i> Video Duration</label>
+            <input type="text" id="duration">
         </div>
         <div class="input-group">
             <label><i class="fa-brands fa-youtube"></i> YouTube Video Link / ID</label>
-            <input type="text" id="youtubeEmbed" placeholder="Paste YouTube link or video ID">
+            <input type="text" id="ytInput" placeholder="Paste link or ID">
         </div>
     </div>
 
-    <div class="section-label">External Connections</div>
+    <div class="section-label">Connections & Narrative</div>
     <div class="grid-layout">
-        <div class="input-group">
-            <label><i class="fa-solid fa-link"></i> Advertisement Link 01</label>
-            <input type="text" id="linkAd1" placeholder="Enter first ad link">
-        </div>
-        <div class="input-group">
-            <label><i class="fa-solid fa-link"></i> Advertisement Link 02</label>
-            <input type="text" id="linkAd2" placeholder="Enter second ad link">
-        </div>
+        <input type="text" id="linkAd1" placeholder="Ad Link 01">
+        <input type="text" id="linkAd2" placeholder="Ad Link 02">
     </div>
-    <div class="input-group">
+    <div style="margin-top: 20px" class="input-group">
         <label><i class="fa-solid fa-cloud-arrow-down"></i> Primary Download Link</label>
-        <input type="text" id="linkMovie" placeholder="Enter main download destination URL">
+        <input type="text" id="linkMovie" placeholder="Download Link">
     </div>
-
-    <div class="section-label">Content Narrative</div>
     <div class="input-group">
-        <label><i class="fa-solid fa-align-left"></i> Article Paragraphs</label>
-        <textarea id="paragraphs" class="article-box" placeholder="Write comprehensive movie details. Each new line will be treated as a new paragraph."></textarea>
+        <label><i class="fa-solid fa-align-left"></i> Article Paragraphs (Each line = New paragraph)</label>
+        <textarea id="paragraphs" class="article-box"></textarea>
     </div>
 
     <div class="security-box">
-        <label style="color: var(--accent);"><i class="fa-solid fa-lock"></i> AUTHORIZATION KEY</label>
-        <input type="password" id="adminKey" placeholder="Verify master secret key...">
+        <label style="color: var(--accent);">MASTER SECRET KEY</label>
+        <input type="password" id="adminKey" placeholder="Enter key to publish...">
     </div>
     
     <div class="action-area">
-        <button class="publish-btn" id="pubBtn" onclick="publishToCloud()">
-            <i class="fa-solid fa-paper-plane"></i> Publish Now
-        </button>
+        <button class="publish-btn" id="pubBtn" onclick="publishToCloud()">Publish Now</button>
         <div id="status-msg"></div>
     </div>
 </div>
@@ -111,80 +96,62 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    const DEFAULTS = { 
-    AD1: "https://www.google.com", 
-    AD2: "https://www.youtube.com", 
-    DOWNLOAD: "https://www.facebook.com"
-    };
-
-    // ৬ অক্ষরের মিক্সড আইডি জেনারেটর (Alpha-Numeric)
-    function generateAdvancedId() {
+    // ID Generator
+    function generateId() {
         const charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
         let res = '';
-        for (let i = 0; i < 6; i++) { res += charset.charAt(Math.floor(Math.random() * charset.length)); }
+        for (let i = 0; i < 6; i++) res += charset.charAt(Math.floor(Math.random() * charset.length));
         return res;
     }
 
-    function generateDuration() {
-        const hh = "02";
-        const mm = Math.floor(Math.random() * 45 + 10).toString().padStart(2, '0');
-        const ss = Math.floor(Math.random() * 59).toString().padStart(2, '0');
-        return `${hh}:${mm}:${ss}`;
-    }
-
-    window.onload = () => { document.getElementById('duration').value = generateDuration(); };
+    window.onload = () => { 
+        document.getElementById('duration').value = "02:" + Math.floor(Math.random()*40+10) + ":25";
+    };
 
     window.publishToCloud = async function() {
         const adminKey = document.getElementById('adminKey').value.trim();
         const title = document.getElementById('title').value.trim();
-        const ytInput = document.getElementById('youtubeEmbed').value.trim();
-        const status = document.getElementById('status-msg');
+        const ytRaw = document.getElementById('ytInput').value.trim();
         const btn = document.getElementById('pubBtn');
+        const status = document.getElementById('status-msg');
 
         if(!title || !adminKey) {
-            status.innerHTML = `<span style="color:var(--error)">Security Key & Title are Mandatory!</span>`;
+            status.innerHTML = `<span style="color:var(--error)">Title and Key are required!</span>`;
             return;
         }
 
         try {
             btn.disabled = true;
-            status.style.color = "var(--primary)";
-            status.innerText = "Synchronizing with Cloud...";
+            status.innerText = "Uploading to Cloud...";
 
-            let vid = ytInput;
-            if (ytInput.includes("v=")) vid = ytInput.split("v=")[1].split("&")[0];
-            else if (ytInput.includes("be/")) vid = ytInput.split("be/")[1];
+            let vid = ytRaw;
+            if (ytRaw.includes("v=")) vid = ytRaw.split("v=")[1].split("&")[0];
+            else if (ytRaw.includes("be/")) vid = ytRaw.split("be/")[1];
 
-            const finalId = generateAdvancedId();
+            const finalId = generateId();
             
-            // গোছানো ডেটা স্ট্রাকচার (আপনার রিকোয়েস্ট অনুযায়ী সিকোয়েন্স)
+            // রুলসের সাথে ১০০% ম্যাচ করা ডাটা স্ট্রাকচার
             const postData = {
-                id: finalId,                         // ১. আইডি (মিক্সড)
-                title: title,                        // ২. টাইটেল
-                mediaImage: document.getElementById('media').value.trim(), // ৩. ইমেজ লিংক
-                uploadTime: new Date().toLocaleString(), // ৪. আপলোড টাইম
-                videoDuration: document.getElementById('duration').value.trim(), // ৫. ডিউরেশন (Editable)
-                adLink1: document.getElementById('linkAd1').value.trim() || DEFAULTS.AD1, // ৬. অ্যাড ১
-                adLink2: document.getElementById('linkAd2').value.trim() || DEFAULTS.AD2, // ৭. অ্যাড ২
-                downloadLink1: document.getElementById('linkMovie').value.trim() || DEFAULTS.DOWNLOAD, // ৮. ডাউনলোড
-                youtubeEmbed: vid,                    // ৯. ইউটিউব ভিডিও
-                paragraphs: document.getElementById('paragraphs').value.trim().split('\n').filter(p => p.trim() !== ''), // ১০. প্যারাগ্রাফ
-                adminKey: adminKey                    // সিকিউরিটি কী
+                id: finalId,
+                adminKey: adminKey,
+                title: title,
+                mediaImage: document.getElementById('media').value.trim(),
+                videoDuration: document.getElementById('duration').value.trim(),
+                uploadTime: new Date().toLocaleString(),
+                adLink1: document.getElementById('linkAd1').value.trim() || "https://google.com",
+                adLink2: document.getElementById('linkAd2').value.trim() || "https://youtube.com",
+                downloadLink1: document.getElementById('linkMovie').value.trim() || "https://facebook.com",
+                youtubeEmbed: vid ? `<iframe src="https://www.youtube.com/embed/${vid}" frameborder="0" allowfullscreen></iframe>` : "",
+                paragraphs: document.getElementById('paragraphs').value.trim().split('\n').filter(p => p.trim() !== '')
             };
 
             await setDoc(doc(db, "posts", finalId), postData);
 
-            status.innerHTML = `<span style="color:var(--success)">✅ Successfully Pushed! ID: ${finalId}</span>`;
-            
-            setTimeout(() => {
-                document.querySelectorAll('input, textarea').forEach(el => { if(el.id !== 'duration') el.value = ""; });
-                document.getElementById('duration').value = generateDuration();
-                status.innerText = "";
-            }, 4000);
+            status.innerHTML = `<span style="color:var(--success)">✅ Pushed Successfully! ID: ${finalId}</span>`;
+            setTimeout(() => location.reload(), 3000);
 
         } catch (e) {
-            status.innerHTML = `<span style="color:var(--error)">❌ Unauthorized: Invalid Secret Key</span>`;
-        } finally {
+            status.innerHTML = `<span style="color:var(--error)">❌ Access Denied: Incorrect Secret Key</span>`;
             btn.disabled = false;
         }
     }
