@@ -13,11 +13,13 @@
     <meta property="og:description" id="og-desc" content="Explore research-based reviews and technical breakdowns of the latest films. Quality and Accuracy guaranteed.">
     <meta property="og:image" content="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg">
     <script type="application/ld+json" id="dynamic-schema"></script>
-    
+    <link rel="canonical" href="https://filmixo.com/">
+    <meta name="robots" content="index, follow">
+
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://prototypesorting.com">
     <link rel="dns-prefetch" href="https://prototypesorting.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" media="print" onload="this.media='all'">
 
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js" async></script>
 
@@ -331,8 +333,8 @@
                 <div class="post-time" id="time-display">${timeAgo(post.uploadTime)}</div>
             </div>
             <div id="ad-box-top" class="ad-box"></div>
-            <div class="video-container" onclick="handleVideoClick()">
-                <img src="${post.mediaImage}" decoding="sync" fetchpriority="high" id="main-img">
+                <div class="video-container" onclick="handleVideoClick()">
+                <img src="${post.mediaImage}" decoding="async" fetchpriority="high" id="main-img" alt="${post.title}">
                 <div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div>
                 <div class="video-controls">
                     <span>${post.videoDuration}</span>
@@ -393,7 +395,6 @@
             
             renderPost(post);
             setupFirebase(post.id);
-            document.getElementById('app-wrapper').classList.add('loaded');
             setInterval(() => { timeElements.forEach(i => i.el.innerText = timeAgo(i.date)); }, 60000);
             restoreScroll();
         } catch (e) { document.getElementById('app-wrapper').classList.add('loaded'); }
