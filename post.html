@@ -158,13 +158,25 @@
         return clean.trim();
     };
 
+    // আইডি ভিত্তিক স্থায়ী সংখ্যা জেনারেটর
+    const getSeed = (id) => {
+        let hash = 0;
+        for (let i = 0; i < id.length; i++) {
+            hash = id.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return Math.abs(hash);
+    };
+
+    const seed = getSeed(post.id);
     const movieName = getCleanMovieName(post.title);
     const fullTitle = `${post.title} | Official Review & Download - FILMIXO`;
     const rawDesc = post.paragraphs && post.paragraphs[0] ? post.paragraphs[0] : "Explore detailed production insights, VFX analysis, and technical movie reviews on FILMIXO.";
     const cleanDesc = rawDesc.substring(0, 160).replace(/["]/g, '') + "...";
     const formattedDate = post.uploadTime ? (post.uploadTime.includes('T') ? post.uploadTime : `${post.uploadTime}T09:00:00+06:00`) : new Date().toISOString();
-    const randomRating = (Math.random() * (5.0 - 4.6) + 4.6).toFixed(1);
-    const randomVotes = Math.floor(Math.random() * (2500000 - 25000 + 1)) + 25000;
+    
+    // স্থায়ী রেটিং (৪.৬ - ৫.০) এবং ভোট (৫ লক্ষ - ২৫ লক্ষ)
+    const randomRating = (4.6 + (seed % 5) / 10).toFixed(1);
+    const randomVotes = Math.floor((seed % (2500000 - 500000 + 1)) + 500000);
 
     document.title = fullTitle;
 
