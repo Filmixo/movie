@@ -3,16 +3,16 @@
 <head>  
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
-        <title>FILMIXO | Professional Movie Insights & HD Downloads</title>
-    <meta name="description" content="FILMIXO: Expert movie reviews, Director & Actor insights, and technical analysis (VFX/Audio). Watch trailers and download HD movies.">
-    <meta name="keywords" content="expert movie review, filmixo analysis, vfx review, director insights, audience reaction, movie download, hd movies">
-    <meta name="author" content="FILMIXO Editorial Team">
-    <meta property="og:type" content="video.movie">
-    <meta property="og:site_name" content="FILMIXO">
-    <meta property="og:title" content="FILMIXO | Professional Movie Insights & HD Downloads">
-    <meta property="og:description" content="Explore research-based reviews and technical breakdowns of the latest films. Quality and Accuracy guaranteed.">
-    <meta property="og:image" content="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg">
-    <script type="application/ld+json" id="dynamic-schema"></script>
+    <title>FILMIXO | Professional Movie Insights & HD Downloads</title>
+<meta name="description" content="FILMIXO: Expert movie reviews, Director & Actor insights. Watch trailers and download HD movies.">
+<meta property="og:type" content="video.movie">
+<meta property="og:site_name" content="FILMIXO">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:title" id="fb-title" content="FILMIXO | Movie Insights">
+<meta property="og:description" id="fb-desc" content="Quality Movie Review and Downloads.">
+<meta property="og:image" id="fb-image" content="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg">
+<script type="application/ld+json" id="dynamic-schema"></script>
     
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://prototypesorting.com">
@@ -149,56 +149,51 @@
     const STAY_TIME = 5000; 
     let pendingTask = null; let blurTimestamp = 0;
     let timeElements = [];
+    
 
-        const generatePremiumSEO = (post) => {
-        // ১. টাইটেল আপডেট (এসইও ফ্রেন্ডলি)
-        document.title = `${post.title} - Full Review & Analysis | FILMIXO`;
+    const generatePremiumSEO = (post) => {
+    if (!post) return;
 
-        // ২. সোশ্যাল মিডিয়া কার্ড ও মেটা আপডেট (আপনার প্রিমিয়াম মেটা বজায় রেখে)
-        const setMeta = (property, content) => {
-            let el = document.querySelector(`meta[property="${property}"]`) || document.querySelector(`meta[name="${property}"]`);
-            if (el) el.setAttribute('content', content);
-        };
+    // ১. ব্রাউজার টাইটেল
+    const titleText = `${post.title} - Full Review | FILMIXO`;
+    document.title = titleText;
 
-        if (post) {
-            setMeta('og:title', `${post.title} - Professional Insights`);
-            setMeta('og:image', post.mediaImage);
-            setMeta('og:description', post.paragraphs[0]?.substring(0, 160) || "Expert analysis and technical breakdown.");
-            setMeta('og:url', window.location.href);
-            // সার্চ ইঞ্জিনের জন্য ডেসক্রিপশন আপডেট
-            setMeta('description', `${post.title}: ${post.paragraphs[0]?.substring(0, 150)}`);
-        }
+    // ২. মেটা ট্যাগ আপডেট (আইডি ধরে সরাসরি পরিবর্তন)
+    const fbTitle = document.getElementById('fb-title');
+    const fbDesc = document.getElementById('fb-desc');
+    const fbImage = document.getElementById('fb-image');
 
-        // ৩. আপনার সেই শক্তিশালী গুগল স্কিমা (যা আপনি আগে চেয়েছিলেন)
-        const schemaData = {
-            "@context": "https://schema.org",
-            "@graph": [
-                {
-                    "@type": "Movie",
-                    "name": post.title,
-                    "image": post.mediaImage,
-                    "description": post.paragraphs[0] || "Professional movie analysis.",
-                    "workFeatured": {
-                        "@type": "VideoObject",
-                        "name": `${post.title} Official Trailer`,
-                        "thumbnailUrl": post.mediaImage,
-                        "uploadDate": "2026-01-01",
-                        "contentUrl": "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea"
-                    }
-                },
-                {
-                    "@type": "Review",
-                    "itemReviewed": { "@type": "Movie", "name": post.title },
-                    "reviewAspect": ["VFX Analysis", "Director Vision", "Sound Engineering", "Production Value"],
-                    "reviewBody": post.paragraphs[0] || "Research-based technical evaluation.",
-                    "author": { "@type": "Organization", "name": "FILMIXO Expert Panel" },
-                    "publisher": { "@type": "Organization", "name": "FILMIXO", "logo": "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg" }
+    if(fbTitle) fbTitle.setAttribute('content', post.title);
+    if(fbDesc) fbDesc.setAttribute('content', post.paragraphs[0]?.substring(0, 150) + "...");
+    if(fbImage) fbImage.setAttribute('content', post.mediaImage);
+
+    // ৩. গুগল স্কিমা (আপনার প্রিমিয়াম এসইও ডাটা)
+    const schemaData = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Movie",
+                "name": post.title,
+                "image": post.mediaImage,
+                "description": post.paragraphs[0]?.substring(0, 200) || "Expert analysis.",
+                "workFeatured": {
+                    "@type": "VideoObject",
+                    "name": `${post.title} Trailer`,
+                    "thumbnailUrl": post.mediaImage,
+                    "contentUrl": "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea"
                 }
-            ]
-        };
-        const schemaScript = document.getElementById('dynamic-schema');
-        if (schemaScript) { schemaScript.text = JSON.stringify(schemaData); }
+            },
+            {
+                "@type": "Review",
+                "itemReviewed": { "@type": "Movie", "name": post.title },
+                "author": { "@type": "Organization", "name": "FILMIXO Panel" },
+                "publisher": { "@type": "Organization", "name": "FILMIXO", "logo": "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg" }
+            }
+        ]
     };
+    const schemaScript = document.getElementById('dynamic-schema');
+    if (schemaScript) { schemaScript.text = JSON.stringify(schemaData); }
+};
 
     function formatCount(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : n || 0; }  
     function timeAgo(s) { const d=new Date(s), n=new Date(), sec=Math.floor((n-d)/1000); if(sec<60)return 'Just now'; const min=Math.floor(sec/60); if(min<60)return min+'m ago'; const hr=Math.floor(min/60); if(hr<24)return hr+'h ago'; return Math.floor(hr/24)+'d ago'; }
