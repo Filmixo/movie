@@ -3,8 +3,18 @@
 <head>  
     <meta charset="UTF-8">  
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">  
-    <title>FILMIXO movie watch & Download</title>  
+    <title>FILMIXO | Professional Movie Insights & HD Downloads</title>  
     
+    <meta name="description" content="FILMIXO: Expert movie reviews, Director & Actor insights, and technical analysis (VFX/Audio). Watch trailers and download HD movies.">
+    <meta name="keywords" content="expert movie review, filmixo analysis, vfx review, director insights, audience reaction, movie download, hd movies">
+    <meta name="author" content="FILMIXO Editorial Team">
+    <meta property="og:type" content="video.movie">
+    <meta property="og:site_name" content="FILMIXO">
+    <meta property="og:title" content="FILMIXO | Professional Movie Insights & HD Downloads">
+    <meta property="og:description" content="Explore research-based reviews and technical breakdowns of the latest films. Quality and Accuracy guaranteed.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg">
+    <script type="application/ld+json" id="dynamic-schema"></script>
+
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://prototypesorting.com">
     <link rel="dns-prefetch" href="https://prototypesorting.com">
@@ -141,6 +151,38 @@
     let pendingTask = null; let blurTimestamp = 0;
     let timeElements = [];
 
+     const generatePremiumSEO = (post) => {
+     document.title = `${post.title} - Full Review, Insights & Download | FILMIXO`;
+     const schemaData = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "Movie",
+                "name": post.title,
+                "image": post.mediaImage,
+                "description": post.paragraphs[0] || "Expert movie analysis and production insights.",
+                "workFeatured": {
+                    "@type": "VideoObject",
+                    "name": `${post.title} Official Trailer`,
+                    "thumbnailUrl": post.mediaImage,
+                    "uploadDate": "2026-01-01",
+                    "contentUrl": "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea"
+                   }
+                 },
+               {
+                "@type": "Review",
+                "itemReviewed": { "@type": "Movie", "name": post.title },
+                "reviewAspect": ["VFX Analysis", "Director Vision", "Sound Engineering", "Audience Verdict"],
+                "reviewBody": "Detailed research-based review featuring director perspectives and technical evaluation of graphics and audio.",
+                "author": { "@type": "Organization", "name": "FILMIXO Expert Panel" },
+                "publisher": { "@type": "Organization", "name": "FILMIXO", "logo": "https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/Image Files/filmixo.jpg" }
+                }
+              ]
+            };
+             const schemaScript = document.getElementById('dynamic-schema');
+           if (schemaScript) { schemaScript.text = JSON.stringify(schemaData); }
+      };
+
     function formatCount(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : n || 0; }  
     function timeAgo(s) { const d=new Date(s), n=new Date(), sec=Math.floor((n-d)/1000); if(sec<60)return 'Just now'; const min=Math.floor(sec/60); if(min<60)return min+'m ago'; const hr=Math.floor(min/60); if(hr<24)return hr+'h ago'; return Math.floor(hr/24)+'d ago'; }
 
@@ -183,6 +225,7 @@
     };
 
     function renderPost(post) {  
+      generatePremiumSEO(post);
         const paras = post.paragraphs || [];
         let body = "";
         paras.forEach((p, i) => {
