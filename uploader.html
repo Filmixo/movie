@@ -3,92 +3,140 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Filmixo Admin - Final Master</title>
+    <title>Filmixo Admin - Secure Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #1da1f2; --bg: #0f1419; --field-bg: #1a1f26;
             --text: #e7e9ea; --border: #333639; --firebase-orange: #f5820d;
+            --success: #00ba7c; --error: #f4212e;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background: var(--bg); color: var(--text); padding: 40px 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .wrapper { width: 100%; max-width: 850px; background: #151a21; padding: 30px; border-radius: 20px; border: 1px solid var(--border); }
-        header { text-align: center; margin-bottom: 35px; }
-        header h1 { font-size: 28px; font-weight: 800; color: white; display: flex; align-items: center; justify-content: center; gap: 12px; }
-        .section-label { display: block; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--accent); margin: 30px 0 15px 0; border-bottom: 1px solid var(--border); padding-bottom: 8px; letter-spacing: 1px; }
-        .input-group { margin-bottom: 20px; }
-        label { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; margin-bottom: 10px; color: #bbb; }
-        label i { color: var(--firebase-orange); font-size: 16px; }
-        input, textarea { width: 100%; background: var(--field-bg); border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; color: white; font-size: 14px; transition: 0.3s; outline: none; }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 10px rgba(29, 161, 242, 0.1); }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .publish-btn { width: 100%; max-width: 350px; padding: 18px; background: var(--firebase-orange); color: white; border: none; border-radius: 40px; font-size: 16px; font-weight: 800; cursor: pointer; transition: 0.3s; margin: 40px auto; display: flex; align-items: center; justify-content: center; gap: 12px; text-transform: uppercase; }
-        .publish-btn:hover { background: #e67600; transform: translateY(-2px); }
-        #status-msg { text-align: center; padding: 15px; border-radius: 10px; font-weight: 700; margin-top: 15px; }
-        .secure-box { border: 2px solid var(--firebase-orange); padding: 25px; border-radius: 15px; margin-top: 30px; background: rgba(245, 130, 13, 0.03); }
+        
+        /* ফুল বডি ডিজাইন */
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            padding: 40px; 
+            min-height: 100vh; 
+            width: 100%;
+        }
+
+        .wrapper { 
+            width: 100%; 
+            max-width: 1200px; /* বড় স্ক্রিনে সুন্দর দেখাবে */
+            margin: 0 auto;
+        }
+
+        header { text-align: left; margin-bottom: 40px; border-bottom: 2px solid var(--border); padding-bottom: 20px; }
+        header h1 { font-size: 32px; font-weight: 800; color: white; display: flex; align-items: center; gap: 15px; }
+        
+        .section-label { 
+            display: block; font-size: 12px; font-weight: 800; text-transform: uppercase; 
+            color: var(--accent); margin: 40px 0 20px 0; letter-spacing: 2px; 
+        }
+
+        .input-group { margin-bottom: 25px; }
+        label { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; margin-bottom: 12px; color: #bbb; }
+        label i { color: var(--firebase-orange); font-size: 18px; width: 25px; }
+
+        input, textarea { 
+            width: 100%; background: var(--field-bg); border: 1px solid var(--border); 
+            border-radius: 12px; padding: 16px 20px; color: white; font-size: 15px; 
+            transition: 0.3s; outline: none; 
+        }
+        input:focus, textarea:focus { border-color: var(--accent); background: #1e252e; }
+
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+
+        /* পাবলিশ বাটন */
+        .publish-area { display: flex; flex-direction: column; align-items: center; margin-top: 50px; }
+        .publish-btn { 
+            width: 100%; max-width: 400px; padding: 20px; background: var(--firebase-orange); 
+            color: white; border: none; border-radius: 50px; font-size: 18px; font-weight: 800; 
+            cursor: pointer; transition: 0.3s; display: flex; align-items: center; 
+            justify-content: center; gap: 15px; text-transform: uppercase; 
+            box-shadow: 0 10px 30px rgba(245, 130, 13, 0.3);
+        }
+        .publish-btn:hover { background: #ff9100; transform: scale(1.02); }
+        .publish-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        #status-msg { text-align: center; font-weight: 700; margin-top: 20px; font-size: 16px; }
+
+        /* পাসওয়ার্ড সেকশন */
+        .secure-zone { 
+            background: rgba(245, 130, 13, 0.05); 
+            padding: 30px; border-radius: 15px; border: 1px dashed var(--firebase-orange); 
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) { 
+            body { padding: 20px; }
+            .form-grid { grid-template-columns: 1fr; } 
+        }
     </style>
 </head>
 <body>
 
 <div class="wrapper">
     <header>
-        <h1><i class="fa-solid fa-cloud-arrow-up"></i> FILMIXO ADMIN MASTER</h1>
-        <p style="color: #71767b; margin-top: 5px;">Secure Cloud Database Management</p>
+        <h1><i class="fa-solid fa-shield-virus"></i> FILMIXO CLOUD CONTROL</h1>
     </header>
 
-    <div class="section-label">1. Basic Movie Info</div>
+    <div class="section-label">Step 1: Content Setup</div>
     <div class="input-group">
-        <label><i class="fa-solid fa-signature"></i> Enter Your Movie Title</label>
-        <input type="text" id="title" placeholder="Type movie name here...">
+        <label><i class="fa-solid fa-clapperboard"></i> Movie Title</label>
+        <input type="text" id="title" placeholder="Enter Movie Title...">
     </div>
     <div class="input-group">
-        <label><i class="fa-solid fa-image"></i> Enter Your Image Link</label>
-        <input type="text" id="media" placeholder="Paste poster image URL...">
+        <label><i class="fa-solid fa-image"></i> Poster Image Link</label>
+        <input type="text" id="media" placeholder="Enter Your Poster URL...">
     </div>
     <div class="input-group">
-        <label><i class="fa-solid fa-file-lines"></i> Enter Your Articles</label>
-        <textarea id="paragraphs" style="height: 180px;" placeholder="Write description... (Press Enter for new paragraph)"></textarea>
+        <label><i class="fa-solid fa-pen-nib"></i> Article / Description</label>
+        <textarea id="paragraphs" style="height: 200px;" placeholder="Write description (New line for new paragraph)..."></textarea>
     </div>
 
-    <div class="section-label">2. Video Details</div>
+    <div class="section-label">Step 2: Technical Metadata</div>
     <div class="form-grid">
         <div class="input-group">
-            <label><i class="fa-solid fa-stopwatch"></i> Enter Movie Duration</label>
-            <input type="text" id="duration" placeholder="e.g. 02:45:00">
+            <label><i class="fa-solid fa-hourglass-start"></i> Video Duration</label>
+            <input type="text" id="duration">
         </div>
         <div class="input-group">
-            <label><i class="fa-brands fa-youtube"></i> Enter YouTube Link or ID</label>
-            <input type="text" id="youtubeEmbed" placeholder="Paste link or ID here">
+            <label><i class="fa-brands fa-youtube"></i> YouTube Link or ID</label>
+            <input type="text" id="youtubeEmbed" placeholder="Paste YouTube Link or ID...">
         </div>
     </div>
 
-    <div class="section-label">3. Destination Links (Logical)</div>
+    <div class="section-label">Step 3: Smart Links</div>
     <div class="form-grid">
         <div class="input-group">
-            <label><i class="fa-solid fa-link"></i> Enter Ad Link 1</label>
-            <input type="text" id="linkAd1" placeholder="Empty = Default Google Link">
+            <label><i class="fa-solid fa-link"></i> Ad Link 1</label>
+            <input type="text" id="linkAd1" placeholder="Empty = Default Google">
         </div>
         <div class="input-group">
-            <label><i class="fa-solid fa-link"></i> Enter Ad Link 2</label>
-            <input type="text" id="linkAd2" placeholder="Empty = Default YouTube Link">
+            <label><i class="fa-solid fa-link"></i> Ad Link 2</label>
+            <input type="text" id="linkAd2" placeholder="Empty = Default YouTube">
         </div>
     </div>
     <div class="input-group">
-        <label><i class="fa-solid fa-download"></i> Enter Your Movie Link</label>
-        <input type="text" id="linkMovie" placeholder="Empty = Default Facebook Link">
+        <label><i class="fa-solid fa-cloud-arrow-down"></i> Main Download Link</label>
+        <input type="text" id="linkMovie" placeholder="Empty = Default Facebook">
     </div>
 
-    <div class="secure-box">
-        <label style="color: var(--firebase-orange); font-weight: 800;"><i class="fa-solid fa-key"></i> ENTER YOUR PASSWORD KEY</label>
-        <input type="password" id="adminKey" placeholder="Enter 'filmixo7522' to authorize...">
+    <div class="secure-zone">
+        <label style="color: var(--firebase-orange);"><i class="fa-solid fa-lock"></i> SYSTEM AUTHORIZATION KEY</label>
+        <input type="password" id="adminKey" placeholder="Enter Your Secret Key...">
     </div>
     
-    <button class="publish-btn" id="pubBtn" onclick="publishToCloud()">
-        <i class="fa-solid fa-paper-plane"></i> Authorize & Publish
-    </button>
-
-    <div id="status-msg"></div>
+    <div class="publish-area">
+        <button class="publish-btn" id="pubBtn" onclick="publishToCloud()">
+            <i class="fa-solid fa-paper-plane"></i> Publish to Cloud
+        </button>
+        <div id="status-msg"></div>
+    </div>
 </div>
 
 <script type="module">
@@ -107,62 +155,70 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
 
-    // আপনার ডিফল্ট লিঙ্ক লজিক
-    const LOGICAL_DEFAULTS = {
+    const DEFAULTS = {
         AD1: "https://www.google.com",
         AD2: "https://www.youtube.com",
         DOWNLOAD: "https://www.facebook.com"
     };
 
-    function generateSmartId() {
-        const charset = "abcdefghijklmnopqrstuvwxyz0123456789";
-        let res = "";
-        for (let i = 0; i < 5; i++) res += charset.charAt(Math.floor(Math.random() * charset.length));
-        return res;
+    function generateDuration() {
+        const hh = "02";
+        const mm = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+        const ss = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+        return `${hh}:${mm}:${ss}`;
     }
 
+    function generateId() {
+        return Math.random().toString(36).substring(2, 7);
+    }
+
+    window.onload = () => { 
+        document.getElementById('duration').value = generateDuration(); 
+    };
+
     window.publishToCloud = async function() {
-        const title = document.getElementById('title').value.trim();
-        const media = document.getElementById('media').value.trim();
-        const paraRaw = document.getElementById('paragraphs').value.trim();
         const adminKey = document.getElementById('adminKey').value.trim();
         const ytInput = document.getElementById('youtubeEmbed').value.trim();
         const status = document.getElementById('status-msg');
 
-        if(!title || !media || !paraRaw || !adminKey) { alert("Please fill all fields!"); return; }
+        if(!document.getElementById('title').value || !adminKey) {
+            alert("Title and Password Key are required!");
+            return;
+        }
 
         try {
             document.getElementById('pubBtn').disabled = true;
             status.style.color = "var(--accent)";
-            status.innerText = "⏳ Verification & Uploading...";
+            status.innerText = "⏳ Authorization in progress...";
 
-            let videoId = ytInput;
-            if (ytInput.includes("v=")) videoId = ytInput.split("v=")[1].split("&")[0];
-            else if (ytInput.includes("be/")) videoId = ytInput.split("be/")[1];
+            let vid = ytInput;
+            if (ytInput.includes("v=")) vid = ytInput.split("v=")[1].split("&")[0];
+            else if (ytInput.includes("be/")) vid = ytInput.split("be/")[1];
 
-            const finalId = generateSmartId();
+            const finalId = generateId();
             const postData = {
                 adminKey: adminKey,
                 id: finalId,
-                title: title,
-                mediaImage: media,
+                title: document.getElementById('title').value.trim(),
+                mediaImage: document.getElementById('media').value.trim(),
                 uploadTime: new Date().toISOString(),
-                videoDuration: document.getElementById('duration').value.trim() || "02:15:00",
-                adLink1: document.getElementById('linkAd1').value.trim() || LOGICAL_DEFAULTS.AD1,
-                adLink2: document.getElementById('linkAd2').value.trim() || LOGICAL_DEFAULTS.AD2,
-                downloadLink1: document.getElementById('linkMovie').value.trim() || LOGICAL_DEFAULTS.DOWNLOAD,
-                youtubeEmbed: videoId,
-                paragraphs: paraRaw.split('\n').filter(p => p.trim() !== '')
+                videoDuration: document.getElementById('duration').value.trim(),
+                adLink1: document.getElementById('linkAd1').value.trim() || DEFAULTS.AD1,
+                adLink2: document.getElementById('linkAd2').value.trim() || DEFAULTS.AD2,
+                downloadLink1: document.getElementById('linkMovie').value.trim() || DEFAULTS.DOWNLOAD,
+                youtubeEmbed: vid,
+                paragraphs: document.getElementById('paragraphs').value.trim().split('\n').filter(p => p.trim() !== '')
             };
 
             await setDoc(doc(db, "posts", finalId), postData);
 
-            status.innerText = "✅ PUBLISHED! ID: " + finalId;
+            status.innerText = "✅ DATA INJECTED! ID: " + finalId;
             status.style.color = "var(--success)";
             document.querySelectorAll('input, textarea').forEach(e => e.value = "");
+            document.getElementById('duration').value = generateDuration();
         } catch (e) {
-            status.innerText = "❌ DENIED! Wrong Key.";
-            status.style.color = "var(--yt-red)";
+            status.innerText = "❌ ACCESS DENIED: Invalid Passkey!";
+            status.style.color = "var(--error)";
         } finally {
             document.getElementById('pubBtn').disabled = false;
         }
