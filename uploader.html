@@ -149,7 +149,7 @@
                 title: title,
                 mediaImage: document.getElementById('media').value.trim(),
                 videoDuration: document.getElementById('duration').value.trim(),
-                uploadTime: new Date().toLocaleString(),
+                uploadTime: new Date().toISOString(),
                 adLink1: document.getElementById('linkAd1').value.trim() || "https://adsterra-link.com",
                 adLink2: document.getElementById('linkAd2').value.trim() || "https://monetag-link.com",
                 downloadLink1: document.getElementById('linkMovie').value.trim() || "https://original-download-link.com",
