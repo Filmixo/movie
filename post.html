@@ -175,7 +175,7 @@
                         "@type": "VideoObject",
                         "name": `${post.title} Official Trailer`,
                         "thumbnailUrl": post.mediaImage,
-                        "uploadDate": post.uploadTime || "2026-01-05",
+                        "uploadDate": post.uploadTime ? post.uploadTime.split('T')[0] : "2026-01-05",
                         "contentUrl": CONFIG.GLOBAL_VIDEO_LINK
                     }
                 },
