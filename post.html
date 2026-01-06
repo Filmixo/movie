@@ -38,8 +38,7 @@
     <script src="https://prototypesorting.com/8e/8f/e0/8e8fe0bd662ff02c455fafbcaf1c9369.js" async></script>
 
     <style>  
-    /* --- বেসিক সেটআপ --- */
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none; }  
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; text-decoration: none !important; color: inherit; } 
     body { display: flex; justify-content: center; -webkit-tap-highlight-color: transparent; user-select: none; background: #fff; }  
     
     .main-wrapper { width: 100%; max-width: 600px; min-height: 100vh; background: #fff; position: relative; border-left: 1px solid #eee; border-right: 1px solid #eee; opacity: 1; margin: 0 auto; }
@@ -135,10 +134,10 @@
 <div class="main-wrapper" id="app-wrapper">  
     <header>  
         <div class="logo-area"><i class="fa-solid fa-clapperboard" style="margin-right: 8px;"></i>FILMIXO</div>
-        <div>  
-            <span class="header-btn" onclick="window.location.href='https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef'"><i class="fa-solid fa-circle-play" style="margin-right: 5px;"></i>Tutorial Vdo</span>
-            <span class="header-btn" onclick="window.location.href='index.html'"><i class="fa-solid fa-house" style="margin-right: 5px;"></i>Home</span>
-        </div>  
+         <div>  
+            <a href="https://prototypesorting.com/dkhpkccgup?key=f93978b429dfbcf244b3718ef67223ef" class="header-btn" aria-label="Watch Tutorial Video"><i class="fa-solid fa-circle-play" aria-hidden="true" style="margin-right: 5px;"></i>Tutorial Vdo</a>
+            <a href="index.html" class="header-btn" aria-label="Go to Home"><i class="fa-solid fa-house" aria-hidden="true" style="margin-right: 5px;"></i>Home</a>
+        </div> 
     </header>  
 
       <div id="post-details-container">
@@ -433,15 +432,15 @@
                     <div onclick="handleDownloadClick('b2','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[1]}"><i class="fa-solid fa-download"></i> <span class="btn-text-main">720P HD READY</span></div>
                     <div onclick="handleDownloadClick('b3','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[2]}"><i class="fa-solid fa-file-arrow-down" style="font-size: 0.9em;"></i> <span class="btn-text-main">360P MOBILE</span></div>
                 </div>
-                <div class="stats-section">
+                  <div class="stats-section">
                     <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="v-cnt">0</span> <span>Views</span></div>
                     <div class="love-btn"><i class="fa-regular fa-heart"></i> <span id="l-cnt">0</span> <span>Likes</span></div>
                     <div class="share-icons">
-                        <div class="share-icon" style="background:#1877f2" onclick="sh('fb')"><i class="fa-brands fa-facebook-f"></i></div>
-                        <div class="share-icon" style="background:#0084ff" onclick="sh('msg')"><i class="fa-brands fa-facebook-messenger"></i></div>
-                        <div class="share-icon" style="background:#25d366" onclick="sh('wa')"><i class="fa-brands fa-whatsapp"></i></div>
-                        <div class="share-icon" style="background:#1da1f2" onclick="sh('tw')"><i class="fa-brands fa-twitter"></i></div>
-                        <div class="share-icon" style="background:#0088cc" onclick="sh('tg')"><i class="fa-brands fa-telegram"></i></div>
+                        <div class="share-icon" role="button" aria-label="Share on Facebook" style="background:#1877f2" onclick="sh('fb')"><i class="fa-brands fa-facebook-f" aria-hidden="true"></i></div>
+                        <div class="share-icon" role="button" aria-label="Share on Messenger" style="background:#0084ff" onclick="sh('msg')"><i class="fa-brands fa-facebook-messenger" aria-hidden="true"></i></div>
+                        <div class="share-icon" role="button" aria-label="Share on WhatsApp" style="background:#25d366" onclick="sh('wa')"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i></div>
+                        <div class="share-icon" role="button" aria-label="Share on Twitter" style="background:#1da1f2" onclick="sh('tw')"><i class="fa-brands fa-twitter" aria-hidden="true"></i></div>
+                        <div class="share-icon" role="button" aria-label="Share on Telegram" style="background:#0088cc" onclick="sh('tg')"><i class="fa-brands fa-telegram" aria-hidden="true"></i></div>
                     </div>
                 </div>
             </div>`;
