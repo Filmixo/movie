@@ -113,10 +113,11 @@
     
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-   /* --- Professional Darker Skeleton Loader --- */
-    #skeleton-loader div { position: relative; overflow: hidden; background-color: #d1d5db !important; }
-    #skeleton-loader div::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(209,213,219,0) 0%, rgba(255,255,255,0.4) 50%, rgba(209,213,219,0) 100%); animation: shimmer 1.2s infinite ease-in-out; transform: translateX(-100%); }
-    @keyframes shimmer { 100% { transform: translateX(100%); } }
+   /* --- নির্দিষ্ট মেটেরিয়াল গাঢ় করার সঠিক কোড --- */
+#skeleton-loader div[style*="width"] { background-color: #d1d5db !important; position: relative; overflow: hidden; } 
+#skeleton-loader div[style*="width"]::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(209,213,219,0) 0%, rgba(255,255,255,0.4) 50%, rgba(209,213,219,0) 100%); animation: shimmer 1.2s infinite ease-in-out; transform: translateX(-100%); }
+#skeleton-loader { background: #ffffff !important; border: 1px solid #eee; } /* মেইন বডি সাদা থাকবে */
+@keyframes shimmer { 100% { transform: translateX(100%); } }
 </style>
 </head>  
 <body>  
