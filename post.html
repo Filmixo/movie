@@ -20,8 +20,15 @@
     <meta property="og:description" id="og-desc" content="Explore research-based reviews and technical breakdowns of the latest films. Quality and Accuracy guaranteed.">
     <meta property="og:image" content="https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/thumbel/filmixo (1).jpg">
     
-    <script type="application/ld+json" id="dynamic-schema"></script>
-    
+    <script type="application/ld+json" id="dynamic-schema">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "FILMIXO | Professional Movie Insights",
+      "description": "Loading expert movie reviews and technical analysis on FILMIXO..."
+     }
+    </script>
+
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="preconnect" href="https://prototypesorting.com">
     <link rel="dns-prefetch" href="https://prototypesorting.com">
@@ -126,7 +133,17 @@
         </div>  
     </header>  
 
-    <div id="post-details-container"></div>  
+    <div id="post-details-container">
+    <div id="skeleton-loader" style="padding: 15px;">
+        <div style="width: 100%; aspect-ratio: 16/9; background: #f2f2f2; border-radius: 4px; margin-bottom: 15px;"></div>
+        <div style="width: 80%; height: 20px; background: #f2f2f2; border-radius: 4px; margin-bottom: 10px;"></div>
+        <div style="width: 60%; height: 15px; background: #f2f2f2; border-radius: 4px; margin-bottom: 20px;"></div>
+        <div style="display: flex; gap: 10px;">
+            <div style="flex: 1; height: 40px; background: #f2f2f2; border-radius: 6px;"></div>
+            <div style="flex: 1; height: 40px; background: #f2f2f2; border-radius: 6px;"></div>
+        </div>
+    </div>
+</div>
 
     <footer class="site-footer">  
         <div class="footer-links"> 
@@ -270,8 +287,9 @@
         schemaScript.type = 'application/ld+json';
         document.head.appendChild(schemaScript);
     }
-    schemaScript.textContent = JSON.stringify(schemaData);
-};
+        schemaScript.textContent = JSON.stringify(schemaData);
+        setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 100);
+       };
 
     function formatCount(n) { return n >= 1e6 ? (n/1e6).toFixed(1)+'M' : n >= 1e3 ? (n/1e3).toFixed(1)+'K' : n || 0; }  
     function timeAgo(s) { const d=new Date(s), n=new Date(), sec=Math.floor((n-d)/1000); if(sec<60)return 'Just now'; const min=Math.floor(sec/60); if(min<60)return min+'m ago'; const hr=Math.floor(min/60); if(hr<24)return hr+'h ago'; return Math.floor(hr/24)+'d ago'; }
@@ -329,8 +347,9 @@
     window.onfocus = checkTaskStatus;
     window.addEventListener('load', checkTaskStatus);
 
-    function renderPost(post) {  
-        const paras = post.paragraphs || [];
+        function renderPost(post) {  
+        const sk = document.getElementById('skeleton-loader'); if(sk) sk.remove();
+        const paras = post.paragraphs || [];        
         let body = "";
         paras.forEach((p, i) => {
             if (i < paras.length - 1) {
