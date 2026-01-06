@@ -147,7 +147,6 @@
     const CONFIG = { GLOBAL_VIDEO_LINK: "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea" };  
 
     const STAY_TIME = 5000; 
-    let pendingTask = null; let blurTimestamp = 0;
     let timeElements = [];
 
     const generatePremiumSEO = (post) => {
@@ -281,15 +280,19 @@
         });
     }
 
-        const checkTaskStatus = () => {
+       const checkTaskStatus = () => {
         const savedTask = sessionStorage.getItem('pendingDownloadTask');
         if (savedTask) {
             const task = JSON.parse(savedTask);
-            if ((Date.now() - task.blurTime) >= STAY_TIME) {
+            const timeSpent = Date.now() - task.blurTime;
+            
+            // ৫ সেকেন্ড পূর্ণ হলেই কেবল লোকাল স্টোরেজে সেভ হবে
+            if (timeSpent >= STAY_TIME) {
                 let map = JSON.parse(localStorage.getItem(task.key)) || {};
                 map[task.id] = task.type;
                 localStorage.setItem(task.key, JSON.stringify(map));
             }
+            // কাজ শেষ বা ব্যর্থ হলে সেশন মুছে যাবে যাতে টাইমিং চুরি করা না যায়
             sessionStorage.removeItem('pendingDownloadTask');
         }
     };
