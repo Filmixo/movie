@@ -143,7 +143,7 @@
     </header>  
 
       <div id="post-details-container">
-    <div id="skeleton-loader" style="padding: 0; background: #ffffff; border: 1px solid #eee;">
+      <div id="skeleton-loader" role="status" aria-live="polite" aria-label="Loading content" style="padding: 0; background: #ffffff; border: 1px solid #eee;">
     
         <div style="padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e1e8ed;">
             <div style="display: flex; align-items: center; gap: 10px;">
@@ -412,7 +412,7 @@
             
           <div id="ad-box-top" class="ad-box"></div>
             <div class="video-container" onclick="handleVideoClick()">
-               <img src="${post.mediaImage}" alt="${post.title} Movie Poster" decoding="auto" fetchpriority="high" id="main-img" loading="eager" style="content-visibility: auto; contain-intrinsic-size: 16/9;">
+               <img src="${post.mediaImage}" alt="Watch ${post.title} Movie Online" decoding="auto" fetchpriority="high" id="main-img" loading="eager" style="content-visibility: auto; contain-intrinsic-size: 16/9;">
                 <div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div>
                  <div class="video-controls">
                     <span>${post.videoDuration}</span>
@@ -429,10 +429,10 @@
                 ${post.youtubeEmbed ? `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed.replace('<iframe', '<iframe loading="lazy"')}</div><div id="ad-box-video" class="ad-box"></div>` : ''} 
                 <p class="article-para">${paras[paras.length-1] || ''}</p>
                 <div class="download-title-text">↕️🔰 Download Full Movie in HD 🔰↕️</div>
-                <div class="download-buttons-container">
-                    <div onclick="handleDownloadClick('b1','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[0]}"><i class="fa-solid fa-circle-down"></i> <span class="btn-text-main">1080P FULL HD</span></div>
-                    <div onclick="handleDownloadClick('b2','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[1]}"><i class="fa-solid fa-download"></i> <span class="btn-text-main">720P HD READY</span></div>
-                    <div onclick="handleDownloadClick('b3','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[2]}"><i class="fa-solid fa-file-arrow-down" style="font-size: 0.9em;"></i> <span class="btn-text-main">360P MOBILE</span></div>
+                    <div class="download-buttons-container">
+                    <div role="button" aria-label="Download 1080p Full HD" onclick="handleDownloadClick('b1','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[0]}"><i class="fa-solid fa-circle-down" aria-hidden="true"></i> <span class="btn-text-main">1080P FULL HD</span></div>
+                    <div role="button" aria-label="Download 720p HD Ready" onclick="handleDownloadClick('b2','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[1]}"><i class="fa-solid fa-download" aria-hidden="true"></i> <span class="btn-text-main">720P HD READY</span></div>
+                    <div role="button" aria-label="Download 360p Mobile" onclick="handleDownloadClick('b3','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[2]}"><i class="fa-solid fa-file-arrow-down" aria-hidden="true" style="font-size: 0.9em;"></i> <span class="btn-text-main">360P MOBILE</span></div>
                 </div>
                 <div class="stats-section">
                     <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="v-cnt">0</span> <span>Views</span></div>
