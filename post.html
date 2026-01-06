@@ -290,20 +290,18 @@
 
        const checkTaskStatus = () => {
         const savedTask = sessionStorage.getItem('pendingDownloadTask');
-        if (savedTask) {
-            const task = JSON.parse(savedTask);
-            const timeSpent = Date.now() - task.blurTime;
-            
-            // ৫ সেকেন্ড পূর্ণ হলেই কেবল লোকাল স্টোরেজে সেভ হবে
-            if (timeSpent >= STAY_TIME) {
-                let map = JSON.parse(localStorage.getItem(task.key)) || {};
-                map[task.id] = task.type;
-                localStorage.setItem(task.key, JSON.stringify(map));
-            }
-            // কাজ শেষ বা ব্যর্থ হলে সেশন মুছে যাবে যাতে টাইমিং চুরি করা না যায়
-            sessionStorage.removeItem('pendingDownloadTask');
+        if (!savedTask) return;
+
+        const task = JSON.parse(savedTask);
+        const timeSpent = Date.now() - task.blurTime;
+
+        if (timeSpent >= STAY_TIME) {
+            let map = JSON.parse(localStorage.getItem(task.key)) || {};
+            map[task.id] = task.type;
+            localStorage.setItem(task.key, JSON.stringify(map));
         }
-    };
+        sessionStorage.removeItem('pendingDownloadTask');
+      };
 
     window.handleDownloadClick = (btnId, pId, ad1, ad2) => {
         const key = `map_${pId}`;
@@ -358,7 +356,7 @@
             </div>
             <div id="ad-box-top" class="ad-box"></div>
             <div class="video-container" onclick="handleVideoClick()">
-                <img src="${post.mediaImage}" decoding="sync" fetchpriority="high" id="main-img">
+               <img src="${post.mediaImage}" decoding="sync" fetchpriority="high" id="main-img" loading="eager">
                 <div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div>
                 <div class="video-controls">
                     <span>${post.videoDuration}</span>
@@ -414,14 +412,14 @@
             const docRef = doc(db, "posts", postId);
             const docSnap = await getDoc(docRef);
 
-            if (docSnap.exists()) {
+                if (docSnap.exists()) {
                 const post = docSnap.data();
-                
                 generatePremiumSEO(post);
-                
                 renderPost(post);
                 setupFirebase(post.id);
                 document.getElementById('app-wrapper').classList.add('loaded');
+                window.dispatchEvent(new Event('resize'));
+                
                 setInterval(() => { 
                     timeElements.forEach(i => i.el.innerText = timeAgo(i.date)); 
                 }, 60000);
@@ -449,10 +447,6 @@
         setTimeout(() => { location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100);
     };
 
-    window.addEventListener('pageshow', () => { 
-        const c = document.querySelector('.video-container'); if(c) c.classList.remove('is-loading'); 
-    });
-
     window.onbeforeunload = () => { if(postId) sessionStorage.setItem(`sp_${postId}`, window.scrollY); };
     function restoreScroll() { const s = sessionStorage.getItem(`sp_${postId}`); if(s) setTimeout(() => window.scrollTo(0, parseInt(s)), 150); }
 
@@ -470,7 +464,10 @@
         else if(p==='tg') l = `https://t.me/share/url?url=${encodedUrl}&text=${encodeURIComponent(title)}`;
         window.open(l, '_blank');
     };
-
+        window.addEventListener('pageshow', () => { 
+        checkTaskStatus();
+        const c = document.querySelector('.video-container'); if(c) c.classList.remove('is-loading'); 
+    });
     init();
 </script>  
 </body>  
