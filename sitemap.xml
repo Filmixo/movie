@@ -4,14 +4,18 @@
   
   <url>
     <loc>https://filmixo.github.io/movie/</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <image:image>
+      <image:loc>https://raw.githubusercontent.com/Filmixo/movie/refs/heads/main/thumbel/filmixo (1).jpg</image:loc>
+      <image:title>FILMIXO - Watch &amp; Download Latest HD Movies</image:title>
+    </image:image>
   </url>
   
   <url>
     <loc>https://filmixo.github.io/movie/post.html</loc>
-    <lastmod>2026-01-05</lastmod>
+    <lastmod>2026-01-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
