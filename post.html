@@ -113,11 +113,12 @@
     
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* --- নির্দিষ্ট মেটেরিয়াল গাঢ় করার সঠিক কোড --- */
-#skeleton-loader div[style*="width"] { background-color: #d1d5db !important; position: relative; overflow: hidden; } 
-#skeleton-loader div[style*="width"]::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(209,213,219,0) 0%, rgba(255,255,255,0.4) 50%, rgba(209,213,219,0) 100%); animation: shimmer 1.2s infinite ease-in-out; transform: translateX(-100%); }
-#skeleton-loader { background: #ffffff !important; border: 1px solid #eee; } /* মেইন বডি সাদা থাকবে */
-@keyframes shimmer { 100% { transform: translateX(100%); } }
+    #skeleton-loader div[style*="width"] { background-color: #d1d5db !important; position: relative; overflow: hidden; } 
+    #skeleton-loader div[style*="width"]::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(209,213,219,0) 0%, rgba(255,255,255,0.4) 50%, rgba(209,213,219,0) 100%); animation: shimmer 1.2s infinite ease-in-out; transform: translateX(-100%); }
+    #skeleton-loader { background: #ffffff !important; border: 1px solid #eee; }
+    #main-img { aspect-ratio: 16/9; background: #d1d5db; content-visibility: auto; }
+   @keyframes shimmer { 100% { transform: translateX(100%); } }
+
 </style>
 </head>  
 <body>  
@@ -405,11 +406,12 @@
                <i class="fa-regular fa-clock" style="margin-right: 5px;"></i>${timeAgo(post.uploadTime)}
               </div>
             </div>
-            <div id="ad-box-top" class="ad-box"></div>
+            
+          <div id="ad-box-top" class="ad-box"></div>
             <div class="video-container" onclick="handleVideoClick()">
-               <img src="${post.mediaImage}" decoding="sync" fetchpriority="high" id="main-img" loading="eager">
+               <img src="${post.mediaImage}" decoding="async" fetchpriority="high" id="main-img" loading="eager">
                 <div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div>
-                <div class="video-controls">
+                 <div class="video-controls">
                     <span>${post.videoDuration}</span>
                     <div class="v-divider"></div>
                     <i class="fa-solid fa-volume-high" style="font-size: 11px;"></i>
@@ -421,7 +423,7 @@
                 <h1 class="article-title">${post.title}</h1>
                 <div id="ad-box-title" class="ad-box"></div>
                 ${body}
-                ${post.youtubeEmbed ? `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed}</div><div id="ad-box-video" class="ad-box"></div>` : ''}
+                ${post.youtubeEmbed ? `<div class="youtube-embed-wrapper" style="display:block;">${post.youtubeEmbed.replace('<iframe', '<iframe loading="lazy"')}</div><div id="ad-box-video" class="ad-box"></div>` : ''} 
                 <p class="article-para">${paras[paras.length-1] || ''}</p>
                 <div class="download-title-text">↕️🔰 Download Full Movie in HD 🔰↕️</div>
                 <div class="download-buttons-container">
