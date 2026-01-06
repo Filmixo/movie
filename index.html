@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FILMIXO | Home of Professional Movie Reviews</title>
-    <meta name="description" content="FILMIXO: Your ultimate HD movie hub for expert reviews and technical analysis.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>FILMIXO - Watch & Download Latest HD Movies & Reviews</title>
+    <meta name="description" content="FILMIXO is your ultimate destination for HD movie downloads, expert reviews, and latest cinema updates. Explore professional analysis and trending blockbusters.">
     <link rel="canonical" href="https://filmixo.github.io/movie/">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://filmixo.github.io/movie/sitemap.xml">
     <link rel="search" type="application/opensearchdescription+xml" title="FILMIXO Search" href="https://filmixo.github.io/movie/index.html?search={search_term_string}">
@@ -34,7 +33,7 @@
         .profile-header-area { position: relative; padding: 0 15px; display: flex; justify-content: space-between; align-items: flex-start; }
         .profile-pic-container { margin-top: -75px; z-index: 2; }
         .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 4px solid white; background-color: #000; overflow: hidden; display: flex; justify-content: center; align-items: center; }
-        .profile-pic img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-pic img { width: 140px; height: 140px; object-fit: cover; fetchpriority: high; } 
         .action-buttons { display: flex; gap: 8px; margin-top: 10px; }
         .btn { border: none; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: transform 0.1s; -webkit-tap-highlight-color: transparent; }
         .btn:active { transform: scale(0.95); } 
@@ -53,7 +52,7 @@
 
         /* --- নেভিগেশন বার (ফুল উইডথ লেআউট) --- */
         .nav-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 8px; border-top: 2px solid #e1e8ed; border-bottom: 2px solid #e1e8ed; background: #fff; position: sticky; top: 0; z-index: 100; }
-        .nav-btn { flex: 1; text-align: center; padding: 8px 5px; margin: 0 4px; border-radius: 20px; font-size: 14px; font-weight: bold; cursor: pointer; border: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: center; gap: 4px; transition: background-color 0.1s ease; -webkit-tap-highlight-color: transparent; }
+        .nav-btn { flex: 1; text-align: center; padding: 12px 5px; margin: 0 4px; border-radius: 20px; font-size: 15px; font-weight: 700; min-height: 48px; cursor: pointer; border: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: center; gap: 6px; transition: all 0.2s ease; -webkit-tap-highlight-color: transparent; }
         .nav-bar .nav-btn:first-child { margin-left: 0; } 
         .nav-bar .nav-btn:last-child { margin-right: 0; } 
         .nav-btn.active { background-color: #000 !important; color: white !important; border: 1px solid #000 !important; }
@@ -68,13 +67,13 @@
         @keyframes fadeIn { to { opacity: 1; } }
         
         .media-container { position: relative; width: 100%; border-radius: 8px; overflow: hidden; background: #f0f2f5; aspect-ratio: 16 / 9; cursor: pointer; -webkit-tap-highlight-color: transparent; }
-        .media-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.1s ease; }
+        .media-container img { width: 100%; height: 100%; aspect-ratio: 16/9; object-fit: cover; transition: transform 0.1s ease; display: block; }
         .media-container:active img { transform: scale(1.03); }
         .play-icon { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background-color: rgba(0, 0, 0, 0.6); border-radius: 50%; display: flex; justify-content: center; align-items: center; border: 1.5px solid rgba(255,255,255,0.8); pointer-events: none; }
         .play-icon::after { content: ''; border-left: 12px solid white; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
         .duration-badge { position: absolute; bottom: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; padding: 2px 5px; border-radius: 4px; font-size: 10px; font-weight: bold; pointer-events: none; }
 
-        .post-title { font-size: 14px; font-weight: 700; color: #0f1419; margin: 8px 0 6px 0; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 34px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+        .post-title { font-size: 16px; font-weight: 700; color: #0f1419; margin: 10px 0 6px 0; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; height: 42px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
         .post-title:active { color: #1da1f2; }
         
         .card-footer-info { display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #536471; font-weight: 600; margin-top: 4px; gap: 4px; }
@@ -157,12 +156,12 @@
             <p class="bio">FILMIXO:🍿 Your ultimate HD movie hub. Download exclusive releases and trending blockbusters instantly. Stop scrolling, seize the cinema.</p>
         </div>
 
-        <div class="nav-bar">
-            <div class="nav-btn active" id="nav-home" onclick="showFeed()"><i class="fa-solid fa-house"></i> Home</div>
-            <div class="nav-btn inactive" id="nav-signup" onclick="goToSignUp()"><i class="fa-solid fa-user-plus"></i> Sign Up</div>
-            <div class="nav-btn inactive" id="nav-login" onclick="showLogin()"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</div>
-            <div class="nav-btn inactive" id="nav-search" onclick="showSearch()"><i class="fa-solid fa-magnifying-glass"></i> Search</div>
-        </div>
+            <nav class="nav-bar" aria-label="Main Navigation">
+            <div class="nav-btn active" id="nav-home" role="button" aria-label="Go to Home" onclick="showFeed()"><i class="fa-solid fa-house" aria-hidden="true"></i> Home</div>
+            <div class="nav-btn inactive" id="nav-signup" role="button" aria-label="Sign Up for Premium" onclick="goToSignUp()"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> Sign Up</div>
+            <div class="nav-btn inactive" id="nav-login" role="button" aria-label="Login to Account" onclick="showLogin()"><i class="fa-solid fa-arrow-right-to-bracket" aria-hidden="true"></i> Login</div>
+            <div class="nav-btn inactive" id="nav-search" role="button" aria-label="Search Movies" onclick="showSearch()"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Search</div>
+            </nav>
         
         <div id="feed-container"></div>
         
@@ -172,13 +171,13 @@
             </div>
         </div>
 
-        <footer class="site-footer" id="main-footer" style="display:none;">
-            <div class="footer-links">
-                <a href="#">About</a>
-                <a href="#">Contact</a>
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-            </div>
+          <footer class="site-footer" id="main-footer" style="display:none;">
+            <nav class="footer-links" aria-label="Footer Navigation">
+                <a href="about.html" aria-label="About Us">About</a>
+                <a href="contact.html" aria-label="Contact Us">Contact</a>
+                <a href="privacy.html" aria-label="Privacy Policy">Privacy Policy</a>
+                <a href="terms.html" aria-label="Terms of Service">Terms of Service</a>
+            </nav>
             <div class="footer-copyright">
                 Copyright © 2026 <a href="#" style="color:#1da1f2; font-weight:bold;">filmixo.com</a>. All rights reserved.
             </div>
@@ -199,15 +198,17 @@
         <div id="notification" class="notification"></div>
     </div>
     
-    <div id="search-overlay">
+        <div id="search-overlay">
         <div class="search-header">
             <button class="search-back-btn" onclick="hideSearch()"><i class="fa-solid fa-arrow-left"></i></button>
-            <div class="search-input-container" style="flex-grow:1; margin:0 10px;"><input type="text" id="search-input" placeholder="Search movie name..." autofocus></div>
+            <div class="search-input-container" style="flex-grow:1; margin:0 10px;">
+                <input type="text" id="search-input" aria-label="Search for movies" placeholder="Search movie name..." autofocus>
+            </div>
         </div>
         <div id="search-results"><div id="not-found">Post Not Found</div></div>
     </div>
 
-    <script type="module">
+    <script type="module" defer>
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
         import { getFirestore, doc, getDoc, setDoc, increment, onSnapshot, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore.js";
 
@@ -280,7 +281,7 @@
                 card.className = 'post-card';
                 card.innerHTML = `
                     <div class="media-container" onclick="openPost('${post.id}')">
-                        <img src="${post.mediaImage}" loading="lazy">
+                       <img src="${post.mediaImage}" alt="${post.title} Movie Poster" loading="lazy" width="300" height="168" style="content-visibility: auto; aspect-ratio: 16/9; object-fit: cover;">
                         <div class="play-icon"></div>
                         <div class="duration-badge">${post.videoDuration}</div>
                     </div>
