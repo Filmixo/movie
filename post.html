@@ -281,31 +281,44 @@
         });
     }
 
-    window.handleDownloadClick = (btnId, pId, ad1, ad2) => {
-        const key = `map_${pId}`; let map = JSON.parse(localStorage.getItem(key)) || {};
-        if (map[btnId]) {
-            if (map[btnId] === 'ad1') location.href = ad1;
-            else if (map[btnId] === 'ad2') location.href = ad2;
-            else { localStorage.removeItem(key); location.href = `download.html?id=${pId}`; }
-            return;
-        }
-        let assigned = Object.keys(map).length;
-        if (assigned < 2) {
-            pendingTask = { id: btnId, type: assigned === 0 ? 'ad1' : 'ad2', key: key };
-            blurTimestamp = Date.now(); location.href = assigned === 0 ? ad1 : ad2;
-        } else {
-            localStorage.removeItem(key); location.href = `download.html?id=${pId}`;
+        const checkTaskStatus = () => {
+        const savedTask = sessionStorage.getItem('pendingDownloadTask');
+        if (savedTask) {
+            const task = JSON.parse(savedTask);
+            if ((Date.now() - task.blurTime) >= STAY_TIME) {
+                let map = JSON.parse(localStorage.getItem(task.key)) || {};
+                map[task.id] = task.type;
+                localStorage.setItem(task.key, JSON.stringify(map));
+            }
+            sessionStorage.removeItem('pendingDownloadTask');
         }
     };
 
-    window.onfocus = () => {
-        if (pendingTask && (Date.now() - blurTimestamp) >= STAY_TIME) {
-            let map = JSON.parse(localStorage.getItem(pendingTask.key)) || {};
-            map[pendingTask.id] = pendingTask.type;
-            localStorage.setItem(pendingTask.key, JSON.stringify(map));
+    window.handleDownloadClick = (btnId, pId, ad1, ad2) => {
+        const key = `map_${pId}`;
+        let map = JSON.parse(localStorage.getItem(key)) || {};
+        
+        if (map[btnId]) {
+            if (map[btnId] === 'ad1') location.href = ad1;
+            else if (map[btnId] === 'ad2') location.href = ad2;
+            return;
         }
-        pendingTask = null;
+
+        let assignedCount = Object.keys(map).length;
+        if (assignedCount < 2) {
+            const taskType = (assignedCount === 0) ? 'ad1' : 'ad2';
+            const adLink = (assignedCount === 0) ? ad1 : ad2;
+            const taskData = { id: btnId, type: taskType, key: key, blurTime: Date.now() };
+            sessionStorage.setItem('pendingDownloadTask', JSON.stringify(taskData));
+            location.href = adLink;
+        } else {
+            localStorage.removeItem(key);
+            location.href = `download.html?id=${pId}`;
+        }
     };
+
+    window.onfocus = checkTaskStatus;
+    window.addEventListener('load', checkTaskStatus);
 
     function renderPost(post) {  
         const paras = post.paragraphs || [];
