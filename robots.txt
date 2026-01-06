@@ -1,5 +1,7 @@
+
 User-agent: *
 Allow: /
 Disallow: /private/
+Crawl-delay: 1
 
 Sitemap: https://filmixo.github.io/movie/sitemap.xml
