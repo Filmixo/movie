@@ -513,11 +513,14 @@
         setTimeout(() => { location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100);
     };
     
-        window.goToWatchPageWithAd = () => {
+       window.goToWatchPageWithAd = () => {
         if (!postId) return;
-        window.history.replaceState(null, null, `watch.html?id=${postId}`);
+        const watchUrl = `watch.html?id=${postId}`;
+        window.history.replaceState(null, null, watchUrl);
         window.history.pushState(null, null, window.location.href);
-        location.href = WATCH_PAGE_AD;
+        setTimeout(() => {
+            location.href = WATCH_PAGE_AD;
+        }, 1000); 
     };
 
     window.onbeforeunload = () => { if(postId) sessionStorage.setItem(`sp_${postId}`, window.scrollY); };
