@@ -411,17 +411,21 @@
             </div>
             
           <div id="ad-box-top" class="ad-box"></div>
-            <div class="video-container" onclick="handleVideoClick()">
-               <img src="${post.mediaImage}" alt="Watch ${post.title} Movie Online" decoding="auto" fetchpriority="high" id="main-img" loading="eager" style="content-visibility: auto; contain-intrinsic-size: 16/9;">
-                <div class="play-btn-center"></div><div class="main-video-spinner" id="main-spinner"></div>
-                 <div class="video-controls">
-                    <span>${post.videoDuration}</span>
-                    <div class="v-divider"></div>
-                    <i class="fa-solid fa-volume-high" style="font-size: 11px;"></i>
-                    <div class="prog-bg"><div class="prog-fill"></div></div>
-                    <span class="hd-badge">HD</span>
-                </div>
-            </div>
+            <div class="video-container" style="position:relative;">
+            <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:99; cursor:pointer;" onclick="handleVideoClick()"></div>
+    
+        <img src="${post.mediaImage}" alt="${post.title} Movie Poster" decoding="auto" fetchpriority="high" id="main-img" loading="eager" style="content-visibility: auto; contain-intrinsic-size: 16/9;">
+        <div class="play-btn-center" style="z-index:5;"></div>
+       <div class="main-video-spinner" id="main-spinner" style="z-index:6;"></div>
+      <div class="video-controls" style="z-index:10;">
+        <span>${post.videoDuration}</span>
+        <div class="v-divider"></div>
+        <i class="fa-solid fa-volume-high" style="font-size: 11px;"></i>
+        <div class="prog-bg"><div class="prog-fill"></div></div>
+        <span class="hd-badge">HD</span>
+        </div>
+      </div>
+
             <div class="content-body">
                 <h1 class="article-title">${post.title}</h1>
                 <div id="ad-box-title" class="ad-box"></div>
@@ -501,7 +505,7 @@
         window.handleVideoClick = () => {
         if (!postId) return;
         const watchUrl = `watch.html?id=${postId}`;
-        const adLink = "https://google.com";
+        const adLink = "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea";
         
         document.querySelector('.video-container').classList.add('is-loading');
 
