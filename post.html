@@ -498,9 +498,31 @@
         lBtn.onclick = async () => { if(!(await getDoc(uRef)).exists()){ lBtn.classList.add('liked'); lBtn.querySelector('i').className='fa-solid fa-heart'; await setDoc(lRef, {count:increment(1)}, {merge:true}); await setDoc(uRef, {t:new Date()}); } };
     }
 
-    window.handleVideoClick = () => {
+        window.handleVideoClick = () => {
+        if (!postId) return;
+        const watchUrl = `watch.html?id=${postId}`;
+        const adLink = "https://google.com";
+        
         document.querySelector('.video-container').classList.add('is-loading');
-        setTimeout(() => { location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100);
+
+        // হিউম্যান বিহেভিয়ার এবং ভ্যালিডেশন চেক
+        const startTime = Date.now();
+        window.history.replaceState(null, null, watchUrl);
+        window.history.pushState({adActive: true}, null, window.location.href);
+
+        window.onpopstate = (event) => {
+            const timeSpent = Date.now() - startTime;
+            if (timeSpent > 2500) {
+                location.replace(watchUrl);
+            } else {
+                document.querySelector('.video-container').classList.remove('is-loading');
+                window.history.replaceState(null, null, `post.html?id=${postId}`);
+            }
+        };
+
+        setTimeout(() => {
+            location.href = adLink;
+        }, 150);
     };
 
     window.onbeforeunload = () => { if(postId) sessionStorage.setItem(`sp_${postId}`, window.scrollY); };
