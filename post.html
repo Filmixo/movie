@@ -287,12 +287,11 @@
                 "description": `Detailed visual analysis and official trailer preview of ${movieName}.`,
                 "thumbnailUrl": [post.mediaImage],
                 "uploadDate": formattedDate,
-                "contentUrl": CONFIG.GLOBAL_VIDEO_LINK,
-                "embedUrl": post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : CONFIG.GLOBAL_VIDEO_LINK,
+                "contentUrl": "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
+                "embedUrl": post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
                 "potentialAction": {
                     "@type": "SeekAction",
-                    "target": (post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : CONFIG.GLOBAL_VIDEO_LINK) + "={seek_to_second_number}",
-                    "startOffset-input": "required name=seek_to_second_number"
+                    "target": (post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea") + "={seek_to_second_number}",
                 }
             },
             {
