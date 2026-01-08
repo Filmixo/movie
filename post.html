@@ -513,14 +513,12 @@
         setTimeout(() => { location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100);
     };
     
-       window.goToWatchPageWithAd = () => {
+           window.goToWatchPageWithAd = () => {
         if (!postId) return;
-        const watchUrl = `watch.html?id=${postId}`;
-        window.history.replaceState(null, null, watchUrl);
-        window.history.pushState(null, null, window.location.href);
-        setTimeout(() => {
-            location.href = WATCH_PAGE_AD;
-        }, 1000); 
+        // ১. একটি ফ্ল্যাগ সেট করা যাতে ব্যাক করলে চেনা যায়
+        sessionStorage.setItem('redirect_to_watch', postId);
+        // ২. সরাসরি অ্যাডে পাঠানো
+        location.href = WATCH_PAGE_AD;
     };
 
     window.onbeforeunload = () => { if(postId) sessionStorage.setItem(`sp_${postId}`, window.scrollY); };
@@ -544,6 +542,17 @@
         checkTaskStatus();
         const c = document.querySelector('.video-container'); if(c) c.classList.remove('is-loading'); 
     });
+        // ব্যাক বাটন ডিটেকশন এবং অটো রিডাইরেক্ট লজিক
+    window.addEventListener('load', () => {
+        const pendingWatchId = sessionStorage.getItem('redirect_to_watch');
+        if (pendingWatchId && pendingWatchId === postId) {
+            // ফ্ল্যাগটি মুছে ফেলা যাতে বারবার রিডাইরেক্ট না হয়
+            sessionStorage.removeItem('redirect_to_watch');
+            // সরাসরি watch.html এ পাঠিয়ে দেওয়া
+            location.replace(`watch.html?id=${pendingWatchId}`);
+        }
+    });
+    
     init();
 </script>  
 </body>  
