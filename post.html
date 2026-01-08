@@ -205,6 +205,8 @@
 
     const urlParams = new URLSearchParams(window.location.search);  
     const postId = urlParams.get('id');  
+    const CONFIG = { GLOBAL_VIDEO_LINK: "https://prototypesorting.com/x0tq9pfa?key=5eaa0857eb30fd0efb62daca7ba27aec" };  
+    const AD_LINK = "https://google.com"; const WATCH_PAGE = `watch.html?id=${postId}`;
 
     const STAY_TIME = 5000; 
     let timeElements = [];
@@ -287,11 +289,12 @@
                 "description": `Detailed visual analysis and official trailer preview of ${movieName}.`,
                 "thumbnailUrl": [post.mediaImage],
                 "uploadDate": formattedDate,
-                "contentUrl": "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
-                "embedUrl": post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea",
+                "contentUrl": CONFIG.GLOBAL_VIDEO_LINK,
+                "embedUrl": post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : CONFIG.GLOBAL_VIDEO_LINK,
                 "potentialAction": {
                     "@type": "SeekAction",
-                    "target": (post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea") + "={seek_to_second_number}",
+                    "target": (post.youtubeEmbed ? post.youtubeEmbed.split('src="')[1]?.split('"')[0] : CONFIG.GLOBAL_VIDEO_LINK) + "={seek_to_second_number}",
+                    "startOffset-input": "required name=seek_to_second_number"
                 }
             },
             {
@@ -425,13 +428,14 @@
                 <div id="ad-box-title" class="ad-box"></div>
                 ${body}
                 ${post.youtubeEmbed ? `
-               <div style="position:relative; width:100%; margin-top:10px;">
-               <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:999; cursor:pointer;" onclick="handleVideoClick()"></div>
-               <div class="youtube-embed-wrapper" style="display:block;">
-               ${post.youtubeEmbed.replace('<iframe', '<iframe loading="lazy"')}
-              </div>
-            </div>
-           <div id="ad-box-video" class="ad-box"></div>` : ''}
+                
+<div style="position:relative; width:100%; margin-top:10px;">
+    <div style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:99; cursor:pointer;" onclick="handleEmbedClick()"></div>
+    <div class="youtube-embed-wrapper" style="display:block;">
+        ${post.youtubeEmbed.replace('<iframe', '<iframe loading="lazy"')}
+    </div>
+</div>
+<div id="ad-box-video" class="ad-box"></div>` : ''}
 
                 <p class="article-para">${paras[paras.length-1] || ''}</p>
                 <div class="download-title-text">↕️🔰 Download Full Movie in HD 🔰↕️</div>
@@ -504,27 +508,16 @@
         lBtn.onclick = async () => { if(!(await getDoc(uRef)).exists()){ lBtn.classList.add('liked'); lBtn.querySelector('i').className='fa-solid fa-heart'; await setDoc(lRef, {count:increment(1)}, {merge:true}); await setDoc(uRef, {t:new Date()}); } };
     }
 
-        window.handleVideoClick = () => {
-        if (!postId) return;
-        const watchUrl = `watch.html?id=${postId}`;
-        const adLink = "https://prototypesorting.com/p99vwjq2?key=57217116cccb25526dfb6a5a4edd9aea";
-        
-        const startTime = Date.now();
-        // ব্যাক হিস্ট্রি সেট করা
-        window.history.replaceState(null, null, watchUrl);
-        window.history.pushState({adActive: true}, null, window.location.href);
-
-        window.onpopstate = () => {
-            const timeSpent = Date.now() - startTime;
-            if (timeSpent > 2000) { 
-                location.replace(watchUrl);
-            }
-        };
-
-        setTimeout(() => {
-            location.href = adLink;
-        }, 100);
+    window.handleVideoClick = () => {
+        document.querySelector('.video-container').classList.add('is-loading');
+        setTimeout(() => { location.href = CONFIG.GLOBAL_VIDEO_LINK; }, 100);
     };
+    
+    window.handleEmbedClick = () => {
+      if (!postId) return;
+        window.history.replaceState(null, null, WATCH_PAGE);
+         window.history.pushState(null, null, window.location.href); location.href = AD_LINK;
+     };
 
     window.onbeforeunload = () => { if(postId) sessionStorage.setItem(`sp_${postId}`, window.scrollY); };
     function restoreScroll() { const s = sessionStorage.getItem(`sp_${postId}`); if(s) setTimeout(() => window.scrollTo(0, parseInt(s)), 150); }
@@ -547,11 +540,7 @@
         checkTaskStatus();
         const c = document.querySelector('.video-container'); if(c) c.classList.remove('is-loading'); 
     });
-       window.addEventListener('pageshow', () => { 
-        const c = document.querySelector('.video-container'); 
-        if(c) c.classList.remove('is-loading'); 
-    });
-     init();
+    init();
 </script>  
 </body>  
 </html>
