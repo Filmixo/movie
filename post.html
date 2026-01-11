@@ -86,11 +86,11 @@
     .youtube-embed-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; margin-bottom: 5px; overflow: hidden; background: #000; display: none; }
     .youtube-embed-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
 
-    .download-title-text { font-size: 18px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
+    .download-title-text { font-size: 17px; font-weight: 800; color: #0f1419; text-align: center; margin: 5px 0 25px 0; padding: 0 15px; border-top: 1px solid #e1e8ed; padding-top: 15px; }  
     .download-buttons-container { padding: 0 15px; margin-bottom: 20px; display: flex; flex-direction: row; justify-content: space-between; gap: 10px; }  
     .download-btn-v2 { display: flex; flex-direction: row; align-items: center; justify-content: center; flex: 1; padding: 12px 5px; border-radius: 6px; text-align: center; color: white; cursor: pointer; transition: transform 0.1s ease; border: 1px solid rgba(255, 255, 255, 0.15); gap: 5px; }
     .download-btn-v2:active { transform: scale(0.98); }
-    .btn-text-main { font-size: 15px; font-weight: 900; letter-spacing: 0.1px; white-space: nowrap; }
+    .btn-text-main { font-size: 14px; font-weight: 900; letter-spacing: 0.1px; white-space: nowrap; }
 
     .stats-section { padding: 10px 15px; margin-top: 10px; border-top: 1px solid #e1e8ed; display: flex; align-items: center; justify-content: space-between; font-size: 15px; color: #536471; font-weight: 500; }  
     .view-stat { display: flex; align-items: center; gap: 4px; font-size: 15px; width: 100px; justify-content: flex-start; }  
@@ -430,9 +430,9 @@
                 <p class="article-para">${paras[paras.length-1] || ''}</p>
                 <div class="download-title-text">🔰 Access High-Definition Sources Below 🔰</div>
                     <div class="download-buttons-container">
-                    <div role="button" aria-label="Download 1080p Full HD" onclick="handleDownloadClick('b1','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[0]}"><i class="fa-solid fa-circle-down" aria-hidden="true"></i> <span class="btn-text-main">[M-1080]</span></div>
-                    <div role="button" aria-label="Download 720p HD Ready" onclick="handleDownloadClick('b2','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[1]}"><i class="fa-solid fa-download" aria-hidden="true"></i> <span class="btn-text-main">[M-720]</span></div>
-                    <div role="button" aria-label="Download 360p Mobile" onclick="handleDownloadClick('b3','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[2]}"><i class="fa-solid fa-file-arrow-down" aria-hidden="true" style="font-size: 0.9em;"></i> <span class="btn-text-main">[M-360]</span></div>
+                    <div role="button" aria-label="Download 1080p Full HD" onclick="handleDownloadClick('b1','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[0]}"><i class="fa-solid fa-circle-down" aria-hidden="true"></i> <span class="btn-text-main">[ M-1080 ]</span></div>
+                    <div role="button" aria-label="Download 720p HD Ready" onclick="handleDownloadClick('b2','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[1]}"><i class="fa-solid fa-download" aria-hidden="true"></i> <span class="btn-text-main">[ M-720 ]</span></div>
+                    <div role="button" aria-label="Download 360p Mobile" onclick="handleDownloadClick('b3','${post.id}','${post.adLink1}','${post.adLink2}')" class="download-btn-v2" style="background:${grads[2]}"><i class="fa-solid fa-file-arrow-down" aria-hidden="true" style="font-size: 0.9em;"></i> <span class="btn-text-main">[ M-360 ]</span></div>
                 </div>
                 <div class="stats-section">
                     <div class="view-stat"><i class="fa-solid fa-chart-simple"></i> <span id="v-cnt">0</span> <span>Views</span></div>
