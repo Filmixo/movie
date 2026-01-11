@@ -233,7 +233,7 @@
         window.shareProfile = function() { const url = window.location.href.split('?')[0]; const text = "Filmixo:🍿 - movie download website 🎥"; if (navigator.share) { navigator.share({ title: "Filmixo", text: text, url: url }); } else { navigator.clipboard.writeText(`${text} ${url}`); showNotification("Website link copied! 📋"); } }
         
         window.sharePost = function(id, title) { 
-            const url = window.location.origin + `/movie/post.html?id=${id}`; 
+            const url = window.location.origin + `/movie/post/?id=${id}`; 
             if (navigator.share) { 
                 navigator.share({ title: title, text: title, url: url }).catch((e) => console.log('Share failed', e)); 
             } else { 
@@ -350,7 +350,7 @@
         window.openPost = (id) => { 
             sessionStorage.setItem('index_scroll', window.scrollY); 
             sessionStorage.setItem('index_count', currentIndex);
-            window.location.href = `/movie/post.html?id=${id}`; 
+            window.location.href = `/movie/post/?id=${id}`; 
         }; 
         
         function deactivateNavButtons() { document.querySelectorAll('.nav-btn').forEach(b => { b.classList.remove('active'); b.classList.add('inactive'); }); }
